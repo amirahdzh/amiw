@@ -7,9 +7,13 @@
 @layer base {
   :root {
 
-    --background: 0 0% 100%;
+    --background: 339, 81%, 85%; /* Soft Pink */
 
-    --foreground: 0 0% 3.9%;
+    --foreground: 0 0% 0%; /* Black */
+    
+    --header-background: 0 0% 100%; /* White */
+
+    --header-foreground: 0 0% 0%; /* Black */
 
     --card: 0 0% 100%;
 
@@ -59,9 +63,13 @@
   }
   .dark {
 
-    --background: 0 0% 3.9%;
+    --background: 217, 19%, 27%; /* Dark Gray */
 
-    --foreground: 0 0% 98%;
+    --foreground: 340, 78%, 80%; /* Soft Pink for "Amiw" */
+    
+    --header-background: 0 0% 5%; /* Dark Gray */
+
+    --header-foreground: 0 0% 100%; /* White */
 
     --card: 0 0% 3.9%;
 
@@ -109,16 +117,5 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
 
-body {
-    font-family: 'Poppins', sans-serif;
-  }
   
