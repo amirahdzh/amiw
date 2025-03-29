@@ -1,30 +1,25 @@
-<script setup lang="ts"></script>
-
 <template>
-  <div class="flex flex-col items-center justify-center min-h-screen p-6">
-    <!-- Hero Section -->
-    <section class="text-center">
-      <h1 class="text-4xl font-bold text-primary">Welcome to Amiw's Space</h1>
-      <p class="mt-2 text-muted-foreground">
-        A personal space to showcase my work, thoughts, and more.
-      </p>
-    </section>
-
-    <!-- Card Example -->
-    <div class="mt-6 w-full max-w-md p-6 bg-card shadow-md rounded-lg">
-      <h2 class="text-xl font-semibold text-card-foreground">
-        About This Site
-      </h2>
-      <p class="mt-2 text-muted-foreground">
-        This website is built with Nuxt 3, Tailwind CSS, and ShadCN Vue.
-      </p>
-    </div>
-
-    <!-- Button Example -->
-    <button
-      class="mt-6 px-4 py-2 bg-primary text-primary-foreground rounded-lg shadow hover:bg-opacity-90 transition"
+  <div class="min-h-screen bg-background text-foreground">
+    <main
+      class="flex flex-col items-center justify-center h-screen text-center"
     >
-      Explore More
-    </button>
+      <!-- <h2 class="text-4xl font-bold mb-4">Hello, I'm Amiw!</h2>
+      <p class="text-lg">
+        A passionate full-stack developer with a love for Nuxt.
+      </p>
+
+      <div class="mt-6 flex gap-4">
+        <button
+          class="px-6 py-2 bg-button-secondary-bg text-button-secondary-text rounded-lg shadow-md"
+        >
+          Get To Know Me
+        </button>
+        <button
+          class="px-6 py-2 bg-button-primary-bg text-button-primary-text rounded-lg shadow-md"
+        >
+          Look at my CV
+        </button>
+      </div> -->
+    </main>
   </div>
 </template>
