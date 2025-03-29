@@ -1,24 +1,22 @@
 <template>
-  <header
+  <!-- <header
     class="fixed top-4 left-0 w-full z-50 flex justify-center items-center"
-  >
+  > -->
+  <header class="w-full z-50 flex justify-center items-center pt-4">
     <div
       class="w-[90%] max-w-[1200px] flex items-center justify-between px-4 py-2 bg-[hsl(var(--header-background))] shadow-lg rounded-md"
     >
       <!-- Logo -->
-      <NuxtLink
-        to="/"
-        class="flex items-center gap-x-4 text-[hsl(var(--header-foreground))]"
-      >
+      <NuxtLink to="/" class="flex items-center gap-x-4">
         <img src="/img/maple_circle.png" alt="Amiw Logo" class="w-10 h-10" />
-        <span class="text-3xl font-semibold">amiw</span>
+        <span class="text-3xl font-semibold">Amiw</span>
       </NuxtLink>
 
       <!-- Typewriting (Hidden on Mobile) -->
       <div
-        class="hidden lg:flex items-center justify-center space-x-4 text-[hsl(var(--header-foreground))]/60 min-h-[40px] ml-6 flex-shrink-0"
+        class="hidden lg:flex items-center justify-center space-x-4 min-h-[40px] ml-6 flex-shrink-0"
       >
-        <p class="text-md font-medium font-mono leading-none">
+        <p class="text-md font-medium font-mono leading-none opacity-60">
           < {{ currentText }}
           <span class="inline-block w-1 bg-current animate-blink">&nbsp;</span>
           />
@@ -27,9 +25,7 @@
 
       <!-- Navigation & GitHub (Hidden on Mobile) -->
       <nav class="hidden md:flex ml-auto mr-4">
-        <ul
-          class="flex space-x-4 font-medium text-lg text-[hsl(var(--header-foreground))]"
-        >
+        <ul class="flex space-x-4 font-medium text-lg">
           <li>
             <NuxtLink
               to="/about"
@@ -55,9 +51,7 @@
       </nav>
 
       <!-- Icons -->
-      <div
-        class="flex items-center space-x-4 text-[hsl(var(--header-foreground))]"
-      >
+      <div class="flex items-center space-x-4">
         <!-- GitHub Icon -->
         <NuxtLink
           to="https://github.com/amiw"
@@ -67,15 +61,17 @@
           <Icon name="fa:github" class="w-6 h-6" />
         </NuxtLink>
         <!-- Dark Mode Toggle (Always Visible) -->
-        <button
-          @click="toggleDarkMode"
-          class="flex items-center justify-center px-1 py-1 rounded-md transition-colors duration-300 hover:bg-accent"
-        >
-          <Icon
-            :name="isDark ? 'heroicons:sun' : 'heroicons:moon'"
-            class="w-6 h-6"
-          />
-        </button>
+        <client-only>
+          <button
+            @click="toggleDarkMode"
+            class="flex items-center justify-center px-1 py-1 rounded-md transition-colors duration-300 hover:bg-accent"
+          >
+            <Icon
+              :name="isDark ? 'heroicons:sun' : 'heroicons:moon'"
+              class="w-6 h-6"
+            />
+          </button>
+        </client-only>
 
         <!-- Hamburger Menu (Mobile) -->
         <button
@@ -99,9 +95,7 @@
       ref="menuRef"
       class="md:hidden fixed top-20 right-6 w-52 bg-[hsl(var(--header-background))] shadow-lg rounded-md p-4"
     >
-      <ul
-        class="flex flex-col space-y-2 text-lg font-medium text-[hsl(var(--header-foreground))]"
-      >
+      <ul class="flex flex-col space-y-2 text-lg font-medium">
         <li>
           <NuxtLink
             to="/about"

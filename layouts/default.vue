@@ -11,13 +11,13 @@
     </main>
 
     <!-- Footer -->
-    <footer
+    <!-- <footer
       class="w-full py-4 text-center bg-secondary text-secondary-foreground"
     >
       <div class="container">
         <p>&copy; 2025 Amiw. Made with 💖</p>
       </div>
-    </footer>
+    </footer> -->
   </div>
 </template>
 

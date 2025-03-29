@@ -1,5 +1,5 @@
 <template>
-  <Html :class="{ dark: isDark }">
+  <Html :class="mode">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
@@ -8,13 +8,13 @@
 
 <script setup lang="ts">
 import { useColorMode } from "@vueuse/core";
-import { ref, onMounted } from "vue";
 
-const mode = useColorMode();
-const isDark = ref(false);
-
-// Ensure dark mode applies **before hydration**
-onMounted(() => {
-  isDark.value = mode.value === "dark";
+const mode = useColorMode({
+  modes: {
+    dark: "dark",
+    light: "light",
+  },
+  storageKey: "vueuse-color-scheme", // prefer localStorage
+  initialValue: "system", // default to system
 });
 </script>
