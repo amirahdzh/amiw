@@ -24,6 +24,20 @@ export default defineNuxtConfig({
         },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       ],
+      script: [
+        {
+          innerHTML: `
+            (function() {
+              const theme = localStorage.getItem("vueuse-color-scheme") || "light";
+              if (theme === "dark") {
+                document.documentElement.classList.add("dark");
+              }
+            })();
+          `,
+          type: "text/javascript",
+        },
+      ],
     },
+    
   },
 })

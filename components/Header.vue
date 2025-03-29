@@ -6,26 +6,27 @@
       class="w-[90%] max-w-[1200px] flex items-center justify-between px-4 py-2 bg-[hsl(var(--header-background))] shadow-lg rounded-md"
     >
       <!-- Logo -->
-      <div
+      <NuxtLink
+        to="/"
         class="flex items-center gap-x-4 text-[hsl(var(--header-foreground))]"
       >
         <img src="/img/maple_circle.png" alt="Amiw Logo" class="w-10 h-10" />
-        <NuxtLink to="/" class="text-3xl font-semibold">amiw</NuxtLink>
-      </div>
+        <span class="text-3xl font-semibold">amiw</span>
+      </NuxtLink>
 
-      <!-- Typewriting -->
+      <!-- Typewriting (Hidden on Mobile) -->
       <div
-        class="flex items-center justify-center space-x-4 text-[hsl(var(--header-foreground))]/60 min-h-[40px] ml-4 flex-shrink-0"
+        class="hidden lg:flex items-center justify-center space-x-4 text-[hsl(var(--header-foreground))]/60 min-h-[40px] ml-6 flex-shrink-0"
       >
-        <p class="text-sm font-medium font-mono leading-none">
+        <p class="text-md font-medium font-mono leading-none">
           < {{ currentText }}
           <span class="inline-block w-1 bg-current animate-blink">&nbsp;</span>
           />
         </p>
       </div>
 
-      <!-- Navigation -->
-      <nav class="ml-auto mr-4">
+      <!-- Navigation & GitHub (Hidden on Mobile) -->
+      <nav class="hidden md:flex ml-auto mr-4">
         <ul
           class="flex space-x-4 font-medium text-lg text-[hsl(var(--header-foreground))]"
         >
@@ -61,12 +62,11 @@
         <NuxtLink
           to="https://github.com/amiw"
           target="_blank"
-          class="flex items-center justify-center px-1 py-1 rounded-md transition-colors duration-300 hover:bg-accent"
+          class="items-center hidden md:flex justify-center px-1 py-1 rounded-md transition-colors duration-300 hover:bg-accent"
         >
           <Icon name="fa:github" class="w-6 h-6" />
         </NuxtLink>
-
-        <!-- Dark Mode Toggle -->
+        <!-- Dark Mode Toggle (Always Visible) -->
         <button
           @click="toggleDarkMode"
           class="flex items-center justify-center px-1 py-1 rounded-md transition-colors duration-300 hover:bg-accent"
@@ -76,7 +76,68 @@
             class="w-6 h-6"
           />
         </button>
+
+        <!-- Hamburger Menu (Mobile) -->
+        <button
+          @click="toggleMenu"
+          ref="buttonRef"
+          class="md:hidden flex items-center justify-center px-1 py-1 rounded-md transition-colors duration-300 hover:bg-accent"
+        >
+          <Icon
+            :name="
+              isMenuOpen ? 'heroicons-outline:x' : 'heroicons-outline:menu'
+            "
+            class="w-6 h-6"
+          />
+        </button>
       </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div
+      v-if="isMenuOpen"
+      ref="menuRef"
+      class="md:hidden fixed top-20 right-6 w-52 bg-[hsl(var(--header-background))] shadow-lg rounded-md p-4"
+    >
+      <ul
+        class="flex flex-col space-y-2 text-lg font-medium text-[hsl(var(--header-foreground))]"
+      >
+        <li>
+          <NuxtLink
+            to="/about"
+            class="block px-3 py-2 rounded-md transition-colors duration-300 hover:bg-accent"
+            @click="toggleMenu"
+            >About</NuxtLink
+          >
+        </li>
+        <li>
+          <NuxtLink
+            to="/blog"
+            class="block px-3 py-2 rounded-md transition-colors duration-300 hover:bg-accent"
+            @click="toggleMenu"
+            >Blog</NuxtLink
+          >
+        </li>
+        <li>
+          <NuxtLink
+            to="/portfolio"
+            class="block px-3 py-2 rounded-md transition-colors duration-300 hover:bg-accent"
+            @click="toggleMenu"
+            >Portfolio</NuxtLink
+          >
+        </li>
+        <li>
+          <NuxtLink
+            to="https://github.com/amirahdzh"
+            target="_blank"
+            class="block px-3 py-2 rounded-md transition-colors duration-300 hover:bg-accent"
+            @click="toggleMenu"
+            >GitHub<Icon
+              name="heroicons-outline:external-link"
+              class="w-4 h-4 ml-2"
+          /></NuxtLink>
+        </li>
+      </ul>
     </div>
   </header>
 </template>
@@ -84,6 +145,7 @@
 <script setup lang="ts">
 import { useColorMode } from "@vueuse/core";
 import { ref, onMounted } from "vue";
+import { onClickOutside } from "@vueuse/core";
 // import { Button } from "@/components/ui/button";
 
 const messages: string[] = [
@@ -91,6 +153,9 @@ const messages: string[] = [
   "Welcome to my site!",
   "Enjoy your stay!",
 ];
+
+const menuRef = ref(null);
+const buttonRef = ref(null);
 
 const currentText = ref<string>("");
 let textIndex = 0;
@@ -119,11 +184,22 @@ onMounted(() => typeEffect());
 
 const mode = useColorMode();
 const isDark = ref(mode.value === "dark");
+const isMenuOpen = ref(false);
 
 const toggleDarkMode = () => {
   mode.value = isDark.value ? "light" : "dark";
   isDark.value = !isDark.value;
 };
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
+
+// Close menu when clicking outside
+onClickOutside(menuRef, (event) => {
+  if ((buttonRef.value as HTMLElement | null)?.contains(event.target as Node))
+    return;
+  isMenuOpen.value = false;
+});
 </script>
 
 <style scoped>

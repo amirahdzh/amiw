@@ -3,7 +3,7 @@
     <main
       class="flex flex-col items-center justify-center h-screen text-center"
     >
-      <h2 class="text-4xl font-bold mb-4">Hello, I'm Amiw!</h2>
+      <!-- <h2 class="text-4xl font-bold mb-4">Hello, I'm Amiw!</h2>
       <p class="text-lg">
         A passionate full-stack developer with a love for Nuxt.
       </p>
@@ -19,7 +19,7 @@
         >
           Look at my CV
         </button>
-      </div>
+      </div> -->
     </main>
   </div>
 </template>
