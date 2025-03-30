@@ -4,7 +4,7 @@ const currentYear = new Date().getFullYear();
 
 <template>
   <footer
-    class="bg-secondary text-muted-foreground py-4 mt-10 border-t border-border"
+    class="bg-secondary text-muted-foreground py-4 border-t border-border"
   >
     <div class="container mx-auto flex flex-col items-center space-y-4">
       <!-- Navigasi Footer -->
