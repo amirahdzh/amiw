@@ -1,5 +1,7 @@
 <template>
-  <section class="flex flex-col justify-center">
+  <section
+    class="w-full py-24 flex flex-col justify-center bg-background border-b-4 border-primary"
+  >
     <div
       class="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto gap-8"
     >
@@ -8,7 +10,7 @@
         :initial="{ opacity: 0, y: 20 }"
         :enter="{ opacity: 1, y: 0 }"
         :transition="{ duration: 0.8, ease: 'easeOut' }"
-        class="flex flex-col items-start text-left max-w-lg"
+        class="flex flex-col items-start text-left max-w-lg px-8"
       >
         <span
           class="text-[48px] md:text-[96px] font-semibold text-[hsl(var(--amiw))]"
@@ -60,32 +62,36 @@
       </Motion>
 
       <!-- Separator for Mobile -->
-      <Motion
+      <!-- <Motion
         :initial="{ opacity: 0, scaleX: 0 }"
         :enter="{ opacity: 1, scaleX: 1 }"
         :transition="{ duration: 0.6, ease: 'easeOut' }"
-        class="block md:hidden w-full border-t-2 border-[hsl(var(--amiw))] origin-left"
+        class="block md:hidden w-full border-t-2 border-[hsl(var(--amiw))] mx-8 origin-left"
       >
-      </Motion>
+      </Motion> -->
 
       <!-- Swappable Content -->
-      <div class="flex items-center justify-end">
-        <component :is="isSmallScreen ? CollaborationSection : QuoteSection" />
+      <div class="flex items-center justify-end px-8">
+        <component
+          :is="isSmallScreen ? HeroCollaborationSection : HeroQuoteSection"
+        />
       </div>
     </div>
 
     <!-- Separator for Desktop -->
-    <Motion
+    <!-- <Motion
       :initial="{ opacity: 0, scaleX: 0 }"
       :enter="{ opacity: 1, scaleX: 1 }"
       :transition="{ duration: 0.6, ease: 'easeOut' }"
-      class="hidden md:block border-t-2 border-[hsl(var(--amiw))] origin-left my-6 md:my-12"
+      class="hidden md:block border-t-2 border-[hsl(var(--amiw))] origin-left my-6 mx-8 md:my-12"
     >
-    </Motion>
+    </Motion> -->
 
     <!-- Second Component -->
-    <div class="flex items-center justify-center">
-      <component :is="isSmallScreen ? QuoteSection : CollaborationSection" />
+    <div class="flex items-center justify-center px-8 md:pt-20">
+      <component
+        :is="isSmallScreen ? HeroQuoteSection : HeroCollaborationSection"
+      />
     </div>
   </section>
 </template>
@@ -94,11 +100,11 @@
 import { ref, onMounted, onBeforeUnmount, defineAsyncComponent } from "vue";
 
 // Import dynamically
-const CollaborationSection = defineAsyncComponent(() =>
-  import("@/components/CollaborationSection.vue")
+const HeroCollaborationSection = defineAsyncComponent(() =>
+  import("~/components/Hero/CollaborationSection.vue")
 );
-const QuoteSection = defineAsyncComponent(() =>
-  import("@/components/QuoteSection.vue")
+const HeroQuoteSection = defineAsyncComponent(() =>
+  import("~/components/Hero/QuoteSection.vue")
 );
 
 // Screen size detection

@@ -1,13 +1,11 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-background text-foreground">
+  <div class="min-h-screen flex flex-col">
     <!-- Header -->
     <Header />
 
     <!-- Content -->
-    <main class="flex-grow bg-background">
-      <div class="container">
-        <slot />
-      </div>
+    <main class="flex-grow">
+      <slot />
     </main>
 
     <Footer />
