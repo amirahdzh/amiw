@@ -8,9 +8,9 @@
       <!-- Left Side: Intro -->
       <Motion
         :initial="{ opacity: 0, y: 20 }"
-        :enter="{ opacity: 1, y: 0 }"
+        :visible="{ opacity: 1, y: 0 }"
         :transition="{ duration: 0.8, ease: 'easeOut' }"
-        class="flex flex-col items-start text-left max-w-lg px-8 md:px-0"
+        class="flex flex-col items-start text-left max-w-lg px-8"
       >
         <span
           class="text-[48px] md:text-[96px] font-semibold text-[hsl(var(--amiw))]"
@@ -24,7 +24,7 @@
         <!-- CTA Buttons -->
         <Motion
           :initial="{ opacity: 0, y: 10 }"
-          :enter="{ opacity: 1, y: 0 }"
+          :visible="{ opacity: 1, y: 0 }"
           :transition="{ delay: 0.3, duration: 0.5 }"
           class="mt-6 flex gap-6"
         >
@@ -44,7 +44,7 @@
         <!-- Location -->
         <Motion
           :initial="{ opacity: 0, y: 10 }"
-          :enter="{ opacity: 1, y: 0 }"
+          :visible="{ opacity: 1, y: 0 }"
           :transition="{ delay: 0.5, duration: 0.5 }"
         >
           <p class="mt-6 flex items-center gap-2 leading-none group">
@@ -61,15 +61,6 @@
         </Motion>
       </Motion>
 
-      <!-- Separator for Mobile -->
-      <!-- <Motion
-        :initial="{ opacity: 0, scaleX: 0 }"
-        :enter="{ opacity: 1, scaleX: 1 }"
-        :transition="{ duration: 0.6, ease: 'easeOut' }"
-        class="block md:hidden w-full border-t-2 border-[hsl(var(--amiw))] mx-8 origin-left"
-      >
-      </Motion> -->
-
       <!-- Swappable Content -->
       <div class="flex items-center justify-end pt-12 md:pt-0 px-8">
         <component
@@ -77,15 +68,6 @@
         />
       </div>
     </div>
-
-    <!-- Separator for Desktop -->
-    <!-- <Motion
-      :initial="{ opacity: 0, scaleX: 0 }"
-      :enter="{ opacity: 1, scaleX: 1 }"
-      :transition="{ duration: 0.6, ease: 'easeOut' }"
-      class="hidden md:block border-t-2 border-[hsl(var(--amiw))] origin-left my-6 mx-8 md:my-12"
-    >
-    </Motion> -->
 
     <!-- Second Component -->
     <div class="flex items-center justify-center px-8 md:pt-20">
@@ -96,36 +78,34 @@
   </section>
 </template>
 
-<script setup>
-import { ref, onMounted, onBeforeUnmount, defineAsyncComponent } from "vue";
+<script setup lang="ts">
+import { ref, defineAsyncComponent } from "vue";
+import { useResizeObserver } from "@vueuse/core";
 
-// Import dynamically
-const HeroCollaborationSection = defineAsyncComponent(() =>
-  import("~/components/Hero/CollaborationSection.vue")
+// **Dynamically import components**
+const HeroCollaborationSection = defineAsyncComponent(
+  () => import("~/components/Hero/CollaborationSection.vue")
 );
-const HeroQuoteSection = defineAsyncComponent(() =>
-  import("~/components/Hero/QuoteSection.vue")
+const HeroQuoteSection = defineAsyncComponent(
+  () => import("~/components/Hero/QuoteSection.vue")
 );
 
-// Screen size detection
-const isSmallScreen = ref(false);
-const checkScreenSize = () => {
-  if (process.client) {
-    isSmallScreen.value = window.matchMedia("(max-width: 768px)").matches;
-  }
-};
+// **Screen size detection**
+const isSmallScreen = ref<boolean>(false);
+const containerRef = ref<HTMLElement | null>(null);
 
-onMounted(() => {
-  checkScreenSize();
-  window.addEventListener("resize", checkScreenSize);
+useResizeObserver(containerRef, (entries) => {
+  const entry = entries[0];
+  isSmallScreen.value = entry.contentRect.width < 768;
 });
 
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", checkScreenSize);
-});
+// **Social Links**
+interface SocialLink {
+  url: string;
+  icon: string;
+}
 
-// Social Links
-const socialLinks = [
+const socialLinks: SocialLink[] = [
   { url: "https://facebook.com/amirahdzh", icon: "fa:facebook" },
   { url: "https://medium.com/@amiwdzh", icon: "fa:medium" },
   { url: "https://github.com/amirahdzh", icon: "fa:github" },

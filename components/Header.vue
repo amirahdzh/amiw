@@ -2,7 +2,12 @@
   <!-- <header
     class="fixed top-4 left-0 w-full z-50 flex justify-center items-center"
   > -->
-  <header class="fixed w-full z-50 flex justify-center items-center pt-4">
+  <header
+    :class="[
+      'fixed w-full z-50 flex justify-center items-center pt-4 transition-transform duration-300',
+      isHeaderVisible ? 'translate-y-0' : '-translate-y-full',
+    ]"
+  >
     <div
       class="w-[90%] max-w-[1200px] flex items-center justify-between px-4 py-2 bg-secondary shadow-lg rounded-md border border-r-8 border-b-8 border-primary"
     >
@@ -150,7 +155,15 @@ const messages: string[] = [
 
 const menuRef = ref(null);
 const buttonRef = ref(null);
+const lastScrollY = ref(0);
+const isHeaderVisible = ref(true);
 
+const handleScroll = () => {
+  const currentScrollY = window.scrollY;
+  isHeaderVisible.value =
+    currentScrollY < lastScrollY.value || currentScrollY < 10;
+  lastScrollY.value = currentScrollY;
+};
 const currentText = ref<string>("");
 let textIndex = 0;
 let charIndex = 0;
@@ -174,6 +187,9 @@ const typeEffect = (): void => {
 };
 
 onMounted(() => typeEffect());
+
+onMounted(() => window.addEventListener("scroll", handleScroll));
+onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 // onMounted(typeEffect);
 
 const mode = useColorMode();

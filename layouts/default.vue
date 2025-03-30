@@ -14,10 +14,4 @@
 
 <script setup lang="ts"></script>
 
-<style scoped>
-.container {
-  max-width: 1024px;
-  margin: 0 auto;
-  padding: 2rem 2rem;
-}
-</style>
+<style scoped></style>
