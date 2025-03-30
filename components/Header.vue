@@ -2,14 +2,14 @@
   <!-- <header
     class="fixed top-4 left-0 w-full z-50 flex justify-center items-center"
   > -->
-  <header class="w-full z-50 flex justify-center items-center pt-4">
+  <header class="fixed w-full z-50 flex justify-center items-center pt-4">
     <div
-      class="w-[90%] max-w-[1200px] flex items-center justify-between px-4 py-2 bg-[hsl(var(--header-background))] shadow-lg rounded-md"
+      class="w-[90%] max-w-[1200px] flex items-center justify-between px-4 py-2 bg-secondary shadow-lg rounded-md border border-r-8 border-b-8 border-primary"
     >
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center gap-x-4">
         <img src="/img/maple_circle.png" alt="Amiw Logo" class="w-10 h-10" />
-        <span class="text-3xl font-semibold">Amiw</span>
+        <span class="text-2xl font-semibold hidden md:block">Amiw</span>
       </NuxtLink>
 
       <!-- Typewriting (Hidden on Mobile) -->

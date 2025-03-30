@@ -1,23 +1,14 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-background text-foreground">
+  <div class="min-h-screen flex flex-col text-foreground">
     <!-- Header -->
     <Header />
 
     <!-- Content -->
-    <main class="flex-grow p-6">
-      <div class="container">
-        <slot />
-      </div>
+    <main class="flex-grow">
+      <slot />
     </main>
 
-    <!-- Footer -->
-    <!-- <footer
-      class="w-full py-4 text-center bg-secondary text-secondary-foreground"
-    >
-      <div class="container">
-        <p>&copy; 2025 Amiw. Made with 💖</p>
-      </div>
-    </footer> -->
+    <Footer />
   </div>
 </template>
 
@@ -27,6 +18,6 @@
 .container {
   max-width: 1024px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 2rem 2rem;
 }
 </style>
