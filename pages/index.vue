@@ -1,6 +1,6 @@
 <template>
   <HeroSection />
-  <HeroSection />
+  <ProfesionalSection />
 </template>
 
 <script setup></script>

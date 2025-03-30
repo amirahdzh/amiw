@@ -71,7 +71,7 @@
       </Motion> -->
 
       <!-- Swappable Content -->
-      <div class="flex items-center justify-end px-8">
+      <div class="flex items-center justify-end pt-4 md:pt-0 px-8">
         <component
           :is="isSmallScreen ? HeroCollaborationSection : HeroQuoteSection"
         />
