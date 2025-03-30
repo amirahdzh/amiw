@@ -10,7 +10,7 @@
       </div>
     </main>
 
-    <!-- <Footer /> -->
+    <Footer />
   </div>
 </template>
 
@@ -20,6 +20,6 @@
 .container {
   max-width: 1024px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 2rem 2rem;
 }
 </style>

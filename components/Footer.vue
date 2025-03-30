@@ -1,32 +1,67 @@
+<script setup>
+const currentYear = new Date().getFullYear();
+</script>
+
 <template>
-  <footer class="w-full border-t bg-muted py-6">
-    <div
-      class="container mx-auto flex flex-col md:flex-row items-center justify-between text-sm text-muted-foreground"
-    >
-      <p>&copy; {{ new Date().getFullYear() }} Amiw. All rights reserved.</p>
-      <div class="flex gap-4 mt-4 md:mt-0">
-        <Button
-          v-for="link in socialLinks"
-          :key="link.url"
-          variant="ghost"
-          as="a"
-          :href="link.url"
+  <footer
+    class="bg-secondary text-muted-foreground py-4 mt-10 border-t border-border"
+  >
+    <div class="container mx-auto flex flex-col items-center space-y-4">
+      <!-- Navigasi Footer -->
+      <nav>
+        <ul class="flex space-x-4 text-sm">
+          <li>
+            <NuxtLink to="/" class="hover:text-primary transition"
+              >Home</NuxtLink
+            >
+          </li>
+          <li>
+            <NuxtLink to="/about" class="hover:text-primary transition"
+              >About</NuxtLink
+            >
+          </li>
+          <li>
+            <NuxtLink to="/blog" class="hover:text-primary transition"
+              >Blog</NuxtLink
+            >
+          </li>
+          <li>
+            <NuxtLink to="/portfolio" class="hover:text-primary transition"
+              >Portfolio</NuxtLink
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Social Media Links (Icon-Only) -->
+      <div class="flex space-x-3">
+        <a
+          href="https://facebook.com"
           target="_blank"
+          class="hover:text-primary transition"
         >
-          <Icon :name="link.icon" class="w-5 h-5" />
-        </Button>
+          <Icon name="fa:facebook" class="w-4 h-4" />
+        </a>
+        <a
+          href="https://github.com"
+          target="_blank"
+          class="hover:text-primary transition"
+        >
+          <Icon name="fa:github" class="w-4 h-4" />
+        </a>
+        <a
+          href="https://medium.com"
+          target="_blank"
+          class="hover:text-primary transition"
+        >
+          <Icon name="fa:medium" class="w-4 h-4" />
+        </a>
       </div>
+
+      <!-- Copyright -->
+      <p class="text-xs text-muted-foreground">
+        &copy; {{ currentYear }} Amiw. All rights reserved.
+      </p>
     </div>
   </footer>
 </template>
-
-<script setup>
-// import { Button } from "@/components/ui/button";
-// import { Icon } from "@/components/ui/icon";
-
-const socialLinks = [
-  { url: "https://facebook.com/amirahdzh", icon: "fa:facebook" },
-  { url: "https://medium.com/@amiwdzh", icon: "fa:medium" },
-  { url: "https://github.com/amirahdzh", icon: "fa:github" },
-];
-</script>

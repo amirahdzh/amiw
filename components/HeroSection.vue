@@ -66,7 +66,6 @@
         :transition="{ duration: 0.6, ease: 'easeOut' }"
         class="block md:hidden w-full border-t-2 border-[hsl(var(--amiw))] origin-left"
       >
-        <hr />
       </Motion>
 
       <!-- Swappable Content -->
@@ -82,7 +81,6 @@
       :transition="{ duration: 0.6, ease: 'easeOut' }"
       class="hidden md:block border-t-2 border-[hsl(var(--amiw))] origin-left my-6 md:my-12"
     >
-      <hr />
     </Motion>
 
     <!-- Second Component -->
