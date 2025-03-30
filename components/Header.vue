@@ -4,7 +4,7 @@
   > -->
   <header class="fixed w-full z-50 flex justify-center items-center pt-4">
     <div
-      class="w-[90%] max-w-[1200px] flex items-center justify-between px-4 py-2 bg-secondary shadow-lg rounded-md"
+      class="w-[90%] max-w-[1200px] flex items-center justify-between px-4 py-2 bg-secondary shadow-lg rounded-md border border-r-8 border-b-8 border-primary"
     >
       <!-- Logo -->
       <NuxtLink to="/" class="flex items-center gap-x-4">

@@ -3,14 +3,14 @@
     class="w-full py-24 flex flex-col justify-center bg-background border-b-4 border-primary"
   >
     <div
-      class="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto gap-8"
+      class="flex flex-col md:flex-row items-center justify-evenly max-w-6xl mx-auto"
     >
       <!-- Left Side: Intro -->
       <Motion
         :initial="{ opacity: 0, y: 20 }"
         :enter="{ opacity: 1, y: 0 }"
         :transition="{ duration: 0.8, ease: 'easeOut' }"
-        class="flex flex-col items-start text-left max-w-lg px-8"
+        class="flex flex-col items-start text-left max-w-lg px-8 md:px-0"
       >
         <span
           class="text-[48px] md:text-[96px] font-semibold text-[hsl(var(--amiw))]"
@@ -71,7 +71,7 @@
       </Motion> -->
 
       <!-- Swappable Content -->
-      <div class="flex items-center justify-end pt-4 md:pt-0 px-8">
+      <div class="flex items-center justify-end pt-12 md:pt-0 px-8">
         <component
           :is="isSmallScreen ? HeroCollaborationSection : HeroQuoteSection"
         />

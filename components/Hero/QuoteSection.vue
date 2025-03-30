@@ -7,7 +7,7 @@
     @click="shuffleQuote"
   >
     <div
-      class="p-6 md:mt-0 mt-12 border-2 border-l-8 border-[hsl(var(--amiw))] bg-secondary space-y-4"
+      class="p-6 md:mt-0 mt-12 border border-l-8 border-[hsl(var(--amiw))] bg-secondary space-y-4"
     >
       <p class="text-xs uppercase tracking-wide font-semibold text-gray-500">
         Book Quotes I Love
