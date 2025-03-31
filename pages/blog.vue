@@ -118,32 +118,12 @@
         <div v-if="error" class="text-center text-red-500 font-semibold">
           {{ error }}
         </div>
-        <!-- ShadCN Skeleton Loader -->
-        <div v-if="isLoading">
-          <ul class="w-full">
-            <li
-              v-for="n in 3"
-              :key="n"
-              class="w-full border-b border-primary py-8 flex flex-col gap-4"
-            >
-              <div
-                class="flex flex-col lg:flex-row md:items-center md:justify-between gap-6 md:gap-12"
-              >
-                <!-- Artikel Info Skeleton -->
-                <div class="flex-1 w-full">
-                  <Skeleton class="w-3/4 h-6 rounded-md" />
-                  <Skeleton class="mt-4 w-full h-4 rounded-md" />
-                  <Skeleton class="mt-2 w-5/6 h-4 rounded-md" />
-                  <Skeleton class="mt-4 w-1/4 h-3 rounded-md" />
-                </div>
-
-                <!-- Thumbnail Skeleton -->
-                <div class="w-full max-w-lg lg:max-w-[256px] lg:flex-shrink-0">
-                  <Skeleton class="w-full h-auto aspect-[5/3] rounded-lg" />
-                </div>
-              </div>
-            </li>
-          </ul>
+        <div v-else-if="isLoading" class="flex justify-center gap-3">
+          <div
+            v-for="n in 3"
+            :key="n"
+            class="w-full h-36 bg-gray-200 rounded-lg"
+          ></div>
         </div>
 
         <!-- Display Posts -->
@@ -162,7 +142,7 @@
                   <a
                     :href="post.link"
                     target="_blank"
-                    class="text-2xl font-semibold text-primary transition-all"
+                    class="text-2xl font-semibold text-primary hover:text-[hsl(var(--amiw))] transition-all"
                   >
                     {{ decodeHTMLEntities(post.title) }}
                   </a>
@@ -177,16 +157,11 @@
 
                 <!-- Thumbnail -->
                 <div class="w-full max-w-lg lg:max-w-[256px] lg:flex-shrink-0">
-                  <a
-                    :href="post.link"
-                    target="_blank"
-                    class="text-2xl font-semibold text-primary transition-all"
-                  >
-                    <img
-                      :src="post.thumbnail"
-                      alt="Thumbnail"
-                      class="w-full h-auto aspect-[5/3] object-cover rounded-lg"
-                  /></a>
+                  <img
+                    :src="post.thumbnail"
+                    alt="Thumbnail"
+                    class="w-full h-auto aspect-[5/3] object-cover rounded-lg"
+                  />
                 </div>
               </div>
             </li>
