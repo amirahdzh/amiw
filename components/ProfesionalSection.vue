@@ -2,13 +2,7 @@
   <section class="w-full py-24 bg-secondary">
     <div class="max-w-6xl mx-auto px-6 md:px-12">
       <!-- Title -->
-      <Motion
-        v-motion
-        :initial="{ opacity: 0, y: 20 }"
-        :visible="{ opacity: 1, y: 0 }"
-        :transition="{ duration: 0.8, ease: 'easeOut' }"
-        class="text-center mb-12"
-      >
+      <Motion v-motion-pop-visible class="text-center mb-12">
         <h2 class="text-3xl md:text-5xl font-bold text-foreground">
           What <span class="text-[hsl(var(--amiw))]"> I Do? </span>
         </h2>
@@ -24,7 +18,10 @@
           :visible="{ opacity: 1, y: 0 }"
           :transition="{ delay: index * 0.2, duration: 0.6, ease: 'easeOut' }"
         >
-          <Card class="p-6 flex flex-col items-start rounded-xl">
+          <Card
+            @click="service.onClick"
+            class="p-6 flex flex-col items-start rounded-xl cursor-pointer"
+          >
             <Icon :name="service.icon" class="w-10 h-10 text-foreground mb-4" />
             <h3 class="text-xl font-semibold text-primary">
               {{ service.title }}
@@ -70,6 +67,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
+// Mendefinisikan tipe data untuk Service
 interface Service {
   icon: string;
   title: string;
@@ -79,8 +77,10 @@ interface Service {
   isExternal: boolean;
   extraButtonText?: string;
   extraButtonLink?: string;
+  onClick?: () => void; // Menambahkan properti onClick
 }
 
+// Membuat data services dengan event click di dalamnya
 const services = ref<Service[]>([
   {
     icon: "lucide:code",
@@ -101,6 +101,9 @@ const services = ref<Service[]>([
     link: "/blog",
     ctaText: "Read More",
     isExternal: false,
+    onClick: () => {
+      store.setCategory("Web Development");
+    },
   },
   {
     icon: "lucide:users",
@@ -119,6 +122,12 @@ const services = ref<Service[]>([
     link: "/blog",
     ctaText: "See My Writings",
     isExternal: false,
+    onClick: () => {
+      store.setCategory("Contemplating");
+    },
   },
 ]);
+
+// import { useBlogStore } from "@/stores/blog";
+const store = useBlogStore();
 </script>

@@ -5,11 +5,10 @@
       <div class="w-1/2 bg-background"></div>
     </div>
 
-    <!-- Blog and article section in the same row with ample space -->
     <div
       class="max-w-7xl mx-auto flex flex-col md:flex-row relative bg-secondary"
     >
-      <!-- Blog Header -->
+      <!-- Sidebar -->
       <div
         class="md:w-1/3 md:sticky pt-28 top-0 z-10 self-start md:max-w-[350px] md:min-w-[350px] px-8"
       >
@@ -20,7 +19,7 @@
             <a
               href="https://www.medium.com/@amiwdzh"
               target="_blank"
-              class="text-[hsl(var(--pink))] font-medium hover:underline transition-colors"
+              class="text-[hsl(var(--pink))] font-medium hover:underline"
             >
               Medium.
             </a>
@@ -51,12 +50,10 @@
           </Card>
         </NuxtLink>
 
-        <!-- Filter Category -->
+        <!-- Category Selection -->
         <div class="flex flex-wrap mb-8 mt-8">
-          <!-- Dropdown for small screens -->
           <div class="md:hidden w-full">
-            <div class="mb-2">Read My Series:</div>
-
+            <div class="mb-2">Read My Articles:</div>
             <select
               v-model="selectedCategory"
               class="w-full px-6 py-3 text-base rounded-md bg-accent"
@@ -71,9 +68,8 @@
             </select>
           </div>
 
-          <!-- Text items for larger screens -->
           <div class="hidden md:flex flex-col gap-2">
-            Read My Series:
+            Read My Articles:
             <div
               v-for="category in allCategories"
               :key="category"
@@ -83,7 +79,8 @@
                   ? 'text-foreground hover:text-[hsl(var(--pink))] font-semibold'
                   : 'text-muted-foreground hover:text-[hsl(var(--pink))]',
               ]"
-              @click="handleCategoryClick(category)"
+              @click="blogStore.setCategory(category)"
+              v-motion-fade
             >
               {{ category }}
             </div>
@@ -91,76 +88,63 @@
         </div>
       </div>
 
-      <!-- Articles Section -->
+      <!-- Main Content -->
       <div
-        class="flex-1 md:w-2/3 bg-background md:py-24 border-t-4 px-8 md:border-t-0 md:border-l-4 border-border"
+        class="flex-1 py-8 md:w-2/3 bg-background md:py-28 border-t-4 px-8 md:border-t-0 md:border-l-4 border-border"
       >
-        <!-- Filter Category -->
-        <!-- <div class="flex gap-4 mb-5 justify-center flex-wrap">
-          <Button
-            v-for="category in allCategories"
-            :key="category"
-            :class="[
-              'px-6 py-3 text-base font-semibold rounded-full cursor-pointer',
-              selectedCategory === category
-                ? 'bg-pink-500 text-white hover:bg-primary'
-                : 'bg-gray-200 text-gray-600 hover:bg-gray-300',
-            ]"
-            @click="handleCategoryClick(category)"
-          >
-            {{ category }}
-          </Button>
-        </div> -->
+        <!-- Display selected category -->
+        <div
+          v-if="selectedCategory"
+          class="text-2xl lg:text-3xl font-semibold mb-2"
+        >
+          {{ selectedCategory }}
+        </div>
 
-        <!-- <hr class="border-gray-300" /> -->
-
-        <!-- Error or Loading States -->
+        <!-- Posts or Loading/Error -->
+        <hr class="border-t border-primary" />
         <div v-if="error" class="text-center text-red-500 font-semibold">
           {{ error }}
         </div>
         <div v-else-if="isLoading" class="flex justify-center gap-3">
-          <div v-for="n in 1" :key="n">
-            Loading post... Click
-            <a href="https://www.medium.com/@amiwdzh"> here</a> to open post on
-            Medium
-          </div>
+          Loading post... Click
+          <a href="https://www.medium.com/@amiwdzh">here</a> to open post on
+          Medium.
         </div>
 
-        <!-- Display Posts -->
         <div v-else>
           <ul>
             <li
               v-for="post in filteredPosts"
               :key="post.link"
               class="border-b border-primary py-8 flex flex-col gap-4"
+              v-motion-pop-visible
             >
               <div
                 class="flex flex-col lg:flex-row md:items-center md:justify-between gap-6 md:gap-12"
               >
-                <!-- Artikel Info -->
                 <div class="flex-1">
                   <a
                     :href="post.link"
                     target="_blank"
-                    class="text-2xl font-semibold text-primary hover:text-[hsl(var(--amiw))] transition-all"
+                    class="text-2xl font-semibold text-primary hover:text-primary/80"
                   >
-                    {{ decodeHTMLEntities(post.title) }}
+                    {{ blogStore.decodeHTMLEntities(post.title) }}
                   </a>
                   <p
                     class="mt-4 text-foreground text-base"
-                    v-html="getExcerpt(post.description)"
+                    v-html="blogStore.getExcerpt(post.description)"
                   ></p>
                   <p class="mt-4 text-xs text-muted-foreground">
-                    {{ formatDate(post.pubDate) }}
+                    {{ blogStore.formatDate(post.pubDate) }}
                   </p>
                 </div>
-
                 <!-- Thumbnail -->
                 <div class="w-full max-w-lg lg:max-w-[256px] lg:flex-shrink-0">
                   <img
-                    :src="post.thumbnail"
+                    :src="post.thumbnail || DEFAULT_THUMBNAIL"
                     alt="Thumbnail"
                     class="w-full h-auto aspect-[5/3] object-cover rounded-lg"
+                    v-motion-fade
                   />
                 </div>
               </div>
@@ -173,132 +157,23 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { onMounted } from "vue";
 
-// Interfaces
-interface Post {
-  title: string;
-  link: string;
-  description: string;
-  pubDate: string;
-  categories: string[];
-  thumbnail?: string;
-}
+// Mengambil blogStore
+const blogStore = useBlogStore();
+const { error, isLoading, selectedCategory, allCategories, filteredPosts } =
+  storeToRefs(blogStore);
 
-// Refs and Constants
-const posts = ref<Post[]>([]);
-const error = ref<string | null>(null);
-const isLoading = ref<boolean>(true);
-const selectedCategory = ref<string>("All");
-// const MEDIUM_URL = "https://medium.com/@amiwdzh";
-const RSS_API_URL =
-  "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40amiwdzh";
+onMounted(() => {
+  blogStore.fetchPosts();
+
+  // Mengambil kategori yang tersimpan di localStorage
+  const storedCategory = localStorage.getItem("selectedCategory");
+  if (storedCategory) {
+    blogStore.setCategory(storedCategory);
+  }
+});
+
 const DEFAULT_THUMBNAIL = "/img/maple_circle.png";
-const ALLOWED_CATEGORIES = [
-  "", // Add new category
-];
-
-const formatDate = (dateString: string): string => {
-  return new Date(dateString).toLocaleDateString("en-US", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
-};
-
-// Decode HTML entities
-const decodeHTMLEntities = (text: string): string => {
-  const parser = new DOMParser();
-  return parser.parseFromString(text, "text/html").body.textContent || "";
-};
-
-// Computed Category Filter
-const allCategories = computed<string[]>(() => {
-  const categories = new Set<string>();
-  // posts.value.forEach((post) => {
-  //   post.categories.forEach((category) => {
-  //     if (ALLOWED_CATEGORIES.includes(category)) categories.add(category);
-  //   });
-  // });
-  return [
-    "All",
-    "How I Built My Website",
-    "Contemplating",
-    "Web Development",
-    ...Array.from(categories),
-  ];
-});
-
-// Filtered Posts Based on Category
-const filteredPosts = computed<Post[]>(() => {
-  console.log("Selected Category:", selectedCategory.value);
-
-  const allPosts = posts.value || [];
-
-  if (selectedCategory.value === "All") {
-    return allPosts;
-  } else if (selectedCategory.value === "How I Built My Website") {
-    return allPosts.filter((post) =>
-      post.title.startsWith("How I Built My Website")
-    );
-  } else if (selectedCategory.value === "Contemplating") {
-    const result = allPosts.filter(
-      (post) =>
-        !post.title.startsWith("How I Built My Website") &&
-        !post.categories.includes("technology")
-    );
-    console.log("Filtered Posts:", result);
-    return result;
-  } else if (selectedCategory.value === "Web Development") {
-    return allPosts.filter((post) =>
-      post.categories.includes("web-development")
-    );
-  }
-
-  return [];
-});
-
-// Get Excerpt (Remove HTML and Trim Text)
-const getExcerpt = (text: string): string => {
-  const clean = text.replace(/<[^>]+>/g, "");
-  return clean.length > 100 ? clean.slice(0, 100) + "..." : clean;
-};
-
-// Handle Category Click
-const handleCategoryClick = (category: string): void => {
-  selectedCategory.value = category;
-};
-
-// Fetch Posts from RSS Feed
-onMounted(async () => {
-  try {
-    const response = await fetch(RSS_API_URL);
-    const data = await response.json();
-    if (data.status === "ok") {
-      posts.value = data.items.map((item: any) => ({
-        title: item.title,
-        link: item.link,
-        description: item.content,
-        pubDate: item.pubDate,
-        categories: item.categories,
-        thumbnail: getMediumImage(item.content) || DEFAULT_THUMBNAIL,
-      }));
-    }
-  } catch (e) {
-    error.value = "Failed to load posts";
-  } finally {
-    isLoading.value = false;
-  }
-});
-
-// Extract Image from Description (HTML Content)
-const getMediumImage = (description: string): string => {
-  if (!description) return DEFAULT_THUMBNAIL;
-  const imageMatch = description.match(/<img.*?src=["'](.*?)["']/);
-  return imageMatch ? imageMatch[1] : DEFAULT_THUMBNAIL;
-};
 </script>
-
-<style scoped>
-/* Add custom styles if necessary */
-</style>
