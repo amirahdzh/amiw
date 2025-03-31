@@ -119,11 +119,11 @@
           {{ error }}
         </div>
         <div v-else-if="isLoading" class="flex justify-center gap-3">
-          <div
-            v-for="n in 3"
-            :key="n"
-            class="w-full h-36 bg-gray-200 rounded-lg"
-          ></div>
+          <div v-for="n in 1" :key="n">
+            Loading post... Click
+            <a href="https://www.medium.com/@amiwdzh"> here</a> to open post on
+            Medium
+          </div>
         </div>
 
         <!-- Display Posts -->
