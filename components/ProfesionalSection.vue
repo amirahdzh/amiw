@@ -53,7 +53,7 @@
                 :href="service.extraButtonLink"
                 variant="ghost"
                 size="icon"
-                class="ml-auto"
+                class="ml-auto hover:bg-[hsl(var(--pink))]"
                 as="a"
                 target="_blank"
               >

@@ -10,7 +10,7 @@
         :initial="{ opacity: 0, y: 20 }"
         :enter="{ opacity: 1, y: 0 }"
         :transition="{ duration: 0.8, ease: 'easeOut' }"
-        class="flex flex-col items-start text-left max-w-lg px-8 md:px-0"
+        class="flex flex-col items-start text-left max-w-lg px-8"
       >
         <span
           class="text-[48px] md:text-[96px] font-semibold text-[hsl(var(--amiw))]"
