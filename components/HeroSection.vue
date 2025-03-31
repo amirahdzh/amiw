@@ -1,6 +1,6 @@
 <template>
   <section
-    class="w-full py-24 flex flex-col justify-center bg-background border-b-4 border-primary"
+    class="w-full py-24 flex flex-col justify-center bg-background border-b-4 border-border"
   >
     <div
       class="flex flex-col md:flex-row items-center justify-evenly max-w-6xl mx-auto"
