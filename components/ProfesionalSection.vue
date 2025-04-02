@@ -20,7 +20,7 @@
         >
           <Card
             @click="service.onClick"
-            class="p-6 flex flex-col items-start rounded-xl cursor-pointer"
+            class="p-6 flex flex-col items-start rounded-xl"
           >
             <Icon :name="service.icon" class="w-10 h-10 text-foreground mb-4" />
             <h3 class="text-xl font-semibold text-primary">
