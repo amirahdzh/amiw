@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full py-24 bg-secondary">
+  <section class="w-full py-24 bg-[hsl(var(--alternate-background))]">
     <div class="max-w-6xl mx-auto px-6 md:px-12">
       <!-- Title -->
       <Motion v-motion-pop-visible class="text-center mb-12">

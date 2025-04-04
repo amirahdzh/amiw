@@ -1,12 +1,12 @@
 <template>
   <section class="w-full flex flex-col justify-center relative">
     <div class="absolute inset-0 flex">
-      <div class="w-1/2 bg-secondary"></div>
+      <div class="w-1/2 bg-[hsl(var(--alternate-background))]"></div>
       <div class="w-1/2 bg-background"></div>
     </div>
 
     <div
-      class="max-w-7xl mx-auto flex flex-col md:flex-row relative bg-secondary"
+      class="max-w-7xl mx-auto flex flex-col md:flex-row relative bg-[hsl(var(--alternate-background))]"
     >
       <!-- Sidebar -->
       <div

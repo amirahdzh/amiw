@@ -11,7 +11,7 @@
       <img
         src="/img/maple_circle.png"
         alt="Amiw Illustration"
-        class="w-20 md:w-32 lg:w-40 flex-shrink-0 border-2 md:border-4 border-primary rounded-full"
+        class="w-20 md:w-32 lg:w-40 flex-shrink-0 rounded-full"
       />
     </Motion>
 

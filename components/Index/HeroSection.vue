@@ -72,9 +72,7 @@
 
       <!-- Swappable Content -->
       <div class="flex items-center justify-end pt-12 md:pt-0 px-8">
-        <component
-          :is="isSmallScreen ? HeroCollaborationSection : HeroQuoteSection"
-        />
+        <component :is="isSmallScreen ? IndexCollaboration : IndexQuote" />
       </div>
     </div>
 
@@ -89,9 +87,7 @@
 
     <!-- Second Component -->
     <div class="flex items-center justify-center px-8 md:pt-20">
-      <component
-        :is="isSmallScreen ? HeroQuoteSection : HeroCollaborationSection"
-      />
+      <component :is="isSmallScreen ? IndexQuote : IndexCollaboration" />
     </div>
   </section>
 </template>
@@ -100,11 +96,11 @@
 import { ref, onMounted, onBeforeUnmount, defineAsyncComponent } from "vue";
 
 // Import dynamically
-const HeroCollaborationSection = defineAsyncComponent(() =>
-  import("~/components/Hero/CollaborationSection.vue")
+const IndexCollaboration = defineAsyncComponent(() =>
+  import("~/components/Index/Collaboration.vue")
 );
-const HeroQuoteSection = defineAsyncComponent(() =>
-  import("~/components/Hero/QuoteSection.vue")
+const IndexQuote = defineAsyncComponent(() =>
+  import("~/components/Index/Quote.vue")
 );
 
 // Screen size detection

@@ -33,9 +33,9 @@
         <ul class="flex space-x-4 font-medium text-lg">
           <li>
             <NuxtLink
-              to="/about"
+              to="/memoir"
               class="px-3 py-1 rounded-md transition-colors duration-300 hover:bg-accent"
-              >About</NuxtLink
+              >Memoir</NuxtLink
             >
           </li>
           <li>
@@ -103,10 +103,10 @@
       <ul class="flex flex-col space-y-2 text-lg font-medium">
         <li>
           <NuxtLink
-            to="/about"
+            to="/memoir"
             class="block px-3 py-2 rounded-md transition-colors duration-300 hover:bg-accent"
             @click="toggleMenu"
-            >About</NuxtLink
+            >Memoir</NuxtLink
           >
         </li>
         <li>
