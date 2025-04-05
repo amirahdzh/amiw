@@ -13,6 +13,8 @@
     
     --header-background: 0 0% 100%; /* White */
 
+    --alternate-background: 0 0% 98%;
+
     --amiw: 0 0% 0%;
 
     --pink: 339, 70%, 80%;
@@ -69,6 +71,8 @@
 
     --background: 215, 27.91%, 16.86%; 
     /* --background: 0 0% 5%; */
+
+    --alternate-background: 0 0% 10%;
 
     --foreground: 0, 0%, 100%; 
     

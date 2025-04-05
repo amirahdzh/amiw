@@ -16,8 +16,8 @@ const currentYear = new Date().getFullYear();
             >
           </li>
           <li>
-            <NuxtLink to="/about" class="hover:text-primary transition"
-              >About</NuxtLink
+            <NuxtLink to="/memoir" class="hover:text-primary transition"
+              >Memoir</NuxtLink
             >
           </li>
           <li>
