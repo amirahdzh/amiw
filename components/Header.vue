@@ -18,7 +18,7 @@
       </NuxtLink>
 
       <!-- Typewriting (Hidden on Mobile) -->
-      <div
+      <!-- <div
         class="hidden lg:flex items-center justify-center space-x-4 min-h-[40px] ml-6 flex-shrink-0"
       >
         <p class="text-md font-medium font-mono leading-none opacity-60">
@@ -26,7 +26,7 @@
           <span class="inline-block w-1 bg-current animate-blink">&nbsp;</span>
           />
         </p>
-      </div>
+      </div> -->
 
       <!-- Navigation & GitHub (Hidden on Mobile) -->
       <nav class="hidden md:flex ml-auto mr-4">
@@ -59,14 +59,14 @@
       <div class="flex items-center space-x-4">
         <!-- GitHub Icon -->
         <NuxtLink
-          to="https://github.com/amiw"
+          to="https://github.com/amirahdzh"
           target="_blank"
           class="items-center hidden md:flex justify-center px-1 py-1 rounded-md transition-colors duration-300 hover:bg-accent"
         >
           <Icon name="fa:github" class="w-6 h-6" />
         </NuxtLink>
         <!-- Dark Mode Toggle (Always Visible) -->
-        <client-only>
+        <!-- <client-only>
           <button
             @click="toggleDarkMode"
             class="flex items-center justify-center px-1 py-1 rounded-md transition-colors duration-300 hover:bg-accent"
@@ -76,7 +76,7 @@
               class="w-6 h-6"
             />
           </button>
-        </client-only>
+        </client-only> -->
 
         <!-- Hamburger Menu (Mobile) -->
         <button

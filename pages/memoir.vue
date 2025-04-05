@@ -1,6 +1,6 @@
 <template>
   <MemoirHero />
-  <MemoirCreative />
+  <!-- <MemoirCreative /> -->
 </template>
 
 <script setup lang="ts"></script>

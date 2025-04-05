@@ -19,25 +19,53 @@ const randomQuote = useState(
   () => quotes[Math.floor(Math.random() * quotes.length)]
 );
 
-const slogans = ["MY UNIVERSE", "MY WORLD", "MY MEMOIR", "MY JOURNEY"];
-const currentSlogan = ref(slogans[0]);
-const sloganIndex = ref(0);
-const isAnimating = ref(false);
+// ✨ Smooth typewriter logic
+const slogans = ["CHAPTER", "PAGE", "DIARY", "JOURNEY"];
 
-let sloganInterval: ReturnType<typeof setInterval>;
+const sloganIndex = ref(0);
+const currentText = ref("");
+const isDeleting = ref(false);
+let typewriterTimeout: ReturnType<typeof setTimeout>;
+
+const typeSpeed = 100;
+const deleteSpeed = 60;
+const pauseAfterTyped = 1200;
+const pauseBeforeTyping = 300;
+
+const typeWriter = async () => {
+  const fullText = slogans[sloganIndex.value];
+
+  if (isDeleting.value) {
+    currentText.value = fullText.slice(0, currentText.value.length - 1);
+  } else {
+    currentText.value = fullText.slice(0, currentText.value.length + 1);
+  }
+
+  let delay = isDeleting.value ? deleteSpeed : typeSpeed;
+
+  // Full word typed
+  if (!isDeleting.value && currentText.value === fullText) {
+    delay = pauseAfterTyped;
+    isDeleting.value = true;
+  }
+
+  // Word deleted
+  else if (isDeleting.value && currentText.value === "") {
+    isDeleting.value = false;
+    sloganIndex.value = (sloganIndex.value + 1) % slogans.length;
+    delay = pauseBeforeTyping;
+  }
+
+  typewriterTimeout = setTimeout(typeWriter, delay);
+};
 
 onMounted(() => {
-  sloganInterval = setInterval(() => {
-    isAnimating.value = true; // Trigger animation
-    setTimeout(() => {
-      sloganIndex.value = (sloganIndex.value + 1) % slogans.length;
-      currentSlogan.value = slogans[sloganIndex.value];
-      isAnimating.value = false; // Reset animation
-    }, 500); // Match with animation duration
-  }, 3000);
+  typeWriter();
 });
 
-onBeforeUnmount(() => clearInterval(sloganInterval));
+onBeforeUnmount(() => {
+  clearTimeout(typewriterTimeout);
+});
 </script>
 
 <template>
@@ -53,7 +81,7 @@ onBeforeUnmount(() => clearInterval(sloganInterval));
           <img
             :src="`${baseURL}/img/angel_maple.jpg`"
             alt="Amiw Illustration"
-            class="w-44 h-44 md:w-64 md:h-64 lg:w-80 lg:h-80 border rounded-full object-cover aspect-square shadow-lg"
+            class="w-44 h-44 md:w-64 md:h-64 lg:w-72 lg:h-72 border rounded-full object-cover aspect-square"
             @error="console.error('Failed to load image!')"
           />
 
@@ -79,25 +107,28 @@ onBeforeUnmount(() => clearInterval(sloganInterval));
       </client-only>
 
       <!-- 📌 Info & Work -->
-      <div class="flex flex-col text-center lg:text-left">
-        <p class="text-muted-foreground text-lg tracking-wide uppercase">
-          Welcome to
-        </p>
+      <div class="flex flex-col text-center lg:text-left max-w-md">
+        <p class="text-muted-foreground text-lg tracking-wide">Welcome to</p>
         <h2
-          class="text-4xl md:text-6xl font-bold text-foreground transition-all duration-500 ease-in-out"
+          class="text-4xl md:text-5xl font-semibold text-foreground transition-all duration-500 ease-in-out whitespace-nowrap"
         >
-          {{ currentSlogan }}
+          MY
+          {{ currentText }}
         </h2>
 
         <!-- 🔥 Quote -->
         <p class="mt-5 italic text-lg text-gray-600 dark:text-gray-400">
-          "{{ randomQuote }}"
+          Not everything needs an explanation. This is mine. A little chaotic, a
+          little honest — just like me.
         </p>
+        <!-- <p class="mt-5 italic text-lg text-gray-600 dark:text-gray-400">
+          "{{ randomQuote }}"
+        </p> -->
 
         <p
-          class="mt-5 text-lg text-gray-800 dark:text-gray-300 leading-relaxed"
+          class="mt-5 text-3xl text-gray-800 dark:text-gray-300 leading-relaxed"
         >
-          I am Amiw, and... well, you'll see.
+          🌧️ 🧃 👾 📖 🎧
         </p>
       </div>
     </div>
