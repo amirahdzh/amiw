@@ -1,6 +1,7 @@
 <template>
-  <MemoirHero />
-  <!-- <MemoirCreative /> -->
+  <MemoirHeroSection />
+  <MemoirEssenceSection />
+  <MemoirJourneySection />
 </template>
 
 <script setup lang="ts"></script>

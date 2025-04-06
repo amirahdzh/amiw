@@ -79,12 +79,12 @@
 import { ref, onMounted, onUnmounted } from "vue";
 
 // ShadCN Vue Tooltip components
-import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-  TooltipProvider,
-} from "@/components/ui/tooltip";
+// import {
+//   Tooltip,
+//   TooltipTrigger,
+//   TooltipContent,
+//   TooltipProvider,
+// } from "@/components/ui/tooltip";
 
 const lastScrollY = ref(0);
 const isHeaderVisible = ref(true);
