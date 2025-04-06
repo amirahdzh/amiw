@@ -1,6 +1,6 @@
 <template>
   <section
-    class="w-full flex flex-wrap md:flex-nowrap items-center justify-center text-left gap-2 md:gap-12"
+    class="w-full flex flex-wrap md:flex-nowrap items-center justify-center text-left gap-2"
   >
     <!-- Image with Motion -->
     <Motion
@@ -11,7 +11,7 @@
       <img
         src="/img/maple_circle.png"
         alt="Amiw Illustration"
-        class="w-20 md:w-32 lg:w-40 flex-shrink-0 rounded-full"
+        class="w-32 lg:w-40 flex-shrink-0 rounded-full"
       />
     </Motion>
 
@@ -20,16 +20,14 @@
       :initial="{ opacity: 0, y: 20 }"
       :enter="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.6, ease: 'easeOut', staggerChildren: 0.2 }"
-      class="w-full md:max-w-md flex flex-col items-center md:items-start space-y-3"
+      class="w-full md:max-w-md flex flex-col items-center md:items-start space-y-3 px-6"
     >
       <Motion
         :initial="{ opacity: 0, y: 10 }"
         :enter="{ opacity: 1, y: 0 }"
         :transition="{ duration: 0.5, ease: 'easeOut' }"
       >
-        <h2 class="text-2xl font-semibold text-primary hidden md:block">
-          Let's Create Something Amazing!
-        </h2>
+        <h2 class="text-4xl text-primary font-bold">I am Amiw!</h2>
       </Motion>
 
       <Motion
@@ -37,10 +35,8 @@
         :enter="{ opacity: 1, y: 0 }"
         :transition="{ duration: 0.5, ease: 'easeOut', delay: 0.2 }"
       >
-        <p class="text-primary text-center md:text-left font-light">
-          I'm a <span class="font-medium">full-stack developer</span>
-          specializing in
-          <span class="font-medium">Vue.js, Nuxt 3, and Laravel.</span>
+        <p class="text-primary text-center md:text-left font-medium">
+          Full-stack developer specializing in Vue.js, Nuxt 3, and Laravel.
         </p>
       </Motion>
 
@@ -58,8 +54,8 @@
           href="https://wa.me/6282114643544"
           target="_blank"
         >
-          <Icon name="fa:whatsapp" class="w-5 h-5" />
-          Get in Touch
+          <Icon name="simple-icons:whatsapp" class="w-5 h-5" />
+          Contact Me
         </Button>
         <Button
           variant="default"
