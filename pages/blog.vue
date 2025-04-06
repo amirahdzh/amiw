@@ -90,7 +90,7 @@
 
       <!-- Main Content -->
       <div
-        class="flex-1 py-8 md:w-2/3 bg-background md:py-28 border-t-4 px-8 md:border-t-0 md:border-l-4 border-border"
+        class="flex-1 py-8 md:w-2/3 bg-background md:py-28 border-t-4 px-8 md:border-t-0 md:border-l-2 border-primary"
       >
         <!-- Display selected category -->
         <div

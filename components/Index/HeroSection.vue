@@ -1,129 +1,86 @@
 <template>
   <section
-    class="w-full py-24 flex flex-col justify-center bg-background border-b-4 border-border"
+    v-motion-slide-bottom
+    class="w-full pt-24 pb-8 flex flex-col justify-center bg-background border-b-2 border-foreground"
   >
+    <!-- Intro Section -->
     <div
+      v-motion-slide-bottom
       class="flex flex-col md:flex-row items-center justify-evenly max-w-6xl mx-auto"
     >
-      <!-- Left Side: Intro -->
-      <Motion
-        :initial="{ opacity: 0, y: 20 }"
-        :enter="{ opacity: 1, y: 0 }"
-        :transition="{ duration: 0.8, ease: 'easeOut' }"
-        class="flex flex-col items-start text-left max-w-lg px-8"
+      <section
+        class="w-full flex flex-wrap md:flex-nowrap items-center justify-center text-left gap-6"
       >
-        <span
-          class="text-[48px] md:text-[96px] font-semibold text-[hsl(var(--amiw))]"
-        >
-          Amiw
-        </span>
-        <h1 class="text-lg font-mono md:text-2xl font-light leading-snug">
-          Just a girl who loves learning, writing, and sharing her journey.
-        </h1>
+        <!-- Profile Image -->
+        <img
+          src="/img/maple_circle.png"
+          alt="Amiw Illustration"
+          class="w-32 lg:w-40 flex-shrink-0 rounded-full"
+        />
 
-        <!-- CTA Buttons -->
-        <Motion
-          :initial="{ opacity: 0, y: 10 }"
-          :enter="{ opacity: 1, y: 0 }"
-          :transition="{ delay: 0.3, duration: 0.5 }"
-          class="mt-6 flex gap-6"
+        <!-- Intro Text & Buttons -->
+        <div
+          class="w-full md:max-w-md flex flex-col items-center md:items-start space-y-3 px-6"
         >
-          <Button
-            v-for="link in socialLinks"
-            :key="link.url"
-            variant="default"
-            as="a"
-            :href="link.url"
-            target="_blank"
-            size="icon"
-          >
-            <Icon :name="link.icon" class="w-5 h-5" />
-          </Button>
-        </Motion>
+          <h2 class="text-4xl text-primary font-bold">I am Amiw!</h2>
 
-        <!-- Location -->
-        <Motion
-          :initial="{ opacity: 0, y: 10 }"
-          :enter="{ opacity: 1, y: 0 }"
-          :transition="{ delay: 0.5, duration: 0.5 }"
-        >
-          <p class="mt-6 flex items-center gap-2 leading-none group">
-            <Icon
-              name="lucide:map-pin"
-              class="w-5 h-5 text-[hsl(var(--amiw))] transition-transform group-hover:scale-110"
-            />
-            <span
-              class="text-primary text-lg font-medium relative after:absolute after:left-0 after:bottom-[-2px] after:w-0 after:h-[2px] after:bg-[hsl(var(--amiw))] after:transition-all after:duration-300 group-hover:after:w-full"
-            >
-              Bandung, Indonesia
-            </span>
+          <p class="text-primary text-center md:text-left font-medium">
+            Full-stack developer specializing in Vue.js, Nuxt 3, and Laravel.
           </p>
-        </Motion>
-      </Motion>
 
-      <!-- Separator for Mobile -->
-      <!-- <Motion
-        :initial="{ opacity: 0, scaleX: 0 }"
-        :enter="{ opacity: 1, scaleX: 1 }"
-        :transition="{ duration: 0.6, ease: 'easeOut' }"
-        class="block md:hidden w-full border-t-2 border-[hsl(var(--amiw))] mx-8 origin-left"
+          <div class="flex gap-4 justify-center md:justify-start w-full">
+            <Button
+              variant="default"
+              class="bg-secondary hover:bg-secondary hover:text-primary border border-r-4 border-b-4 border-primary text-primary"
+              as="a"
+              href="https://wa.me/6282114643544"
+              target="_blank"
+            >
+              <Icon name="simple-icons:whatsapp" class="w-5 h-5" />
+              Contact Me
+            </Button>
+
+            <Button
+              variant="default"
+              class="bg-primary text-secondary"
+              as="a"
+              href="https://docs.google.com/document/d/1mMpH2B_8Qti2K9_YoP3OTbwzzxvhOsrZJPDD03YdBKA/edit?usp=sharing"
+              target="_blank"
+            >
+              <Icon name="heroicons-outline:external-link" class="w-4 h-4" />
+              Resume
+            </Button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Separator -->
+    <div v-motion-slide-bottom class="flex justify-center mt-8 mb-6">
+      <div class="w-1/2 border-t border-primary"></div>
+    </div>
+
+    <!-- About Section -->
+    <section v-motion-slide-bottom class="max-w-3xl mx-auto px-8 text-center">
+      <p class="text-primary leading-relaxed">
+        I'm <b>Amirah Dzatul Himmah</b>, known as <b>Amiw</b> — a full-stack
+        developer passionate about building clean, scalable, and user-friendly
+        web apps. I mostly work with <b>Vue.js</b>, <b>Nuxt 3</b>,
+        <b>Tailwind CSS</b>, and <b>Laravel</b>, and I thrive at the
+        intersection of creativity, logic, and continuous learning.
+      </p>
+    </section>
+
+    <!-- Tech Stack Icons -->
+    <!-- <div class="flex justify-center mt-6">
+      <div
+        class="flex items-center gap-6 px-6 py-4 rounded-full bg-white backdrop-blur-md"
       >
-      </Motion> -->
-
-      <!-- Swappable Content -->
-      <div class="flex items-center justify-end pt-12 md:pt-0 px-8">
-        <component :is="isSmallScreen ? IndexCollaboration : IndexQuote" />
+        <Icon name="simple-icons:nuxt" class="w-8 h-8 text-[#00DC82]" />
+        <Icon name="simple-icons:vuedotjs" class="w-8 h-8 text-[#42B883]" />
+        <Icon name="simple-icons:laravel" class="w-8 h-8 text-[#FF2D20]" />
+        <Icon name="simple-icons:tailwindcss" class="w-8 h-8 text-[#06B6D4]" />
       </div>
-    </div>
-
-    <!-- Separator for Desktop -->
-    <!-- <Motion
-      :initial="{ opacity: 0, scaleX: 0 }"
-      :enter="{ opacity: 1, scaleX: 1 }"
-      :transition="{ duration: 0.6, ease: 'easeOut' }"
-      class="hidden md:block border-t-2 border-[hsl(var(--amiw))] origin-left my-6 mx-8 md:my-12"
-    >
-    </Motion> -->
-
-    <!-- Second Component -->
-    <div class="flex items-center justify-center px-8 md:pt-20">
-      <component :is="isSmallScreen ? IndexQuote : IndexCollaboration" />
-    </div>
+    </div> -->
   </section>
 </template>
-
-<script setup>
-import { ref, onMounted, onBeforeUnmount, defineAsyncComponent } from "vue";
-
-// Import dynamically
-const IndexCollaboration = defineAsyncComponent(() =>
-  import("~/components/Index/Collaboration.vue")
-);
-const IndexQuote = defineAsyncComponent(() =>
-  import("~/components/Index/Quote.vue")
-);
-
-// Screen size detection
-const isSmallScreen = ref(false);
-const checkScreenSize = () => {
-  if (process.client) {
-    isSmallScreen.value = window.matchMedia("(max-width: 768px)").matches;
-  }
-};
-
-onMounted(() => {
-  checkScreenSize();
-  window.addEventListener("resize", checkScreenSize);
-});
-
-onBeforeUnmount(() => {
-  window.removeEventListener("resize", checkScreenSize);
-});
-
-// Social Links
-const socialLinks = [
-  { url: "https://facebook.com/amirahdzh", icon: "fa:facebook" },
-  { url: "https://medium.com/@amiwdzh", icon: "fa:medium" },
-  { url: "https://github.com/amirahdzh", icon: "fa:github" },
-];
-</script>
