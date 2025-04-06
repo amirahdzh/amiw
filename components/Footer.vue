@@ -4,7 +4,7 @@ const currentYear = new Date().getFullYear();
 
 <template>
   <footer
-    class="bg-secondary text-muted-foreground py-4 border-t border-border"
+    class="bg-secondary text-muted-foreground py-4 border-t-2 border-primary"
   >
     <div class="container mx-auto flex flex-col items-center space-y-4">
       <!-- Navigasi Footer -->
@@ -16,18 +16,13 @@ const currentYear = new Date().getFullYear();
             >
           </li>
           <li>
-            <NuxtLink to="/about" class="hover:text-primary transition"
-              >About</NuxtLink
-            >
-          </li>
-          <li>
             <NuxtLink to="/blog" class="hover:text-primary transition"
               >Blog</NuxtLink
             >
           </li>
           <li>
-            <NuxtLink to="/portfolio" class="hover:text-primary transition"
-              >Portfolio</NuxtLink
+            <NuxtLink to="/memoir" class="hover:text-primary transition"
+              >Memoir</NuxtLink
             >
           </li>
         </ul>
@@ -40,21 +35,21 @@ const currentYear = new Date().getFullYear();
           target="_blank"
           class="hover:text-primary transition"
         >
-          <Icon name="fa:facebook" class="w-4 h-4" />
+          <Icon name="simple-icons:facebook" class="w-4 h-4" />
         </a>
         <a
           href="https://github.com"
           target="_blank"
           class="hover:text-primary transition"
         >
-          <Icon name="fa:github" class="w-4 h-4" />
+          <Icon name="simple-icons:github" class="w-4 h-4" />
         </a>
         <a
           href="https://medium.com"
           target="_blank"
           class="hover:text-primary transition"
         >
-          <Icon name="fa:medium" class="w-4 h-4" />
+          <Icon name="simple-icons:medium" class="w-4 h-4" />
         </a>
       </div>
 
