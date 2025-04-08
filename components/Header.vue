@@ -6,7 +6,7 @@
     ]"
   >
     <div
-      class="flex items-center gap-1 px-3 py-1 bg-secondary rounded-md border border-r-4 border-b-4 border-primary"
+      class="flex items-center gap-1 hover:gap-2 px-3 py-1 bg-secondary rounded-md border border-r-4 border-b-4 border-primary transition-all duration-300 ease-out"
     >
       <TooltipProvider :delayDuration="0">
         <!-- Loop sebelum separator -->

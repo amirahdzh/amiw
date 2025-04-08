@@ -19,6 +19,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-vue-next": "^0.483.0",
+    "markdown-it": "^14.1.0",
     "nodemailer": "^6.10.0",
     "nuxt": "^3.16.1",
     "reka-ui": "^2.2.0",
@@ -32,6 +33,7 @@
     "@iconify-json/fa": "^1.2.1",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/simple-icons": "^1.2.29",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^22.13.14"
   }
 }

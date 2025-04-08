@@ -43,6 +43,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       baseURL: process.env.BASE_URL || "",
+      siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
+      siteName: process.env.NUXT_PUBLIC_SITE_NAME,
       motion: {
         directives: {
           'pop-bottom': {
@@ -60,5 +62,6 @@ export default defineNuxtConfig({
         }
       }
     },
+    openRouterApiKey: process.env.OPENROUTER_API_KEY
   },
 })
