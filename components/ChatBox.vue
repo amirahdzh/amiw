@@ -5,7 +5,7 @@
     >
       <!-- Chat messages -->
       <div
-        class="flex-1 overflow-y-auto pr-2 space-y-3"
+        class="flex-1 overflow-y-auto pr-2 space-y-3 messages-container"
         ref="messagesContainer"
       >
         <div
@@ -24,20 +24,31 @@
             v-html="renderMarkdown(msg.content)"
           />
         </div>
+
+        <!-- Bot is typing -->
+        <div v-if="isLoading" class="flex justify-start">
+          <div
+            class="animate-pulse px-4 py-2 text-sm text-muted-foreground bg-muted rounded-xl rounded-bl-none"
+          >
+            Amiw's bot is typing...
+          </div>
+        </div>
       </div>
 
       <!-- Input -->
-      <div class="mt-4 flex items-center gap-2">
-        <input
+      <div class="mt-4 flex items-end gap-2">
+        <textarea
           v-model="userInput"
-          @keydown.enter="sendMessage"
-          type="text"
+          @keydown="handleKeydown"
           placeholder="Ask something..."
-          class="w-full px-4 py-2 text-sm border rounded-xl bg-secondary border-border focus:outline-none focus:ring-2 focus:ring-primary"
+          rows="1"
+          :disabled="isLoading"
+          class="w-full resize-none px-4 py-2 text-sm border rounded-xl bg-secondary border-border focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
         />
         <button
           @click="sendMessage"
-          class="px-4 py-2 text-sm rounded-xl bg-[hsl(var(--primary))] text-white hover:brightness-110 transition"
+          :disabled="isLoading"
+          class="px-4 py-2 text-sm rounded-xl bg-[hsl(var(--primary))] text-white hover:brightness-110 transition disabled:opacity-50"
         >
           Send
         </button>
@@ -71,6 +82,7 @@ const md = new MarkdownIt({
 const renderMarkdown = (text: string) => md.render(text);
 
 const userInput = ref("");
+const isLoading = ref(false);
 const messages = ref<ChatMessage[]>([
   {
     role: "assistant",
@@ -90,9 +102,11 @@ const scrollToBottom = () => {
 
 const sendMessage = async () => {
   const input = userInput.value.trim();
-  if (!input) return;
+  if (!input || isLoading.value) return;
 
   messages.value.push({ role: "user", content: input });
+  userInput.value = "";
+  isLoading.value = true;
 
   try {
     const res = await $fetch<ChatResponse>("/api/chat", {
@@ -102,7 +116,7 @@ const sendMessage = async () => {
           {
             role: "system",
             content:
-              "You are a chatbot that speaks like Amiw, a warm-hearted developer, but you are not Amiw, you are just her chat bot, and if its necessary, tells user that you are provided here by Amiw to assist her website visitor. You casually use soft and playful language, sometimes add emojis, and occasionally use interjections like :3 , :v , :D. You're a comforting presence who likes talking about life, tech, books, or just random deep thoughts.",
+              "You are a chatbot that speaks like Amiw, a warm-hearted developer, but you are not Amiw. You are just her chat bot, and if necessary, tell the user that you are provided here by Amiw to assist her website visitor. You casually use soft and playful language, sometimes add emojis, and occasionally use interjections like :3 , :v , :D. You're a comforting presence who likes talking about life, tech, books, or just random deep thoughts.",
           },
           ...messages.value,
         ],
@@ -110,14 +124,13 @@ const sendMessage = async () => {
     });
 
     const reply = res.choices?.[0]?.message;
-    if (reply) {
-      messages.value.push(reply);
-    } else {
-      messages.value.push({
+
+    messages.value.push(
+      reply || {
         role: "assistant",
-        content: "⚠️ I couldn’t come up with a reply. Can you rephrase it?",
-      });
-    }
+        content: "⚠️ I couldn't come up with a reply. Can you rephrase it?",
+      }
+    );
   } catch (err) {
     console.error(err);
     messages.value.push({
@@ -126,13 +139,20 @@ const sendMessage = async () => {
     });
   }
 
-  userInput.value = "";
+  isLoading.value = false;
   scrollToBottom();
+};
+
+const handleKeydown = (e: KeyboardEvent) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
 };
 </script>
 
 <style scoped>
-/* Smooth scroll and scrollbar styling */
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -141,7 +161,12 @@ const sendMessage = async () => {
   border-radius: 3px;
 }
 
-/* Markdown styles */
+/* Smooth scroll */
+.messages-container {
+  scroll-behavior: smooth;
+}
+
+/* Markdown styling */
 .prose pre {
   background-color: hsl(var(--muted));
   padding: 1rem;

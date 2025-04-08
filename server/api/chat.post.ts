@@ -21,6 +21,7 @@ export default defineEventHandler(async (event) => {
         },
         body: JSON.stringify({
             model:"deepseek/deepseek-r1-distill-llama-70b:free",
+            // model:"deepseek/deepseek-v3-base:free",
           messages: body.messages
         }),
         signal: controller.signal

@@ -3,7 +3,7 @@
   <MemoirEssenceSection />
   <MemoirJourneySection />
   <!-- <MemoirPlaygroundSection /> -->
-  <ChatBox />
+  <!-- <ChatBox /> -->
 </template>
 
 <script setup lang="ts"></script>
