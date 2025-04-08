@@ -3,7 +3,7 @@ const innerJourney = [
   {
     year: "2024",
     title: "Letting Go of Control",
-    description: "I learned to surrender what’s beyond me and found peace.",
+    description: "I learned to surrender what's beyond me and found peace.",
   },
   {
     year: "2023",
