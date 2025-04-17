@@ -1,9 +1,24 @@
-<template>
+<!-- <template>
   <Html :class="mode">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
   </Html>
+</template> -->
+
+<template>
+  <Html :class="mode">
+    <div class="min-h-screen flex flex-col text-foreground">
+      <!-- Header -->
+      <Header />
+
+      <!-- Content -->
+      <main class="flex-grow">
+        <NuxtPage />
+      </main>
+
+      <Footer /></div
+  ></Html>
 </template>
 
 <script setup lang="ts">

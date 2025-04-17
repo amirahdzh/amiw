@@ -4,7 +4,9 @@ import { onClickOutside } from "@vueuse/core";
 import ChatBox from "~/components/ChatBox.vue";
 
 const showChatModal = ref(false);
+const showGameChoiceModal = ref(false); // New modal state for game selection
 const modalRef = ref(null);
+const selectedGame = ref(""); // Selected game (Valorant or Mobile Legends)
 
 // Close modal on outside click
 onClickOutside(modalRef, () => {
@@ -18,6 +20,24 @@ const handleEscape = (e: KeyboardEvent) => {
 
 onMounted(() => window.addEventListener("keydown", handleEscape));
 onBeforeUnmount(() => window.removeEventListener("keydown", handleEscape));
+
+// Open game choice modal when "View Logs" is clicked
+const openGameChoiceModal = () => {
+  showGameChoiceModal.value = true;
+};
+
+// Close game choice modal
+const closeGameChoiceModal = () => {
+  showGameChoiceModal.value = false;
+};
+
+// Handle game selection and redirect to the appropriate log
+const handleGameSelection = (game: string) => {
+  selectedGame.value = game;
+  closeGameChoiceModal();
+  // Redirect to the specific game logs
+  window.location.href = `/memoir/gaming-log/${game}`;
+};
 </script>
 
 <template>
@@ -29,20 +49,35 @@ onBeforeUnmount(() => window.removeEventListener("keydown", handleEscape));
       <div class="grid md:grid-cols-2 gap-6">
         <!-- ChatBox Playground -->
         <div
-          class="bg-secondary border border-border rounded-2xl p-6 cursor-pointer transition hover:scale-[1.02] hover:shadow-lg duration-300 group"
+          v-motion-fade-visible
+          class="bg-secondary border border-border rounded-2xl p-6 cursor-pointer transition-transform hover:scale-[1.02] duration-300"
           @click="showChatModal = true"
         >
           <h3 class="text-xl font-semibold text-primary mb-2">
             🧠 Talk with the Bot
           </h3>
           <p class="text-muted-foreground text-sm">
-            Chat with Amiw’s thoughtful bot, always ready to listen 💬 (until my
-            free tokens run out lol)
+            Chat with Amiw’s thoughtful bot, always ready to listen 💬
           </p>
         </div>
 
-        <!-- Sustainable Living -->
+        <!-- Gaming Log Card -->
         <div
+          class="bg-secondary border border-border rounded-2xl p-6 cursor-pointer transition hover:scale-[1.02] duration-300 group"
+          @click="openGameChoiceModal"
+        >
+          <h3 class="text-xl font-semibold text-primary mb-2">
+            🎮 My Gaming Log
+          </h3>
+          <p class="text-muted-foreground text-sm">
+            Track my progress in Mobile Legends & Valorant, from strategies to
+            milestones!
+          </p>
+        </div>
+
+        <!-- Other Cards -->
+        <div
+          v-motion-fade-visible
           class="bg-secondary border border-border rounded-2xl p-6 cursor-not-allowed transition hover:opacity-90 duration-300 group relative"
         >
           <h3 class="text-xl font-semibold text-primary mb-2">
@@ -59,6 +94,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", handleEscape));
 
         <!-- Homesteading Projects -->
         <div
+          v-motion-fade-visible
           class="bg-secondary border border-border rounded-2xl p-6 cursor-not-allowed transition hover:opacity-90 duration-300 group relative"
         >
           <h3 class="text-xl font-semibold text-primary mb-2">
@@ -75,6 +111,7 @@ onBeforeUnmount(() => window.removeEventListener("keydown", handleEscape));
 
         <!-- Pantry & Food Waste Tracker -->
         <div
+          v-motion-fade-visible
           class="bg-secondary border border-border rounded-2xl p-6 cursor-not-allowed transition hover:opacity-90 duration-300 group relative"
         >
           <h3 class="text-xl font-semibold text-primary mb-2">
@@ -91,51 +128,85 @@ onBeforeUnmount(() => window.removeEventListener("keydown", handleEscape));
       </div>
     </div>
 
-    <!-- Modal Overlay -->
+    <!-- Game Selection Modal -->
+    <transition name="fade">
+      <div
+        v-show="showGameChoiceModal"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4"
+      >
+        <div
+          v-show="showGameChoiceModal"
+          ref="modalRef"
+          class="relative bg-secondary rounded-3xl shadow-2xl w-full max-w-md p-8 border border-border"
+        >
+          <button
+            @click="closeGameChoiceModal"
+            class="absolute top-4 right-6 text-muted-foreground hover:text-destructive transition text-xl"
+          >
+            ×
+          </button>
+
+          <h3 class="text-2xl font-semibold text-primary mb-6">
+            Choose a Game
+          </h3>
+
+          <div class="space-y-4">
+            <button
+              @click="handleGameSelection('valorant')"
+              class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-dark transition"
+            >
+              Valorant
+            </button>
+            <button
+              @click="handleGameSelection('mobile-legends')"
+              class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-dark transition"
+            >
+              Mobile Legends
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
+    <!-- ChatBox Modal -->
     <transition name="fade">
       <div
         v-show="showChatModal"
         class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4"
       >
-        <!-- Modal Container -->
-        <transition name="scale-fade">
-          <div
-            v-show="showChatModal"
-            ref="modalRef"
-            class="relative bg-secondary rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden border border-border"
+        <div
+          v-show="showChatModal"
+          ref="modalRef"
+          class="relative bg-secondary rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden border border-border"
+        >
+          <button
+            @click="showChatModal = false"
+            class="absolute top-4 right-6 text-muted-foreground hover:text-destructive transition text-xl"
           >
-            <button
-              @click="showChatModal = false"
-              class="absolute top-4 right-6 text-muted-foreground hover:text-destructive transition text-xl"
-            >
-              ×
-            </button>
+            ×
+          </button>
 
-            <div class="pt-8 pb-4 px-4 sm:px-8">
-              <!-- Optional header or avatar -->
-              <div class="flex items-center justify-center gap-3">
-                <!-- <span class="text-3xl">💬</span> -->
-                <h3 class="text-xl font-semibold text-primary">Amiw's Bot</h3>
-              </div>
-              <!-- Powered by Deepseek R1 description -->
-              <p class="text-xs text-muted-foreground text-center">
-                Powered by the <strong>Deepseek R1</strong> model, designed for
-                engaging conversations and intelligent responses.
+          <div class="pt-8 pb-4 px-4 sm:px-8">
+            <h3 class="text-xl font-semibold text-center text-primary mb-2">
+              Amiw's Bot
+            </h3>
+            <p class="text-xs text-muted-foreground text-center">
+              Powered by the <strong>Deepseek R1</strong> model, designed for
+              engaging conversations and intelligent responses.
+            </p>
+            <ChatBox />
+
+            <div class="mt-4 text-xs text-muted-foreground">
+              <p class="italic">
+                Disclaimer: The responses generated by this bot are based on a
+                trained AI model and may not always be accurate. Please use
+                discretion when interpreting or acting upon the information
+                provided. And Amiw can not see your chat history, so feel free
+                to interact! 🌸
               </p>
-              <ChatBox />
-
-              <!-- Disclaimer -->
-              <div class="mt-4 text-sm text-muted-foreground">
-                <p class="italic">
-                  Disclaimer: The responses generated by this bot are based on a
-                  trained AI model and may not always be accurate. Please use
-                  discretion when interpreting or acting upon the information
-                  provided.
-                </p>
-              </div>
             </div>
           </div>
-        </transition>
+        </div>
       </div>
     </transition>
   </section>
