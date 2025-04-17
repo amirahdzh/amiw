@@ -26,8 +26,9 @@ const journeyItems = [
   },
   {
     year: "2024",
-    title: "Graduated BSc Computer Science",
-    description: "Finished uni + explored <strong>freelance</strong> coding.",
+    title: "Graduated B.Cs (Bachelor of Computer Science)",
+    description:
+      "Graduated from <strong>Universitas Pendidikan Indonesia</strong>.",
     emoji: "🎓",
   },
   {

@@ -2,8 +2,7 @@
   <MemoirHeroSection />
   <MemoirEssenceSection />
   <MemoirJourneySection />
-  <!-- <MemoirPlaygroundSection /> -->
-  <!-- <ChatBox /> -->
+  <MemoirPlaygroundSection />
 </template>
 
 <script setup lang="ts"></script>

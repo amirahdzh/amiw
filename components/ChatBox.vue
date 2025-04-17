@@ -1,7 +1,7 @@
 <template>
-  <div class="max-w-xl mx-auto pt-20 px-4">
+  <div class="max-w-xl mx-auto pt-6 px-4">
     <div
-      class="border border-border rounded-2xl p-4 bg-background shadow-lg flex flex-col h-[500px]"
+      class="border border-primary rounded-2xl p-4 bg-background flex flex-col h-[500px]"
     >
       <!-- Chat messages -->
       <div
@@ -18,7 +18,7 @@
             class="rounded-xl px-4 py-2 whitespace-pre-line text-sm prose prose-sm max-w-full sm:max-w-xs dark:prose-invert"
             :class="
               msg.role === 'user'
-                ? 'bg-secondary border border-primary text-primary rounded-br-none'
+                ? 'bg-secondary  text-primary rounded-br-none'
                 : 'bg-muted text-foreground rounded-bl-none'
             "
             v-html="renderMarkdown(msg.content)"
@@ -43,7 +43,7 @@
           placeholder="Ask something..."
           rows="1"
           :disabled="isLoading"
-          class="w-full resize-none px-4 py-2 text-sm border rounded-xl bg-secondary border-border focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+          class="w-full resize-none px-4 py-2 text-sm border rounded-xl bg-secondary border-primary focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
         />
         <button
           @click="sendMessage"
@@ -52,13 +52,19 @@
         >
           Send
         </button>
+        <button
+          @click="clearChat"
+          class="px-3 py-2 text-xs rounded-xl border border-primary transition"
+        >
+          Clear
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick } from "vue";
+import { ref, nextTick, onMounted, watch } from "vue";
 import MarkdownIt from "markdown-it";
 
 type Role = "system" | "user" | "assistant";
@@ -81,14 +87,16 @@ const md = new MarkdownIt({
 
 const renderMarkdown = (text: string) => md.render(text);
 
-const userInput = ref("");
-const isLoading = ref(false);
-const messages = ref<ChatMessage[]>([
+const defaultWelcome: ChatMessage[] = [
   {
     role: "assistant",
     content: "Hey there! I'm your reflective chatbot. Let's talk ☕",
   },
-]);
+];
+
+const userInput = ref("");
+const isLoading = ref(false);
+const messages = ref<ChatMessage[]>([...defaultWelcome]);
 
 const messagesContainer = ref<HTMLElement | null>(null);
 
@@ -148,6 +156,34 @@ const handleKeydown = (e: KeyboardEvent) => {
     e.preventDefault();
     sendMessage();
   }
+};
+
+// Restore chat from localStorage
+onMounted(() => {
+  const saved = localStorage.getItem("chat-messages");
+  if (saved) {
+    try {
+      messages.value = JSON.parse(saved);
+    } catch {
+      messages.value = [...defaultWelcome];
+    }
+  }
+  scrollToBottom();
+});
+
+// Save chat to localStorage whenever messages change
+watch(
+  messages,
+  (val) => {
+    localStorage.setItem("chat-messages", JSON.stringify(val));
+  },
+  { deep: true }
+);
+
+// Clear chat and remove from storage
+const clearChat = () => {
+  messages.value = [...defaultWelcome];
+  localStorage.removeItem("chat-messages");
 };
 </script>
 

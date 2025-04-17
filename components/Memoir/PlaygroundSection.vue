@@ -1,99 +1,163 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import { onClickOutside } from "@vueuse/core";
+import ChatBox from "~/components/ChatBox.vue";
 
-const quotes = [
-  "Simplicity is the soul of efficiency.",
-  "Stay hungry, stay foolish.",
-  "Be present, fully engage.",
-  "Code is poetry.",
-];
+const showChatModal = ref(false);
+const modalRef = ref(null);
 
-const currentQuote = ref("");
-const generateQuote = () => {
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  currentQuote.value = quotes[randomIndex];
+// Close modal on outside click
+onClickOutside(modalRef, () => {
+  if (showChatModal.value) showChatModal.value = false;
+});
+
+// Optional: Close on ESC
+const handleEscape = (e: KeyboardEvent) => {
+  if (e.key === "Escape") showChatModal.value = false;
 };
 
-const currentColor = ref("#F472B6");
-const generateColor = () => {
-  const colors = ["#F472B6", "#60A5FA", "#34D399", "#FBBF24"];
-  currentColor.value = colors[Math.floor(Math.random() * colors.length)];
-};
-
-const feeling = ref("");
+onMounted(() => window.addEventListener("keydown", handleEscape));
+onBeforeUnmount(() => window.removeEventListener("keydown", handleEscape));
 </script>
 
 <template>
   <section id="playground" class="py-20 bg-[hsl(var(--alternate-background))]">
     <div class="max-w-4xl mx-auto px-6">
-      <h2 class="text-3xl font-bold mb-4 text-foreground">🎠 Playground</h2>
-      <p class="text-muted-foreground mb-10">
-        Eksperimen & nikmati hal random di halaman ini ✨
-      </p>
+      <h2 class="text-3xl font-bold mb-6 text-foreground">🎠 Playground</h2>
 
-      <div class="grid gap-8 md:grid-cols-2">
-        <!-- 🎯 Quote Generator -->
-        <div class="border p-5 rounded-xl bg-background shadow-sm">
-          <h3 class="font-semibold text-foreground mb-2">📝 Quote Generator</h3>
-          <p class="text-muted-foreground mb-4">
-            Klik untuk mendapatkan inspirasi random.
-          </p>
-          <button
-            @click="generateQuote"
-            class="px-4 py-2 rounded bg-pink-500 text-white hover:bg-pink-600"
-          >
-            Get Quote
-          </button>
-          <p v-if="currentQuote" class="mt-4 italic text-foreground">
-            "{{ currentQuote }}"
-          </p>
-        </div>
-
-        <!-- 🎨 Blob Color Generator -->
-        <div class="border p-5 rounded-xl bg-background shadow-sm">
-          <h3 class="font-semibold text-foreground mb-2">🎨 Color Blob</h3>
-          <p class="text-muted-foreground mb-4">
-            Klik tombol untuk ganti warna blob SVG.
-          </p>
-          <button
-            @click="generateColor"
-            class="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
-          >
-            Change Blob
-          </button>
-          <svg
-            :fill="currentColor"
-            viewBox="0 0 200 200"
-            class="mt-4 w-32 h-32 transition-all duration-300"
-          >
-            <path
-              d="M41.1,-66.7C52.4,-59.5,61.4,-52.4,67.3,-42.4C73.3,-32.3,76.1,-19.2,75.2,-6.9C74.3,5.4,69.7,16.9,63.4,27.1C57.2,37.2,49.2,46,39.3,54.3C29.4,62.6,17.6,70.5,3.8,72.2C-10.1,74,-20.2,69.6,-30.1,63.2C-40,56.8,-49.7,48.4,-56.3,38.2C-62.8,27.9,-66.1,15.9,-67.3,3.2C-68.5,-9.5,-67.6,-22.9,-61.2,-33.6C-54.8,-44.2,-42.9,-52.1,-31,-58.5C-19.1,-64.9,-7.1,-69.7,4.7,-76.2C16.5,-82.7,32.9,-91.6,41.1,-66.7Z"
-              transform="translate(100 100)"
-            />
-          </svg>
-        </div>
-
-        <!-- ✍️ Mood Writer -->
+      <!-- Playground Cards -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- ChatBox Playground -->
         <div
-          class="border p-5 rounded-xl bg-background shadow-sm md:col-span-2"
+          class="bg-secondary border border-border rounded-2xl p-6 cursor-pointer transition hover:scale-[1.02] hover:shadow-lg duration-300 group"
+          @click="showChatModal = true"
         >
-          <h3 class="font-semibold text-foreground mb-2">✍️ Mood Writer</h3>
-          <p class="text-muted-foreground mb-4">
-            Apa yang kamu rasakan hari ini?
+          <h3 class="text-xl font-semibold text-primary mb-2">
+            🧠 Talk with the Bot
+          </h3>
+          <p class="text-muted-foreground text-sm">
+            Chat with Amiw’s thoughtful bot, always ready to listen 💬 (until my
+            free tokens run out lol)
           </p>
-          <input
-            v-model="feeling"
-            placeholder="Tulis di sini..."
-            class="w-full px-4 py-2 border rounded bg-muted text-foreground"
-          />
-          <p
-            v-if="feeling"
-            class="mt-4 text-2xl font-bold text-center text-[hsl(var(--pink))]"
-          >
-            {{ feeling }}
+        </div>
+
+        <!-- Sustainable Living -->
+        <div
+          class="bg-secondary border border-border rounded-2xl p-6 cursor-not-allowed transition hover:opacity-90 duration-300 group relative"
+        >
+          <h3 class="text-xl font-semibold text-primary mb-2">
+            🌱 Sustainable Living
+          </h3>
+          <p class="text-muted-foreground text-sm">
+            Learn to reduce waste, live minimally, and love the Earth in small
+            everyday choices.
           </p>
+          <div class="mt-4 text-center text-muted-foreground italic">
+            Under Development
+          </div>
+        </div>
+
+        <!-- Homesteading Projects -->
+        <div
+          class="bg-secondary border border-border rounded-2xl p-6 cursor-not-allowed transition hover:opacity-90 duration-300 group relative"
+        >
+          <h3 class="text-xl font-semibold text-primary mb-2">
+            🏡 Homesteading Projects
+          </h3>
+          <p class="text-muted-foreground text-sm">
+            Future space for garden logs, DIY tools, and seasonal harvest notes
+            from a quiet life.
+          </p>
+          <div class="mt-4 text-center text-muted-foreground italic">
+            Coming Soon...
+          </div>
+        </div>
+
+        <!-- Pantry & Food Waste Tracker -->
+        <div
+          class="bg-secondary border border-border rounded-2xl p-6 cursor-not-allowed transition hover:opacity-90 duration-300 group relative"
+        >
+          <h3 class="text-xl font-semibold text-primary mb-2">
+            🍽️ Food Waste Tracker
+          </h3>
+          <p class="text-muted-foreground text-sm">
+            A simple tool to track what's in your pantry, save food, and plan
+            meals more mindfully.
+          </p>
+          <div class="mt-4 text-center text-muted-foreground italic">
+            Still in the kitchen...
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Modal Overlay -->
+    <transition name="fade">
+      <div
+        v-show="showChatModal"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center px-4"
+      >
+        <!-- Modal Container -->
+        <transition name="scale-fade">
+          <div
+            v-show="showChatModal"
+            ref="modalRef"
+            class="relative bg-secondary rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden border border-border"
+          >
+            <button
+              @click="showChatModal = false"
+              class="absolute top-4 right-6 text-muted-foreground hover:text-destructive transition text-xl"
+            >
+              ×
+            </button>
+
+            <div class="pt-8 pb-4 px-4 sm:px-8">
+              <!-- Optional header or avatar -->
+              <div class="flex items-center justify-center gap-3">
+                <!-- <span class="text-3xl">💬</span> -->
+                <h3 class="text-xl font-semibold text-primary">Amiw's Bot</h3>
+              </div>
+              <!-- Powered by Deepseek R1 description -->
+              <p class="text-xs text-muted-foreground text-center">
+                Powered by the <strong>Deepseek R1</strong> model, designed for
+                engaging conversations and intelligent responses.
+              </p>
+              <ChatBox />
+
+              <!-- Disclaimer -->
+              <div class="mt-4 text-sm text-muted-foreground">
+                <p class="italic">
+                  Disclaimer: The responses generated by this bot are based on a
+                  trained AI model and may not always be accurate. Please use
+                  discretion when interpreting or acting upon the information
+                  provided.
+                </p>
+              </div>
+            </div>
+          </div>
+        </transition>
+      </div>
+    </transition>
   </section>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.scale-fade-enter-active,
+.scale-fade-leave-active {
+  transition: all 0.3s ease;
+}
+.scale-fade-enter-from,
+.scale-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+</style>
