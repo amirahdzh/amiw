@@ -188,6 +188,18 @@ onBeforeUnmount(() => {
               class="absolute -bottom-1 left-1/2 w-0 h-[2px] bg-[hsl(var(--pink))] transition-all duration-300 group-hover:w-full group-hover:left-0"
             ></span>
           </a>
+
+          <span class="text-muted-foreground">·</span>
+
+          <a
+            href="#playground"
+            class="relative px-2 transition-colors duration-300 hover:text-foreground group"
+          >
+            🎠 Playground
+            <span
+              class="absolute -bottom-1 left-1/2 w-0 h-[2px] bg-[hsl(var(--pink))] transition-all duration-300 group-hover:w-full group-hover:left-0"
+            ></span>
+          </a>
         </nav>
       </div>
     </div>

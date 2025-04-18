@@ -1,41 +1,43 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import { onClickOutside } from "@vueuse/core";
-import ChatBox from "~/components/ChatBox.vue";
+// import ChatBox from "~/components/ChatBox.vue";
 
 const showChatModal = ref(false);
-const showGameChoiceModal = ref(false); // New modal state for game selection
-const modalRef = ref(null);
-const selectedGame = ref(""); // Selected game (Valorant or Mobile Legends)
+const showGameChoiceModal = ref(false);
+const chatModalRef = ref(null);
+const gameModalRef = ref(null);
+const selectedGame = ref("");
 
 // Close modal on outside click
-onClickOutside(modalRef, () => {
+onClickOutside(chatModalRef, () => {
   if (showChatModal.value) showChatModal.value = false;
+});
+onClickOutside(gameModalRef, () => {
+  if (showGameChoiceModal.value) showGameChoiceModal.value = false;
 });
 
 // Optional: Close on ESC
 const handleEscape = (e: KeyboardEvent) => {
-  if (e.key === "Escape") showChatModal.value = false;
+  if (e.key === "Escape") {
+    showChatModal.value = false;
+    showGameChoiceModal.value = false;
+  }
 };
 
 onMounted(() => window.addEventListener("keydown", handleEscape));
 onBeforeUnmount(() => window.removeEventListener("keydown", handleEscape));
 
-// Open game choice modal when "View Logs" is clicked
 const openGameChoiceModal = () => {
   showGameChoiceModal.value = true;
 };
-
-// Close game choice modal
 const closeGameChoiceModal = () => {
   showGameChoiceModal.value = false;
 };
 
-// Handle game selection and redirect to the appropriate log
 const handleGameSelection = (game: string) => {
   selectedGame.value = game;
   closeGameChoiceModal();
-  // Redirect to the specific game logs
   window.location.href = `/memoir/gaming-log/${game}`;
 };
 </script>
@@ -136,33 +138,56 @@ const handleGameSelection = (game: string) => {
       >
         <div
           v-show="showGameChoiceModal"
-          ref="modalRef"
-          class="relative bg-secondary rounded-3xl shadow-2xl w-full max-w-md p-8 border border-border"
+          ref="gameModalRef"
+          class="relative bg-white rounded-3xl shadow-2xl w-full max-w-xl p-8 border border-gray-200"
         >
           <button
             @click="closeGameChoiceModal"
-            class="absolute top-4 right-6 text-muted-foreground hover:text-destructive transition text-xl"
+            class="absolute top-4 right-6 text-gray-400 hover:text-red-500 transition text-xl"
           >
             ×
           </button>
 
-          <h3 class="text-2xl font-semibold text-primary mb-6">
+          <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
             Choose a Game
           </h3>
 
-          <div class="space-y-4">
-            <button
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Valorant Card -->
+            <div
+              class="cursor-pointer border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition"
               @click="handleGameSelection('valorant')"
-              class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-dark transition"
             >
-              Valorant
-            </button>
-            <button
+              <img
+                src="/img/gaming-log/valorant.webp"
+                alt="Valorant Cover"
+                class="w-full h-32 object-cover"
+              />
+            </div>
+
+            <!-- Mobile Legends Card -->
+            <div
+              class="cursor-pointer border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition"
               @click="handleGameSelection('mobile-legends')"
-              class="w-full bg-primary text-white py-3 rounded-lg hover:bg-primary-dark transition"
             >
-              Mobile Legends
-            </button>
+              <img
+                src="/img/gaming-log/ml.webp"
+                alt="Mobile Legends Cover"
+                class="w-full h-32 object-cover"
+              />
+            </div>
+
+            <!-- Dota 2 Card -->
+            <div
+              class="cursor-pointer border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition"
+              @click="handleGameSelection('mobile-legends')"
+            >
+              <img
+                src="/img/gaming-log/dota2.webp"
+                alt="Dota 2 Cover"
+                class="w-full h-32 object-cover"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -176,7 +201,7 @@ const handleGameSelection = (game: string) => {
       >
         <div
           v-show="showChatModal"
-          ref="modalRef"
+          ref="chatModalRef"
           class="relative bg-secondary rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden border border-border"
         >
           <button

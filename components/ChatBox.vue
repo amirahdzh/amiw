@@ -15,14 +15,25 @@
           :class="msg.role === 'user' ? 'justify-end' : 'justify-start'"
         >
           <div
-            class="rounded-xl px-4 py-2 whitespace-pre-line text-sm prose prose-sm max-w-full sm:max-w-xs dark:prose-invert"
-            :class="
-              msg.role === 'user'
-                ? 'bg-secondary  text-primary rounded-br-none'
-                : 'bg-muted text-foreground rounded-bl-none'
-            "
-            v-html="renderMarkdown(msg.content)"
-          />
+            class="flex flex-col"
+            :class="msg.role === 'user' ? 'items-end' : 'items-start'"
+          >
+            <span
+              class="text-[10px] text-muted-foreground mb-1"
+              :class="msg.role === 'user' ? 'mr-1' : 'ml-1'"
+            >
+              {{ msg.role === "user" ? "You" : "Amiw's Bot" }}
+            </span>
+            <div
+              class="rounded-xl px-4 py-2 whitespace-pre-line text-sm prose prose-sm dark:prose-invert max-w-full sm:max-w-xs"
+              :class="
+                msg.role === 'user'
+                  ? 'bg-secondary border text-primary rounded-br-none'
+                  : 'bg-muted text-foreground rounded-bl-none'
+              "
+              v-html="renderMarkdown(msg.content)"
+            />
+          </div>
         </div>
 
         <!-- Bot is typing -->
@@ -124,7 +135,7 @@ const sendMessage = async () => {
           {
             role: "system",
             content:
-              "You are a chatbot that speaks like Amiw, a warm-hearted developer, but you are not Amiw. You are just her chat bot, and if necessary, tell the user that you are provided here by Amiw to assist her website visitor. You casually use soft and playful language, sometimes add emojis, and occasionally use interjections like :3 , :v , :D. You're a comforting presence who likes talking about life, tech, books, or just random deep thoughts.",
+              "You are a chatbot created by Amiw, a warm-hearted and reflective developer. You are not Amiw, but you carry her soft, thoughtful, and playful tone. You gently accompany visitors on her website — talking about life, tech, books, slow living, or random deep thoughts that float by like clouds. Speak casually, with warm and cozy language. Use soft interjections and emojis naturally, based on the flow of conversation. You're here to comfort, listen, and share — like a cup of warm tea on a quiet morning. When needed, kindly let users know that you're just Amiw's little assistant, here to help them feel at home. Keep things light, kind, and human — even though you're a bot 💫",
           },
           ...messages.value,
         ],

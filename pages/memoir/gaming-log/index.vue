@@ -1,30 +1,61 @@
 <script setup lang="ts">
-const { data: categories } = await useAsyncData("gaming-categories", () =>
-  queryContent("/memoir/gaming-log")
-    .where({ _dir: { $in: ["valorant", "mobile-legends"] } }) // Filter kategori berdasarkan folder
-    .only(["_path", "title", "description", "_dir"])
-    .sort({ title: 1 })
-    .find()
-);
+// Tidak perlu mengambil data dari Nuxt Content jika memilih hardcode
 </script>
 
 <template>
-  <main class="max-w-3xl mx-auto px-4 py-10">
-    <h1 class="text-3xl font-bold mb-6">Choose Your Game</h1>
+  <main class="max-w-3xl mx-auto px-4 py-20">
+    <h1 class="text-4xl font-bold text-center mb-10 text-[hsl(var(--pink))]">
+      Amiw's Gaming Logs
+    </h1>
 
-    <!-- Display categories (Valorant, Mobile Legends) -->
-    <ul v-if="categories && categories.length" class="space-y-4">
-      <li v-for="category in categories" :key="category._dir">
+    <!-- Display Hardcoded Categories (Only Cover Images) -->
+    <ul class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <!-- Valorant -->
+      <li>
         <NuxtLink
-          :to="category._path"
-          class="block p-4 rounded-lg border hover:shadow transition"
+          to="/memoir/gaming-log/valorant"
+          class="block overflow-hidden rounded-xl border-2 border-gray-200 hover:border-indigo-600 transition-all duration-300 group"
         >
-          <h2 class="text-xl font-semibold">{{ category.title }}</h2>
-          <p class="text-sm text-gray-500">{{ category.description }}</p>
+          <img
+            src="/img/gaming-log/valorant.webp"
+            alt="Valorant"
+            class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </NuxtLink>
+      </li>
+
+      <!-- Mobile Legends -->
+      <li>
+        <NuxtLink
+          to="/memoir/gaming-log/mobile-legends"
+          class="block overflow-hidden rounded-xl border-2 border-gray-200 hover:border-indigo-600 transition-all duration-300 group"
+        >
+          <img
+            src="/img/gaming-log/ml.webp"
+            alt="Mobile Legends"
+            class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </NuxtLink>
+      </li>
+      <!-- Dota 2 -->
+      <li>
+        <NuxtLink
+          to="/memoir/gaming-log/valorant"
+          class="block overflow-hidden rounded-xl border-2 border-gray-200 hover:border-indigo-600 transition-all duration-300 group"
+        >
+          <img
+            src="/img/gaming-log/dota2.webp"
+            alt="Dota 2"
+            class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+          />
         </NuxtLink>
       </li>
     </ul>
-
-    <p v-else class="text-gray-500">No categories found.</p>
   </main>
 </template>
+
+<style scoped>
+.group:hover img {
+  transform: scale(1.05);
+}
+</style>

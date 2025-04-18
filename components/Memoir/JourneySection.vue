@@ -1,15 +1,16 @@
 <script setup lang="ts">
 const innerJourney = [
   {
+    year: "2025",
+    title: "Beauty in Simplicity",
+    description: "Minimalism brought clarity to my mind and space.",
+  },
+  {
     year: "2024",
     title: "Letting Go of Control",
     description: "I learned to surrender what's beyond me and found peace.",
   },
-  {
-    year: "2023",
-    title: "Beauty in Simplicity",
-    description: "Minimalism brought clarity to my mind and space.",
-  },
+
   {
     year: "2022",
     title: "Reconnected with Faith",
