@@ -149,9 +149,18 @@ function toggleExpand(index: number) {
 
 const work = [
   {
+    company: "PT Sanbersy",
+    role: "Freelance Full-stack Web Developer",
+    period: "Feb 2025 - Present",
+    logo: "/img/logo/sanbersy.png",
+    link: "https://sanbersy.com/",
+    description:
+      "Collaborated on web-based projects for academic and nonprofit institutions. Contributed to the development of a conference management system and a donation platform for Rumah Amal Salman. Responsible for both frontend and backend development tasks, utilizing Laravel and Bootstrap frameworks.",
+  },
+  {
     company: "PT Mega Giga Solusindo",
     role: "Frontend Developer",
-    period: "Mei 2025 - Present",
+    period: "Mei 2025 - Sept 2025",
     logo: "/img/logo/mgs.webp",
     link: "https://www.megagigasolusindo.co.id/",
     description:
@@ -160,20 +169,11 @@ const work = [
   {
     company: "PT PLN Icon Plus",
     role: "Frontend Developer (Via PT MGS)",
-    period: "June 2025 - Present",
+    period: "June 2025 - July 2025",
     logo: "/img/logo/icon+.webp",
     link: "https://plniconplus.co.id/",
     description:
       "Assigned by PT Mega Giga Solusindo as a contract frontend developer for bug fixing and code improvements for Alih Daya PLN application. Worked closely with the client team on short-term goals.",
-  },
-  {
-    company: "PT Sanbersy",
-    role: "Freelance Full-stack Web Developer",
-    period: "Feb 2025 - Present",
-    logo: "/img/logo/sanbersy.png",
-    link: "https://sanbersy.com/",
-    description:
-      "Collaborated on web-based projects for academic and nonprofit institutions. Contributed to the development of a conference management system and a donation platform for Rumah Amal Salman. Responsible for both frontend and backend development tasks, utilizing Laravel and Bootstrap frameworks.",
   },
 ];
 

@@ -22,13 +22,13 @@
         <div
           class="w-full sm:max-w-sm flex flex-col items-center sm:items-start space-y-4 px-6"
         >
-          <h2 class="text-4xl text-primary font-poppins">I am <b> Amiw</b>!</h2>
+          <h2 class="text-4xl text-primary">I am <b> Amiw</b>!</h2>
 
           <div class="text-primary font-medium text-md sm:whitespace-nowrap">
             <span class="block text-center sm:text-left text-md">
               <i>Frontend? Backend? Servers?</i> <br />
-              Don't worry, I'm <b>full-stack</b>. <br />I do everything on my
-              own.
+              Don't worry, I'm a <b>full-stack dev</b>. <br />I do everything on
+              my own.
             </span>
           </div>
 
@@ -56,7 +56,7 @@
             </Button>
           </div>
           <div class="flex items-center gap-2 text-sm">
-            <span class="block text-center sm:text-left font-poppins">
+            <span class="block text-center sm:text-left">
               Remote · Jakarta (GMT+7)
             </span>
           </div>
@@ -70,18 +70,30 @@
     </div>
 
     <!-- Pitch Your Idea CTA -->
-    <div class="max-w-3xl mx-auto px-8 mb-8">
+    <!-- <div class="max-w-3xl mx-auto px-8 mb-8">
       <div class="flex flex-col items-center gap-1 rounded">
         <span class="text-neutral-700 text-center text-sm font-poppins">
           Interested in <b class="font-bold">sustainability</b>?<br />Discuss
           with me · Pitch
         </span>
       </div>
-    </div>
+    </div> -->
 
     <!-- About Section -->
     <section class="max-w-3xl mx-auto px-8 text-center">
-      <p class="text-primary leading-relaxed"></p>
+      <p class="text-primary leading-relaxed text-xs">
+        beyond professional, I love to connect and collaborate with people:
+        <br />
+        <a href="https://discord.gg/Ye8J4Z4ANN" target="_blank"
+          ><span class="hover:underline bg-white">[join my community]</span></a
+        >
+
+        <a
+          href="mailto:amirahdzh@gmail.com?subject=Pitch%20Your%20Idea"
+          target="_blank"
+          >&nbsp;<span class="hover:underline bg-white">[pitch your idea]</span>
+        </a>
+      </p>
     </section>
 
     <!-- Tech Stack Icons -->

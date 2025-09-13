@@ -1,11 +1,3 @@
-<!-- <template>
-  <Html :class="mode">
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </Html>
-</template> -->
-
 <template>
   <Html :class="mode">
     <div class="min-h-screen flex flex-col text-foreground">
