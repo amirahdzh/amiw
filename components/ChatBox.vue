@@ -182,14 +182,17 @@ onMounted(() => {
   scrollToBottom();
 });
 
-// Save chat to localStorage whenever messages change
-watch(
-  messages,
-  (val) => {
+// Debounced save function to reduce localStorage writes
+let saveTimeout: ReturnType<typeof setTimeout> | null = null;
+const debouncedSave = (val: any) => {
+  if (saveTimeout) clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(() => {
     localStorage.setItem("chat-messages", JSON.stringify(val));
-  },
-  { deep: true }
-);
+  }, 300); // Wait 300ms before saving
+};
+
+// Save chat to localStorage whenever messages change (debounced)
+watch(messages, debouncedSave, { deep: true });
 
 // Clear chat and remove from storage
 const clearChat = () => {

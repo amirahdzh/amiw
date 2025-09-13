@@ -37,7 +37,7 @@
               <div class="flex gap-4">
                 <img
                   class="w-12 h-12 rounded-full"
-                  src="/img/maple_circle.png"
+                  src="/img/maple.png"
                   alt="Author Avatar"
                 />
                 <div>
@@ -175,5 +175,5 @@ onMounted(() => {
   }
 });
 
-const DEFAULT_THUMBNAIL = "/img/maple_circle.png";
+const DEFAULT_THUMBNAIL = "/img/maple.png";
 </script>

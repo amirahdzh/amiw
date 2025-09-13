@@ -32,11 +32,14 @@ const goToMemoir = () => {
   router.push("/memoir");
 };
 
-let intervalId: NodeJS.Timer;
-let timeoutId: NodeJS.Timeout;
+let intervalId: ReturnType<typeof setInterval> | null = null;
+let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
 const startShortcutCycle = () => {
   showShortcut.value = true;
+
+  // Clear any existing timeout before setting new one
+  if (timeoutId) clearTimeout(timeoutId);
 
   timeoutId = setTimeout(() => {
     // hanya sembunyikan kalau tidak di-hover
@@ -44,30 +47,37 @@ const startShortcutCycle = () => {
       showShortcut.value = false;
     }
     // jika sedang hover, tunggu sampai mouseleave
-  }, 4000);
+  }, 3000); // Reduced from 4000ms to 3000ms
 };
 
 const onMouseLeave = () => {
   isHovered.value = false;
+  // Clear any existing timeout before setting new one
+  if (timeoutId) clearTimeout(timeoutId);
+
   // sembunyikan shortcut setelah hover selesai
   timeoutId = setTimeout(() => {
     showShortcut.value = false;
-  }, 1000); // kasih jeda sedikit
+  }, 800); // Reduced from 1000ms to 800ms
 };
 
 onMounted(() => {
-  startShortcutCycle(); // langsung muncul pertama kali
+  // Delay initial appearance to reduce startup load
+  timeoutId = setTimeout(() => {
+    startShortcutCycle();
+  }, 2000);
 
+  // Increased interval to reduce frequency
   intervalId = setInterval(() => {
-    if (!showShortcut.value) {
+    if (!showShortcut.value && !isHovered.value) {
       startShortcutCycle();
     }
-  }, 5000); // shortcut muncul setiap 15 detik
+  }, 10000); // Increased from 5000ms to 10000ms
 });
 
 onBeforeUnmount(() => {
-  clearInterval(intervalId);
-  clearTimeout(timeoutId);
+  if (intervalId) clearInterval(intervalId);
+  if (timeoutId) clearTimeout(timeoutId);
 });
 </script>
 

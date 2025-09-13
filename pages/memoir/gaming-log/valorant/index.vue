@@ -28,7 +28,7 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
             <!-- Avatar -->
             <div class="w-14 h-14 rounded-full overflow-hidden">
               <img
-                src="/img/maple_circle.png"
+                src="/img/maple.png"
                 alt="Amiw Avatar"
                 class="w-full h-full object-cover"
               />

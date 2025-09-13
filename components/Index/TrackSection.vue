@@ -4,7 +4,7 @@
       <!-- <div class="grid md:grid-cols-2 gap-12"> -->
       <div class="">
         <!-- Work Experience -->
-        <div v-motion-slide-left>
+        <div>
           <h3 class="text-xl font-semibold mb-6">Work Experience</h3>
           <ul class="space-y-3">
             <li

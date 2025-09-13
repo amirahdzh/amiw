@@ -15,6 +15,14 @@ export default {
       },
       fontFamily: {
         sans: ["Poppins", "sans-serif"],
+        mono: [
+          "Fira Mono",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "Liberation Mono",
+          "monospace",
+        ],
       },
       colors: {
         background: "hsl(var(--background))",

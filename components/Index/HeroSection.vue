@@ -1,34 +1,38 @@
 <template>
   <section
     v-motion-slide-bottom
-    class="w-full pt-24 pb-8 flex flex-col justify-center bg-background border-b-2 border-foreground"
+    :delay="100"
+    class="w-full pt-24 pb-8 flex flex-col justify-center bg-background border-b-2 border-foreground font-mono"
   >
     <!-- Intro Section -->
     <div
-      v-motion-slide-bottom
       class="flex flex-col md:flex-row items-center justify-evenly max-w-6xl mx-auto"
     >
       <section
-        class="w-full flex flex-wrap md:flex-nowrap items-center justify-center text-left gap-6"
+        class="w-full flex flex-wrap sm:flex-nowrap items-center justify-center text-left sm:gap-2 gap-4"
       >
         <!-- Profile Image -->
         <img
-          src="/img/maple_circle.png"
+          src="/img/maple.png"
           alt="Amiw Illustration"
-          class="w-32 lg:w-40 flex-shrink-0 rounded-full"
+          class="sm:w-52 w-28 flex-shrink-0 border-2 border-primary rounded-lg"
         />
 
         <!-- Intro Text & Buttons -->
         <div
-          class="w-full md:max-w-md flex flex-col items-center md:items-start space-y-3 px-6"
+          class="w-full sm:max-w-sm flex flex-col items-center sm:items-start space-y-4 px-6"
         >
-          <h2 class="text-4xl text-primary font-bold">I am Amiw!</h2>
+          <h2 class="text-4xl text-primary font-poppins">I am <b> Amiw</b>!</h2>
 
-          <p class="text-primary text-center md:text-left font-medium">
-            Full-stack developer specializing in Vue.js, Nuxt 3, and Laravel.
-          </p>
+          <div class="text-primary font-medium text-md sm:whitespace-nowrap">
+            <span class="block text-center sm:text-left text-md">
+              <i>Frontend? Backend? Servers?</i> <br />
+              Don't worry, I'm <b>full-stack</b>. <br />I do everything on my
+              own.
+            </span>
+          </div>
 
-          <div class="flex gap-4 justify-center md:justify-start w-full">
+          <div class="flex gap-4 justify-center sm:justify-start w-full">
             <Button
               variant="default"
               class="bg-secondary hover:bg-secondary hover:text-primary border border-r-4 border-b-4 border-primary text-primary"
@@ -44,31 +48,40 @@
               variant="default"
               class="bg-primary text-secondary"
               as="a"
-              href="https://docs.google.com/document/d/1mMpH2B_8Qti2K9_YoP3OTbwzzxvhOsrZJPDD03YdBKA/edit?usp=sharing"
+              href="https://docs.google.com/document/d/1RnKQJoASDSASEYZp6-OdoPom6lehE-J-2ZmPf39MftU/edit?usp=sharing"
               target="_blank"
             >
               <Icon name="heroicons-outline:external-link" class="w-4 h-4" />
               Resume
             </Button>
           </div>
+          <div class="flex items-center gap-2 text-sm">
+            <span class="block text-center sm:text-left font-poppins">
+              Remote · Jakarta (GMT+7)
+            </span>
+          </div>
         </div>
       </section>
     </div>
 
     <!-- Separator -->
-    <div v-motion-slide-bottom class="flex justify-center mt-8 mb-6">
+    <div class="flex justify-center mt-8 mb-6">
       <div class="w-1/2 border-t border-primary"></div>
     </div>
 
+    <!-- Pitch Your Idea CTA -->
+    <div class="max-w-3xl mx-auto px-8 mb-8">
+      <div class="flex flex-col items-center gap-1 rounded">
+        <span class="text-neutral-700 text-center text-sm font-poppins">
+          Interested in <b class="font-bold">sustainability</b>?<br />Discuss
+          with me · Pitch
+        </span>
+      </div>
+    </div>
+
     <!-- About Section -->
-    <section v-motion-slide-bottom class="max-w-3xl mx-auto px-8 text-center">
-      <p class="text-primary leading-relaxed">
-        I'm <b>Amirah Dzatul Himmah</b>, known as <b>Amiw</b> — a full-stack
-        developer passionate about building clean, scalable, and user-friendly
-        web apps. I mostly work with <b>Vue.js</b>, <b>Nuxt 3</b>,
-        <b>Tailwind CSS</b>, and <b>Laravel</b>, and I thrive at the
-        intersection of creativity, logic, and continuous learning.
-      </p>
+    <section class="max-w-3xl mx-auto px-8 text-center">
+      <p class="text-primary leading-relaxed"></p>
     </section>
 
     <!-- Tech Stack Icons -->
@@ -84,3 +97,46 @@
     </div> -->
   </section>
 </template>
+
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
+const currentTime = ref("");
+let rafId: number | null = null;
+let lastUpdate = 0;
+
+function updateTime() {
+  const now = Date.now();
+  // Only update every second (1000ms) to reduce DOM updates
+  if (now - lastUpdate >= 1000) {
+    const date = new Date();
+    currentTime.value = date.toLocaleTimeString("en-US", {
+      hour12: false,
+      timeZone: "Asia/Jakarta",
+    });
+    lastUpdate = now;
+  }
+
+  // Continue animation loop
+  rafId = requestAnimationFrame(updateTime);
+}
+
+onMounted(() => {
+  // Initial update
+  const date = new Date();
+  currentTime.value = date.toLocaleTimeString("en-US", {
+    hour12: false,
+    timeZone: "Asia/Jakarta",
+  });
+  lastUpdate = Date.now();
+
+  // Start RAF loop
+  rafId = requestAnimationFrame(updateTime);
+});
+
+onBeforeUnmount(() => {
+  if (rafId) {
+    cancelAnimationFrame(rafId);
+  }
+});
+</script>
