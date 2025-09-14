@@ -2,7 +2,7 @@
   <IndexHeroSection />
   <!-- <IndexProfesionalSection /> -->
   <IndexTrackSection />
-  <IndexSkillSection />
+  <!-- <IndexSkillSection /> -->
   <IndexProjectSection />
   <IndexPersonalSection />
 

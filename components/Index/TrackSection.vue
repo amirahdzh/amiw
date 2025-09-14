@@ -17,7 +17,7 @@
                 :class="[
                   'flex flex-col items-start group p-2 rounded-lg border-2 cursor-pointer select-none transition-all duration-300 overflow-hidden bg-secondary',
                   expandedIndex === index
-                    ? 'border-[hsl(var(--amiw))] bg-muted  max-h-64'
+                    ? 'border-[hsl(var(--amiw))] bg-muted '
                     : 'border-primary max-h-20',
                 ]"
                 style="min-height: 64px"
@@ -37,22 +37,28 @@
                         :href="job.link"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="underline hover:text-[hsl(var(--amiw))]"
+                        class="hover:text-[hsl(var(--amiw))]"
                         @click.stop
                       >
                         {{ job.company }}
                       </a>
                       <span v-else>{{ job.company }}</span>
                     </div>
-                    <div class="text-sm text-muted-foreground">
+                    <div
+                      class="text-xs text-muted-foreground font-mono mt-1 sm:hidden"
+                    >
+                      {{ job.period }}
+                    </div>
+                    <div class="text-xs text-muted-foreground font-mono">
                       {{ job.role }}
                     </div>
                   </div>
                   <div
-                    class="text-sm text-muted-foreground text-right whitespace-nowrap ml-4"
+                    class="text-sm text-muted-foreground text-right whitespace-nowrap ml-4 font-mono hidden sm:block"
                   >
                     {{ job.period }}
                   </div>
+
                   <span class="ml-2 text-lg">
                     {{ expandedIndex === index ? "▲" : "▼" }}
                   </span>
@@ -60,9 +66,21 @@
                 <transition name="fade">
                   <div
                     v-if="expandedIndex === index"
-                    class="w-full mt-2 p-3 text-sm text-foreground transition-all duration-300"
+                    class="w-full mt-2 p-3 text-sm text-foreground transition-all duration-300 break-words leading-relaxed space-y-2"
                   >
-                    {{ job.description }}
+                    <div>{{ job.description }}</div>
+                    <div
+                      v-if="job.skills && job.skills.length"
+                      class="flex flex-wrap gap-2"
+                    >
+                      <span
+                        v-for="skill in job.skills"
+                        :key="skill"
+                        class="px-2 py-1 rounded bg-[hsl(var(--amiw)/0.12)] text-xs font-mono text-primary border border-[hsl(var(--amiw))]"
+                      >
+                        {{ skill }}
+                      </span>
+                    </div>
                   </div>
                 </transition>
               </div>
@@ -150,12 +168,13 @@ function toggleExpand(index: number) {
 const work = [
   {
     company: "PT Sanbersy",
-    role: "Freelance Full-stack Web Developer",
+    role: "Full-stack Web Developer",
     period: "Feb 2025 - Present",
     logo: "/img/logo/sanbersy.png",
     link: "https://sanbersy.com/",
     description:
       "Collaborated on web-based projects for academic and nonprofit institutions. Contributed to the development of a conference management system and a donation platform for Rumah Amal Salman. Responsible for both frontend and backend development tasks, utilizing Laravel and Bootstrap frameworks.",
+    skills: ["Laravel", "Bootstrap", "Vue.js", "MySQL"],
   },
   {
     company: "PT Mega Giga Solusindo",
@@ -165,6 +184,14 @@ const work = [
     link: "https://www.megagigasolusindo.co.id/",
     description:
       "Joined as an in-house frontend developer and assigned to key client projects. Contributed to various frontend development tasks, including client-specific deployments. Communicated with project stakeholders to ensure alignment on technical requirements.",
+    skills: [
+      "React.js",
+      "Next.js",
+      "Tailwind CSS",
+      "Typescript",
+      "Vite",
+      "Git",
+    ],
   },
   {
     company: "PT PLN Icon Plus",
@@ -174,6 +201,7 @@ const work = [
     link: "https://plniconplus.co.id/",
     description:
       "Assigned by PT Mega Giga Solusindo as a contract frontend developer for bug fixing and code improvements for Alih Daya PLN application. Worked closely with the client team on short-term goals.",
+    skills: ["Vue.js", "REST API", "Git", "Tailwind"],
   },
 ];
 

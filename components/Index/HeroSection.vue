@@ -27,8 +27,9 @@
           <div class="text-primary font-medium text-md sm:whitespace-nowrap">
             <span class="block text-center sm:text-left text-md">
               <i>Frontend? Backend? Servers?</i> <br />
-              Don't worry, I'm a <b>full-stack dev</b>. <br />I do everything on
-              my own.
+              Don't worry,
+              <span class="bg-white"> I'm a <b>full-stack dev</b></span
+              >. <br />I do everything on my own.
             </span>
           </div>
 
@@ -65,7 +66,7 @@
     </div>
 
     <!-- Separator -->
-    <div class="flex justify-center mt-8 mb-6">
+    <div class="flex justify-center my-4 sm:my-8">
       <div class="w-1/2 border-t border-primary"></div>
     </div>
 
