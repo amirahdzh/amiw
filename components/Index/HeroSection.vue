@@ -49,7 +49,7 @@
               variant="default"
               class="bg-primary text-secondary"
               as="a"
-              href="https://docs.google.com/document/d/1RnKQJoASDSASEYZp6-OdoPom6lehE-J-2ZmPf39MftU/edit?usp=sharing"
+              href="https://docs.google.com/document/d/1JPOLI2oE2TByNBR7FCI7I6ZZaW7vDEOff67c0FaDrDA/edit?usp=drive_link"
               target="_blank"
             >
               <Icon name="heroicons-outline:external-link" class="w-4 h-4" />

@@ -64,7 +64,7 @@ const handleGameSelection = (game: string) => {
         </div>
 
         <!-- Gaming Log Card -->
-        <!-- <div
+        <div
           class="bg-secondary border border-border rounded-2xl p-6 cursor-pointer transition hover:scale-[1.02] duration-300 group"
           @click="openGameChoiceModal"
         >
@@ -75,7 +75,7 @@ const handleGameSelection = (game: string) => {
             Track my progress in Mobile Legends & Valorant, from strategies to
             milestones!
           </p>
-        </div> -->
+        </div>
 
         <!-- Other Cards -->
         <div
@@ -178,7 +178,7 @@ const handleGameSelection = (game: string) => {
             </div>
 
             <!-- Dota 2 Card -->
-            <div
+            <!-- <div
               class="cursor-pointer border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition"
               @click="handleGameSelection('mobile-legends')"
             >
@@ -187,7 +187,7 @@ const handleGameSelection = (game: string) => {
                 alt="Dota 2 Cover"
                 class="w-full h-32 object-cover"
               />
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
