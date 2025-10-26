@@ -108,5 +108,25 @@ const projects = [
     website: "https://amiwspace.vercel.app",
     source: "https://github.com/amirahdzh/amiwspace",
   },
+  {
+    title: "Daarul Ummahaat Website",
+    date: "Sept 2025",
+    description:
+      "Official website for Daarul Ummahaat, non-profit organization focused on empowering humanity through education and social initiatives.",
+    tech: ["Nuxt 3", "Markdown", "TailwindCSS"],
+    thumbnail: "/gif/daarul_ummahaat.gif",
+    website: "https://daarulummahaat.org",
+    source: "https://github.com/amirahdzh/daarul-ummahaat",
+  },
+  {
+    title: "Miaw Discord Bot",
+    date: "Sept 2025",
+    description:
+      "Miaw Bott is a  customizable Discord bot designed for modern servers. It features both slash and prefix commands, dynamic reaction roles, public and private messaging, and is easy to extend for new features.",
+    tech: ["Node.js", "Discord.js", "Typescript"],
+    thumbnail: "/img/miaw.jpg",
+    // website: "https://daarulummahaat.org",
+    source: "https://github.com/amirahdzh/amiw-bot",
+  },
 ];
 </script>
