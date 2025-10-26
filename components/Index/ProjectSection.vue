@@ -84,7 +84,7 @@ const projects = [
       "Personal library site to manage my books, share insights, and allow others to recommend or borrow books.",
     tech: ["Vue.js", "Nuxt 3", "Laravel", "Tailwind"],
     thumbnail: "/gif/miwsbook.gif",
-    website: "https://laravue-bookworld.vercel.app/",
+    website: "https://book.amiw.dev/",
     source: "https://github.com/amirahdzh/miwsbook-fe",
   },
   {
