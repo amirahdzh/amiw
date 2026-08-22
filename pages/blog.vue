@@ -15,35 +15,34 @@
         <div class="text-left space-y-4">
           <h2 class="text-5xl font-bold text-foreground">blog.</h2>
           <p class="text-muted-foreground text-base leading-relaxed">
-            Sharing thoughts, insights, and stories. Let's connect on
-            <a
-              href="https://www.medium.com/@amiwdzh"
-              target="_blank"
-              class="text-[hsl(var(--pink))] font-medium hover:underline"
-            >
-              Medium.
-            </a>
+            Sharing thoughts, insights, and stories from this little corner
+            of the internet.
           </p>
         </div>
 
         <!-- Author Info -->
-        <NuxtLink
-          to="https://medium.com/@amiwdzh"
-          target="_blank"
-          class="block mt-6 rounded-xl transition-all"
+        <div
+          class="relative overflow-hidden mt-6 rounded-2xl border border-r-4 border-b-4 border-primary bg-secondary p-5"
         >
-          <Card class="px-6 py-4 bg-primary">
-            <div class="flex items-center justify-between">
-              <div class="flex gap-4">
-                <div>
-                  <p class="text-lg font-medium text-secondary">Amiw Dzh</p>
-                  <p class="text-sm text-secondary/80">@amiwdzh</p>
-                </div>
-              </div>
-              <Icon name="fa:medium" class="text-secondary w-7 h-7" />
+          <div class="absolute top-0 left-0 right-0 h-1.5 bg-bloom"></div>
+          <div class="flex items-center justify-between gap-3 mt-1">
+            <div>
+              <p class="text-lg font-bold text-primary">Amiw Dzh</p>
+              <p class="text-sm text-muted-foreground">
+                Web Developer & Writer
+              </p>
             </div>
-          </Card>
-        </NuxtLink>
+            <a
+              href="https://medium.com/@amiwdzh"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Also on Medium"
+              class="flex items-center justify-center w-9 h-9 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-secondary transition-colors shrink-0"
+            >
+              <Icon name="fa:medium" class="w-4 h-4" />
+            </a>
+          </div>
+        </div>
 
         <!-- Category Selection -->
         <div class="flex flex-wrap mb-8 mt-8">
@@ -88,67 +87,64 @@
         class="flex-1 py-8 md:w-2/3 bg-background md:py-28 border-t-4 px-8 md:border-t-0 md:border-l-2 border-primary"
       >
         <!-- Display selected category -->
-        <div
-          v-if="selectedCategory"
-          class="text-2xl lg:text-3xl font-semibold mb-2"
-        >
+        <div v-if="selectedCategory" class="text-3xl font-bold mb-6">
           {{ selectedCategory }}
         </div>
 
-        <!-- Posts or Loading/Error -->
-        <hr class="border-t border-primary" />
-        <div v-if="error" class="text-center text-destructive font-semibold">
-          {{ error }}
-        </div>
-        <div v-else-if="isLoading" class="flex justify-center gap-3">
-          Loading post... Click
-          <a href="https://www.medium.com/@amiwdzh">here</a> to open post on
-          Medium.
-        </div>
-
-        <div v-else>
-          <ul>
-            <li
-              v-for="post in filteredPosts"
-              :key="post.link"
-              class="border-b border-primary py-8 flex flex-col gap-4"
-              v-motion-pop-visible
+        <!-- Posts -->
+        <ul class="flex flex-col gap-6">
+          <li
+            v-for="post in filteredPosts"
+            :key="post.id"
+            v-motion-pop-visible
+            class="relative overflow-hidden bg-secondary rounded-2xl p-6 border border-r-4 border-b-4 border-primary transition hover:scale-[1.01] duration-300"
+          >
+            <div class="absolute top-0 left-0 right-0 h-1.5" :class="post.accentBg"></div>
+            <div
+              class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mt-1"
             >
-              <div
-                class="flex flex-col lg:flex-row md:items-center md:justify-between gap-6 md:gap-12"
-              >
-                <div class="flex-1">
-                  <a
-                    :href="post.link"
-                    target="_blank"
-                    class="text-2xl font-semibold text-primary hover:text-primary/80"
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-2">
+                  <span
+                    class="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full text-secondary"
+                    :class="post.accentBg"
                   >
-                    {{ blogStore.decodeHTMLEntities(post.title) }}
-                  </a>
-                  <p
-                    class="mt-4 text-foreground text-base"
-                    v-html="blogStore.getExcerpt(post.description)"
-                  ></p>
-                  <p class="mt-4 text-xs text-muted-foreground">
+                    {{ post.badge }}
+                  </span>
+                  <span class="text-xs text-muted-foreground">
                     {{ blogStore.formatDate(post.pubDate) }}
-                  </p>
+                  </span>
                 </div>
-                <!-- Thumbnail -->
-                <div
-                  v-if="post.thumbnail"
-                  class="w-full max-w-lg lg:max-w-[256px] lg:flex-shrink-0"
+                <a
+                  v-if="post.link"
+                  :href="post.link"
+                  target="_blank"
+                  class="text-2xl font-extrabold text-primary hover:text-primary/80"
                 >
-                  <img
-                    :src="post.thumbnail"
-                    alt="Thumbnail"
-                    class="w-full h-auto aspect-[5/3] object-cover rounded-lg"
-                    v-motion-fade
-                  />
-                </div>
+                  {{ post.title }}
+                </a>
+                <span v-else class="text-2xl font-extrabold text-primary">
+                  {{ post.title }}
+                </span>
+                <p class="mt-3 text-muted-foreground text-base leading-relaxed">
+                  {{ blogStore.getExcerpt(post.description) }}
+                </p>
               </div>
-            </li>
-          </ul>
-        </div>
+              <!-- Thumbnail -->
+              <div
+                v-if="post.thumbnail"
+                class="w-full max-w-lg lg:max-w-[256px] lg:flex-shrink-0"
+              >
+                <img
+                  :src="post.thumbnail"
+                  alt="Thumbnail"
+                  class="w-full h-auto aspect-[5/3] object-cover rounded-lg"
+                  v-motion-fade
+                />
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </section>
@@ -160,11 +156,11 @@ import { onMounted } from "vue";
 
 // Mengambil blogStore
 const blogStore = useBlogStore();
-const { error, isLoading, selectedCategory, allCategories, filteredPosts } =
+const { selectedCategory, allCategories, filteredPosts } =
   storeToRefs(blogStore);
 
 onMounted(() => {
-  blogStore.fetchPosts();
+  blogStore.loadPosts();
 
   // Mengambil kategori yang tersimpan di localStorage
   const storedCategory = localStorage.getItem("selectedCategory");

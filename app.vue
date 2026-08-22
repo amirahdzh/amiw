@@ -22,6 +22,6 @@ const mode = useColorMode({
     light: "light",
   },
   storageKey: "vueuse-color-scheme", // prefer localStorage
-  initialValue: "system", // default to system
+  initialValue: "light", // theme toggle is disabled right now, so always default to light
 });
 </script>

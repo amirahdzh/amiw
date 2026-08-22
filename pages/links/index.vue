@@ -5,6 +5,12 @@
     <div class="w-full max-w-md px-4 flex flex-col flex-1">
       <!-- Profile -->
       <div class="text-center mb-8">
+        <div
+          class="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-r-4 border-b-4 border-[hsl(var(--pink))] bg-[hsl(var(--alternate-background))] flex items-center justify-center"
+        >
+          <span class="font-mono text-4xl text-[hsl(var(--pink))]">A</span>
+        </div>
+
         <h1 class="text-2xl font-bold text-primary">{{ profile.name }}</h1>
         <p class="text-sm text-muted-foreground mt-1">
           {{ profile.nickname }}
@@ -36,28 +42,29 @@
               ? { 'aria-disabled': 'true' }
               : { href: link.href, target: '_blank', rel: 'noopener noreferrer' }
           "
-          class="flex items-center gap-3 px-5 py-4 rounded-2xl border border-r-4 border-b-4 border-primary bg-secondary text-primary transition-transform"
+          class="relative overflow-hidden flex items-center gap-3 pl-5 pr-4 py-4 pt-5 rounded-2xl border border-r-4 border-b-4 border-primary bg-secondary text-primary transition-transform"
           :class="
             link.disabled
-              ? 'opacity-50 cursor-not-allowed'
+              ? 'opacity-80 cursor-not-allowed'
               : 'hover:-translate-y-0.5 active:translate-y-0 active:border-r-2 active:border-b-2'
           "
         >
+          <div class="absolute top-0 left-0 right-0 h-1.5" :class="link.accentBg"></div>
           <Icon :name="link.icon" class="w-5 h-5 shrink-0" />
-          <div class="flex flex-col">
+          <div class="flex flex-col flex-1 min-w-0">
             <span class="font-semibold flex items-center gap-2">
               {{ link.title }}
-              <span
-                v-if="link.disabled"
-                class="text-[10px] font-normal uppercase tracking-wide px-1.5 py-0.5 rounded-full bg-primary text-secondary"
-              >
-                Coming soon
-              </span>
             </span>
             <span v-if="link.desc" class="text-xs text-muted-foreground">
               {{ link.desc }}
             </span>
           </div>
+          <span
+            class="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full shrink-0"
+            :class="[link.accentBg, link.disabled ? 'text-primary' : 'text-secondary']"
+          >
+            {{ link.disabled ? "Soon" : "Live" }}
+          </span>
         </component>
       </div>
 
@@ -113,6 +120,7 @@ const links = [
     href: "https://newsletter.amiw.dev",
     icon: "lucide:mail",
     disabled: true,
+    accentBg: "bg-honey",
   },
   {
     title: "Free Website for You",
@@ -120,6 +128,7 @@ const links = [
     desc: "for selected communities supporting open education and meaningful impact",
     icon: "lucide:globe",
     disabled: true,
+    accentBg: "bg-sage",
   },
   {
     title: "Real-World Projects",
@@ -127,6 +136,7 @@ const links = [
     desc: "how I solve digital problems",
     icon: "lucide:folder-open",
     disabled: false,
+    accentBg: "bg-terracotta",
   },
 ];
 </script>

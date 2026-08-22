@@ -74,8 +74,6 @@
 </template>
 
 <script setup>
-const { $config } = useNuxtApp();
-
 const projects = [
   {
     title: "Miw's Book",
@@ -87,17 +85,6 @@ const projects = [
     website: "https://book.amiw.dev/",
     source: "https://github.com/amirahdzh/miwsbook-fe",
     accentBg: "bg-sage",
-  },
-  {
-    title: "Wedding Invitation Template",
-    date: "Oct 2025",
-    description:
-      "A beautiful, modern wedding invitation website built with Express.js, EJS, htmx, TailwindCSS, and SQLite.",
-    tech: ["Express.js", "EJS", "htmx", "TailwindCSS", "SQLite"],
-    thumbnail: "/gif/wedding_inv.gif",
-    website: `${$config.public.siteUrl}/wedding-template`,
-    source: "https://github.com/amirahdzh/wedding-inv",
-    accentBg: "bg-bloom",
   },
   {
     title: "Personal Website",

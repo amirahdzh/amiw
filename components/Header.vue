@@ -6,7 +6,7 @@
     ]"
   >
     <div
-      class="flex items-center gap-1 hover:gap-2 px-3 py-1 bg-secondary rounded-md border border-r-4 border-b-4 border-primary transition-all duration-300 ease-out"
+      class="flex items-center gap-0.5 sm:gap-1 hover:gap-2 px-2 sm:px-3 py-1 bg-secondary rounded-md border border-r-4 border-b-4 border-primary transition-all duration-300 ease-out"
     >
       <TooltipProvider :delayDuration="0">
         <!-- Loop sebelum separator -->
@@ -20,9 +20,19 @@
               <NuxtLink
                 :to="icon.link"
                 :target="icon.external ? '_blank' : undefined"
-                class="flex items-center justify-center p-2 rounded-full transition-colors duration-300 hover:bg-accent"
+                :rel="icon.external ? 'noopener noreferrer' : undefined"
+                class="relative flex items-center justify-center p-1.5 sm:p-2 rounded-full transition-colors duration-300 hover:bg-accent"
               >
                 <Icon :name="icon.name" class="w-5 h-5" />
+                <span
+                  v-if="icon.external"
+                  class="absolute top-0.5 right-0.5 flex items-center justify-center w-3 h-3 rounded-full bg-[hsl(var(--pink))] ring-2 ring-secondary"
+                >
+                  <Icon
+                    name="lucide:arrow-up-right"
+                    class="w-2 h-2 text-secondary"
+                  />
+                </span>
               </NuxtLink>
             </TooltipTrigger>
             <TooltipContent>
@@ -45,9 +55,19 @@
               <NuxtLink
                 :to="icon.link"
                 :target="icon.external ? '_blank' : undefined"
-                class="flex items-center justify-center p-2 rounded-full transition-colors duration-300 hover:bg-accent"
+                :rel="icon.external ? 'noopener noreferrer' : undefined"
+                class="relative flex items-center justify-center p-1.5 sm:p-2 rounded-full transition-colors duration-300 hover:bg-accent"
               >
                 <Icon :name="icon.name" class="w-5 h-5" />
+                <span
+                  v-if="icon.external"
+                  class="absolute top-0.5 right-0.5 flex items-center justify-center w-3 h-3 rounded-full bg-[hsl(var(--pink))] ring-2 ring-secondary"
+                >
+                  <Icon
+                    name="lucide:arrow-up-right"
+                    class="w-2 h-2 text-secondary"
+                  />
+                </span>
               </NuxtLink>
             </TooltipTrigger>
             <TooltipContent>
@@ -63,7 +83,7 @@
           <TooltipTrigger as-child>
             <button
               disabled
-              class="flex items-center justify-center p-2 rounded-full opacity-50 cursor-not-allowed"
+              class="flex items-center justify-center p-1.5 sm:p-2 rounded-full opacity-50 cursor-not-allowed"
             >
               <Icon name="lucide:moon" class="w-5 h-5" />
             </button>
@@ -103,23 +123,29 @@ const icons = [
   { name: "lucide:home", link: "/", tooltip: "Home" },
   { name: "lucide:briefcase", link: "/portfolio", tooltip: "Portfolio" },
   { name: "lucide:book-text", link: "/blog", tooltip: "Blog" },
+  // {
+  //   name: "simple-icons:github",
+  //   link: "https://github.com/amirahdzh",
+  //   external: true,
+  //   tooltip: "GitHub",
+  // },
+  // {
+  //   name: "simple-icons:facebook",
+  //   link: "https://facebook.com/amiwdzh",
+  //   external: true,
+  //   tooltip: "Facebook",
+  // },
   {
-    name: "simple-icons:github",
-    link: "https://github.com/amirahdzh",
+    name: "simple-icons:whatsapp",
+    link: "https://wa.me/6282114643544",
     external: true,
-    tooltip: "GitHub",
+    tooltip: "WhatsApp",
   },
   {
-    name: "simple-icons:medium",
-    link: "https://medium.com/@amiwdzh",
+    name: "lucide:mail",
+    link: "mailto:amirahdzh@gmail.com",
     external: true,
-    tooltip: "Medium",
-  },
-  {
-    name: "simple-icons:facebook",
-    link: "https://facebook.com/amiwdzh",
-    external: true,
-    tooltip: "Facebook",
+    tooltip: "Email",
   },
 ];
 </script>

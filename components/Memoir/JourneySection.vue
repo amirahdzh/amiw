@@ -1,4 +1,13 @@
 <script setup lang="ts">
+import emblaCarouselVue from "embla-carousel-vue";
+
+const [emblaRef] = emblaCarouselVue({
+  loop: false,
+  align: "start",
+  dragFree: true,
+  containScroll: "trimSnaps",
+});
+
 const innerJourney = [
   {
     year: "2025",
@@ -95,38 +104,57 @@ const highlight = (text: string) =>
       <h3 class="text-lg font-semibold text-foreground mb-3">
         🏁 Visible Milestones
       </h3>
-      <ol class="relative border-l-2 border-primary/30 ml-4">
-        <li
-          v-for="(item, index) in journeyItems"
-          :key="'outer-' + index"
-          v-motion-fade-visible
-          class="relative pl-8 pb-8 last:pb-0"
-        >
-          <!-- Marker on the timeline -->
-          <span
-            class="absolute -left-[19px] top-0 w-9 h-9 rounded-full border-2 border-primary ring-4 ring-background flex items-center justify-center text-base"
-            :class="item.accentBg"
-          >
-            {{ item.emoji }}
-          </span>
+      <p class="text-xs text-muted-foreground mb-4 italic">
+        🖱️ Drag sideways to explore
+      </p>
 
+      <div ref="emblaRef" class="overflow-hidden cursor-grab active:cursor-grabbing select-none -mx-1">
+        <div class="journey-track relative flex gap-6 px-1 pb-2">
           <div
-            class="relative overflow-hidden bg-secondary rounded-2xl p-4 border border-r-4 border-b-4 border-primary transition hover:scale-[1.02] duration-300"
+            v-for="(item, index) in journeyItems"
+            :key="'outer-' + index"
+            v-motion-fade-visible
+            class="relative z-10 shrink-0 w-60"
           >
-            <div class="absolute top-0 left-0 right-0 h-1.5" :class="item.accentBg"></div>
-            <p class="mt-1 text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1">
-              {{ item.year }}
-            </p>
-            <h4 class="font-bold text-sm text-foreground mb-1">
-              {{ item.title }}
-            </h4>
-            <p
-              class="text-xs text-muted-foreground"
-              v-html="highlight(item.description)"
-            />
+            <!-- Marker on the timeline -->
+            <div
+              class="w-9 h-9 rounded-full border-2 border-primary ring-4 ring-background flex items-center justify-center text-base mb-4"
+              :class="item.accentBg"
+            >
+              {{ item.emoji }}
+            </div>
+
+            <div
+              class="relative overflow-hidden bg-secondary rounded-2xl p-4 border border-r-4 border-b-4 border-primary transition hover:scale-[1.02] duration-300"
+            >
+              <div class="absolute top-0 left-0 right-0 h-1.5" :class="item.accentBg"></div>
+              <p class="mt-1 text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1">
+                {{ item.year }}
+              </p>
+              <h4 class="font-bold text-sm text-foreground mb-1">
+                {{ item.title }}
+              </h4>
+              <p
+                class="text-xs text-muted-foreground"
+                v-html="highlight(item.description)"
+              />
+            </div>
           </div>
-        </li>
-      </ol>
+        </div>
+      </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+.journey-track::before {
+  content: "";
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 18px;
+  height: 2px;
+  background: hsl(var(--primary) / 0.3);
+  pointer-events: none;
+}
+</style>
