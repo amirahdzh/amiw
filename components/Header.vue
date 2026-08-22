@@ -101,7 +101,7 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 
 const icons = [
   { name: "lucide:home", link: "/", tooltip: "Home" },
-  { name: "fa:heart", link: "/memoir", tooltip: "Memoir" },
+  { name: "lucide:briefcase", link: "/portfolio", tooltip: "Portfolio" },
   { name: "lucide:book-text", link: "/blog", tooltip: "Blog" },
   {
     name: "simple-icons:github",

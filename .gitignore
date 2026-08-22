@@ -22,3 +22,7 @@ logs
 .env
 .env.*
 !.env.example
+
+# Local design reference (not for the repo)
+DESIGN.md
+DESIGN-garden-bake.md

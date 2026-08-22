@@ -2,10 +2,10 @@
   <div class="min-h-screen bg-secondary py-20 px-4">
     <div class="max-w-6xl mx-auto">
       <header class="text-center mb-12">
-        <h1 class="text-4xl font-light text-slate-800">
+        <h1 class="text-4xl font-light text-foreground">
           Wedding Invitation Templates
         </h1>
-        <p class="mt-2 text-lg text-slate-500">
+        <p class="mt-2 text-lg text-muted-foreground">
           Choose the perfect template for your special day
         </p>
       </header>
@@ -13,8 +13,9 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Available Template -->
         <article
-          class="rounded-lg border-2 border-primary overflow-hidden bg-secondary transition"
+          class="rounded-2xl overflow-hidden bg-secondary transition hover:scale-[1.02] duration-300 relative border border-r-4 border-b-4 border-primary"
         >
+          <div class="absolute top-0 left-0 right-0 h-2 z-10 bg-bloom"></div>
           <div class="relative h-48 md:h-56 overflow-hidden">
             <img
               src="/gif/wedding_inv.gif"
@@ -22,22 +23,29 @@
               class="w-full h-full object-cover"
             />
           </div>
-          <div class="p-6">
-            <h3 class="text-lg font-semibold text-slate-800">
-              Classic Elegance
-            </h3>
-            <p class="mt-2 text-sm text-slate-500">
+          <div class="p-6 space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <h3 class="text-2xl font-extrabold text-foreground">
+                Classic Elegance
+              </h3>
+              <span
+                class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-bloom text-primary"
+              >
+                Live
+              </span>
+            </div>
+            <p class="text-muted-foreground text-base leading-relaxed">
               Timeless and sophisticated design
             </p>
-            <div class="mt-4 flex gap-3">
+            <div class="pt-3 flex gap-3">
               <a
                 href="https://wedding.amiw.dev/classic?bride=Sara&groom=Alex&bride_fn=Sara+Amelia&groom_fn=Alexander+Pratama&bride_desc=Putri+dari+Bapak+Budi+dan+Ibu+Siti&groom_desc=Putra+dari+Bapak+Setiawan+dan+Ibu+Sri&date=2025-10-11T00%3A01&akad_date=2025-10-30&akad_time=10%3A00&akad_place=Masjid+Agung&akad_place_desc=Jl.+Merdeka+no+1&akad_place_maps=link&resepsi_time=00%3A00&resepsi_place=Hotel+Grand+Jakarta&resepsi_place_desc=Ballroom+lantai+2&resepsi_place_maps=link"
-                class="inline-flex items-center px-4 py-2 bg-primary text-white rounded-md text-sm font-medium transition"
+                class="inline-flex items-center px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-bold transition"
                 >Use Template</a
               >
               <button
                 @click.prevent="openCustomize(null)"
-                class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-md text-sm font-medium hover:shadow"
+                class="inline-flex items-center px-4 py-2 bg-secondary border border-primary text-primary rounded-full text-sm font-bold hover:bg-primary hover:text-background transition-colors"
               >
                 Customize
               </button>
@@ -49,34 +57,41 @@
         <article
           v-for="template in comingSoonTemplates"
           :key="template.id"
-          class="rounded-lg border-2 border-primary overflow-hidden bg-secondary transition"
+          class="rounded-2xl overflow-hidden bg-secondary transition relative border border-r-4 border-b-4 border-primary"
         >
+          <div class="absolute top-0 left-0 right-0 h-2 z-10" :class="template.accentBg"></div>
           <div class="relative">
-            <img
-              :src="template.image"
-              :alt="template.name"
-              class="w-full h-48 md:h-56 object-cover"
-            />
+            <div
+              class="w-full h-48 md:h-56 bg-[hsl(var(--alternate-background))]"
+            ></div>
             <div
               class="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-lg font-semibold"
             >
               Coming Soon
             </div>
           </div>
-          <div class="p-4 space-y-3">
-            <h3 class="text-xl font-semibold">{{ template.name }}</h3>
-            <p class="text-primary text-sm">{{ template.description }}</p>
+          <div class="p-6 space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <h3 class="text-2xl font-extrabold text-foreground">{{ template.name }}</h3>
+              <span
+                class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 text-secondary"
+                :class="template.accentBg"
+              >
+                Soon
+              </span>
+            </div>
+            <p class="text-muted-foreground text-base leading-relaxed">{{ template.description }}</p>
 
             <div class="flex items-center gap-3 pt-3">
               <button
-                class="px-3 py-1 bg-gray-400 text-white rounded-md text-sm font-medium cursor-not-allowed opacity-70"
+                class="px-4 py-2 bg-muted text-muted-foreground rounded-full text-sm font-bold cursor-not-allowed opacity-70"
                 disabled
                 aria-disabled="true"
               >
                 Coming Soon
               </button>
               <button
-                class="px-3 py-1 bg-white border border-primary text-primary rounded-md text-sm font-medium cursor-not-allowed opacity-70"
+                class="px-4 py-2 bg-secondary border border-primary text-primary rounded-full text-sm font-bold cursor-not-allowed opacity-70"
                 disabled
                 aria-disabled="true"
               >
@@ -95,19 +110,19 @@
     >
       <div
         ref="modalRef"
-        class="w-full max-w-2xl bg-white rounded-lg shadow-lg overflow-auto max-h-[90vh]"
+        class="w-full max-w-2xl bg-secondary rounded-lg shadow-lg overflow-auto max-h-[90vh]"
       >
-        <header class="flex items-center justify-between p-4 border-b">
-          <h3 class="text-lg font-semibold">Customize Template</h3>
+        <header class="flex items-center justify-between p-4 border-b border-border">
+          <h3 class="text-lg font-semibold text-foreground">Customize Template</h3>
           <button
             @click="closeModal"
-            class="text-slate-500 hover:text-slate-700"
+            class="text-muted-foreground hover:text-foreground"
           >
             Close
           </button>
         </header>
         <div class="p-4 space-y-4">
-          <p class="text-sm text-slate-600">
+          <p class="text-sm text-muted-foreground">
             Fill fields you want to override. All fields are optional.
           </p>
           <!-- Guest section moved to the top for easier access -->
@@ -116,7 +131,7 @@
             <div class="mt-2">
               <label
                 for="name"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Guest name</label
               >
               <input
@@ -124,7 +139,7 @@
                 v-model="form.name"
                 type="text"
                 placeholder="Ayu"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
           </div>
@@ -133,7 +148,7 @@
             <div>
               <label
                 for="bride"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Bride</label
               >
               <input
@@ -141,14 +156,14 @@
                 v-model="form.bride"
                 type="text"
                 placeholder="Sara"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
             <div>
               <label
                 for="groom"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Groom</label
               >
               <input
@@ -156,7 +171,7 @@
                 v-model="form.groom"
                 type="text"
                 placeholder="Alex"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
@@ -166,7 +181,7 @@
             <div>
               <label
                 for="bride_fn"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Bride (full)</label
               >
               <input
@@ -174,7 +189,7 @@
                 v-model="form.bride_fn"
                 type="text"
                 placeholder="Sara Amelia"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
@@ -182,14 +197,14 @@
             <div class="sm:col-span-2">
               <label
                 for="bride_desc"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Bride description</label
               >
               <textarea
                 id="bride_desc"
                 v-model="form.bride_desc"
                 rows="3"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
                 placeholder="Daughter of Mr. & Mrs. Wijaya — loves travel & coffee"
               ></textarea>
             </div>
@@ -197,7 +212,7 @@
             <div>
               <label
                 for="groom_fn"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Groom (full)</label
               >
               <input
@@ -205,7 +220,7 @@
                 v-model="form.groom_fn"
                 type="text"
                 placeholder="Alexander Pratama"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
@@ -213,14 +228,14 @@
             <div class="sm:col-span-2">
               <label
                 for="groom_desc"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Groom description</label
               >
               <textarea
                 id="groom_desc"
                 v-model="form.groom_desc"
                 rows="3"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
                 placeholder="Son of Mr. & Mrs. Santoso — software engineer & musician"
               ></textarea>
             </div>
@@ -229,7 +244,7 @@
             <div>
               <label
                 for="date"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Event (datetime)</label
               >
               <input
@@ -237,14 +252,14 @@
                 v-model="form.date"
                 type="datetime-local"
                 placeholder="2026-06-12T17:00"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
             <div>
               <label
                 for="akad_date"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Akad date</label
               >
               <input
@@ -252,14 +267,14 @@
                 v-model="form.akad_date"
                 type="date"
                 placeholder="2026-06-12"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
             <div>
               <label
                 for="akad_time"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Akad time</label
               >
               <input
@@ -267,14 +282,14 @@
                 v-model="form.akad_time"
                 type="time"
                 placeholder="09:00"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
             <div>
               <label
                 for="resepsi_time"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Reception time</label
               >
               <input
@@ -282,7 +297,7 @@
                 v-model="form.resepsi_time"
                 type="time"
                 placeholder="19:00"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
@@ -290,7 +305,7 @@
             <div>
               <label
                 for="akad_place"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Akad place</label
               >
               <input
@@ -298,14 +313,14 @@
                 v-model="form.akad_place"
                 type="text"
                 placeholder="Masjid Agung"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
             <div>
               <label
                 for="resepsi_place"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Reception place</label
               >
               <input
@@ -313,7 +328,7 @@
                 v-model="form.resepsi_place"
                 type="text"
                 placeholder="Hotel Grand Jakarta"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
@@ -321,7 +336,7 @@
             <div>
               <label
                 for="akad_place_maps"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Akad map URL</label
               >
               <input
@@ -329,14 +344,14 @@
                 v-model="form.akad_place_maps"
                 type="url"
                 placeholder="https://maps.app.goo.gl/xyz"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
             <div>
               <label
                 for="resepsi_place_maps"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Reception map URL</label
               >
               <input
@@ -344,7 +359,7 @@
                 v-model="form.resepsi_place_maps"
                 type="url"
                 placeholder="https://maps.app.goo.gl/abc"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               />
             </div>
 
@@ -352,7 +367,7 @@
             <div>
               <label
                 for="akad_place_desc"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Akad place details</label
               >
               <textarea
@@ -360,14 +375,14 @@
                 v-model="form.akad_place_desc"
                 placeholder="Jl. Merdeka No. 1, Central City"
                 rows="2"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               ></textarea>
             </div>
 
             <div>
               <label
                 for="resepsi_place_desc"
-                class="block text-xs font-medium mb-1 text-slate-700"
+                class="block text-xs font-medium mb-1 text-foreground"
                 >Reception place details</label
               >
               <textarea
@@ -375,7 +390,7 @@
                 v-model="form.resepsi_place_desc"
                 placeholder="Ballroom Lantai 2, Hotel Grand Jakarta"
                 rows="2"
-                class="w-full px-3 py-2 border rounded"
+                class="w-full px-3 py-2 border border-border rounded bg-background text-foreground"
               ></textarea>
             </div>
           </div>
@@ -383,19 +398,19 @@
           <div class="flex items-center gap-3">
             <button
               @click="openLink"
-              class="px-4 py-2 bg-primary text-white rounded"
+              class="px-4 py-2 bg-primary text-primary-foreground rounded"
             >
               Open Link
             </button>
-            <button @click="copyLink" class="px-4 py-2 border rounded">
+            <button @click="copyLink" class="px-4 py-2 border border-border rounded text-foreground">
               Copy Link
             </button>
-            <div class="text-sm text-slate-600 ml-auto">
+            <div class="text-sm text-muted-foreground ml-auto">
               Preview:
               <a
                 :href="builtUrl"
                 target="_blank"
-                class="text-blue-600 underline truncate block w-64"
+                class="text-[hsl(var(--amiw))] underline truncate block w-64"
                 >{{ builtUrl }}</a
               >
             </div>
@@ -414,19 +429,16 @@ const comingSoonTemplates = [
     id: 1,
     name: "Modern Minimalist",
     description: "Clean and contemporary design",
-    image: "/img/angel_maple.jpg",
   },
   {
     id: 2,
     name: "Vintage Romance",
     description: "Romantic vintage-inspired style",
-    image: "/img/angel_maple.jpg",
   },
   {
     id: 3,
     name: "Garden Party",
     description: "Fresh and floral themed",
-    image: "/img/angel_maple.jpg",
   },
 ];
 

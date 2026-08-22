@@ -14,7 +14,7 @@
       <li>
         <NuxtLink
           to="/memoir/gaming-log/valorant"
-          class="block overflow-hidden rounded-xl border-2 border-gray-200 hover:border-indigo-600 transition-all duration-300 group"
+          class="block overflow-hidden rounded-xl border-2 border-border hover:border-[hsl(var(--amiw))] transition-all duration-300 group"
         >
           <img
             src="/img/gaming-log/valorant.webp"
@@ -28,7 +28,7 @@
       <li>
         <NuxtLink
           to="/memoir/gaming-log/mobile-legends"
-          class="block overflow-hidden rounded-xl border-2 border-gray-200 hover:border-indigo-600 transition-all duration-300 group"
+          class="block overflow-hidden rounded-xl border-2 border-border hover:border-[hsl(var(--amiw))] transition-all duration-300 group"
         >
           <img
             src="/img/gaming-log/ml.webp"
@@ -41,7 +41,7 @@
       <li>
         <NuxtLink
           to="/memoir/gaming-log/valorant"
-          class="block overflow-hidden rounded-xl border-2 border-gray-200 hover:border-indigo-600 transition-all duration-300 group"
+          class="block overflow-hidden rounded-xl border-2 border-border hover:border-[hsl(var(--amiw))] transition-all duration-300 group"
         >
           <img
             src="/img/gaming-log/dota2.webp"

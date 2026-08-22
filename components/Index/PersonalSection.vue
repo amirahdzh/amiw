@@ -14,7 +14,7 @@
         everything else that doesn’t quite fit into a portfolio.
       </p>
       <NuxtLink
-        to="/memoir"
+        to="/"
         class="inline-flex items-center justify-center gap-2 px-6 py-2 text-foreground border border-foreground rounded hover:bg-foreground/10 transition mb-4"
       >
         🌿 Visit My Memoir

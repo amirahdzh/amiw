@@ -9,18 +9,18 @@
     <div
       class="p-6 max-w-md md:mt-0 mt-12 border border-l-8 border-[hsl(var(--amiw))] bg-secondary space-y-4"
     >
-      <p class="text-xs uppercase tracking-wide font-semibold text-gray-500">
+      <p class="text-xs uppercase tracking-wide font-semibold text-muted-foreground">
         Book Quotes I Love
       </p>
       <p
-        class="italic text-lg leading-relaxed text-gray-700 dark:text-gray-300"
+        class="italic text-lg leading-relaxed text-foreground"
       >
         "{{ currentQuote.text }}"
       </p>
       <p class="text-sm font-semibold text-[hsl(var(--amiw))]">
         — {{ currentQuote.author }}
       </p>
-      <div class="pt-2 flex items-center gap-2 text-xs text-gray-500">
+      <div class="pt-2 flex items-center gap-2 text-xs text-muted-foreground">
         <Icon name="lucide:refresh-cw" class="w-4 h-4" />
         <span>Click to shuffle</span>
       </div>

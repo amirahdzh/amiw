@@ -21,8 +21,8 @@ const currentYear = new Date().getFullYear();
             >
           </li>
           <li>
-            <NuxtLink to="/memoir" class="hover:text-primary transition"
-              >Memoir</NuxtLink
+            <NuxtLink to="/portfolio" class="hover:text-primary transition"
+              >Portfolio</NuxtLink
             >
           </li>
         </ul>
@@ -31,21 +31,21 @@ const currentYear = new Date().getFullYear();
       <!-- Social Media Links (Icon-Only) -->
       <div class="flex space-x-3">
         <a
-          href="https://facebook.com"
+          href="https://facebook.com/amiwdzh"
           target="_blank"
           class="hover:text-primary transition"
         >
           <Icon name="simple-icons:facebook" class="w-4 h-4" />
         </a>
         <a
-          href="https://github.com"
+          href="https://github.com/amirahdzh"
           target="_blank"
           class="hover:text-primary transition"
         >
           <Icon name="simple-icons:github" class="w-4 h-4" />
         </a>
         <a
-          href="https://medium.com"
+          href="https://medium.com/@amiwdzh"
           target="_blank"
           class="hover:text-primary transition"
         >

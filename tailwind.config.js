@@ -58,6 +58,12 @@ export default {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        amiw: "hsl(var(--amiw))",
+        pink: "hsl(var(--pink))",
+        bloom: "hsl(var(--bloom))",
+        sage: "hsl(var(--sage))",
+        terracotta: "hsl(var(--terracotta))",
+        honey: "hsl(var(--honey))",
         chart: {
           1: "hsl(var(--chart-1))",
           2: "hsl(var(--chart-2))",

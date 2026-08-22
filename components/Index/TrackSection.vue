@@ -15,13 +15,17 @@
               <div
                 @click="toggleExpand(index)"
                 :class="[
-                  'flex flex-col items-start group p-2 rounded-lg border-2 cursor-pointer select-none transition-all duration-300 overflow-hidden bg-secondary',
+                  'relative flex flex-col items-start group p-3 pl-5 rounded-2xl cursor-pointer select-none transition-all duration-300 overflow-hidden bg-secondary border border-r-4 border-b-4',
                   expandedIndex === index
                     ? 'border-[hsl(var(--amiw))] bg-muted '
                     : 'border-primary max-h-20',
                 ]"
                 style="min-height: 64px"
               >
+                <div
+                  class="absolute top-0 bottom-0 left-0 w-1.5"
+                  :class="job.accentBg"
+                ></div>
                 <div class="flex w-full">
                   <img
                     :src="job.logo"
@@ -30,7 +34,7 @@
                   />
                   <div class="flex-1">
                     <div
-                      class="text-base font-semibold text-foreground group-hover:text-[hsl(var(--amiw))] transition-colors"
+                      class="text-lg font-bold text-foreground group-hover:text-[hsl(var(--amiw))] transition-colors"
                     >
                       <a
                         v-if="job.link"
@@ -172,6 +176,7 @@ const work = [
     period: "Feb 2025 - Present",
     logo: "/img/logo/sanbersy.png",
     link: "https://sanbersy.com/",
+    accentBg: "bg-sage",
     description:
       "Collaborated on web-based projects for academic and nonprofit institutions. Contributed to the development of a conference management system and a donation platform for Rumah Amal Salman. Responsible for both frontend and backend development tasks, utilizing Laravel and Bootstrap frameworks.",
     skills: ["Laravel", "Bootstrap", "Vue.js", "MySQL"],
@@ -182,6 +187,7 @@ const work = [
     period: "Mei 2025 - Sept 2025",
     logo: "/img/logo/mgs.webp",
     link: "https://www.megagigasolusindo.co.id/",
+    accentBg: "bg-terracotta",
     description:
       "Joined as an in-house frontend developer and assigned to key client projects. Contributed to various frontend development tasks, including client-specific deployments. Communicated with project stakeholders to ensure alignment on technical requirements.",
     skills: [
@@ -199,6 +205,7 @@ const work = [
     period: "June 2025 - July 2025",
     logo: "/img/logo/icon+.webp",
     link: "https://plniconplus.co.id/",
+    accentBg: "bg-honey",
     description:
       "Assigned by PT Mega Giga Solusindo as a contract frontend developer for bug fixing and code improvements for Alih Daya PLN application. Worked closely with the client team on short-term goals.",
     skills: ["Vue.js", "REST API", "Git", "Tailwind"],

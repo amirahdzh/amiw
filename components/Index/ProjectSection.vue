@@ -23,22 +23,22 @@
             scale: 1,
             transition: { delay: index * 0.1, duration: 0.4 },
           }"
-          class="rounded-lg border-2 border-primary overflow-hidden bg-secondary transition"
+          class="rounded-2xl overflow-hidden bg-secondary transition hover:scale-[1.02] duration-300 relative border border-r-4 border-b-4 border-primary"
         >
+          <div class="absolute top-0 left-0 right-0 h-2 z-10" :class="project.accentBg"></div>
           <img
             :src="project.thumbnail"
             :alt="`${project.title} Thumbnail`"
             class="w-full h-48 object-cover"
           />
-          <div class="p-4 space-y-3">
-            <h3 class="text-xl font-semibold">{{ project.title }}</h3>
-            <!-- <p class="text-sm text-muted-foreground">{{ project.date }}</p> -->
-            <p class="text-primary text-sm">{{ project.description }}</p>
-            <div class="flex flex-wrap gap-2 text-xs text-secondary">
+          <div class="p-6 space-y-3">
+            <h3 class="text-2xl font-extrabold text-primary">{{ project.title }}</h3>
+            <p class="text-muted-foreground text-base leading-relaxed">{{ project.description }}</p>
+            <div class="flex flex-wrap gap-2">
               <span
                 v-for="tech in project.tech"
                 :key="tech"
-                class="px-2 py-1 bg-muted-foreground rounded"
+                class="px-3 py-1 text-xs font-bold uppercase tracking-wide rounded-full bg-muted text-foreground"
               >
                 {{ tech }}
               </span>
@@ -49,7 +49,7 @@
                 :href="project.website"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex items-center gap-2 px-3 py-1 border border-primary text-primary rounded-full text-sm hover:bg-primary hover:text-background transition-colors"
+                class="flex items-center gap-2 px-3 py-1 border border-primary text-primary rounded-full text-sm font-medium hover:bg-primary hover:text-background transition-colors"
               >
                 <Icon name="fa6-solid:globe" class="w-4 h-4" />
                 Website
@@ -60,7 +60,7 @@
                 :href="project.source"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="flex items-center gap-2 px-3 py-1 border border-primary text-primary rounded-full text-sm hover:bg-primary hover:text-background transition-colors"
+                class="flex items-center gap-2 px-3 py-1 border border-primary text-primary rounded-full text-sm font-medium hover:bg-primary hover:text-background transition-colors"
               >
                 <Icon name="simple-icons:github" class="w-4 h-4" />
                 Source
@@ -86,6 +86,7 @@ const projects = [
     thumbnail: "/gif/miwsbook.gif",
     website: "https://book.amiw.dev/",
     source: "https://github.com/amirahdzh/miwsbook-fe",
+    accentBg: "bg-sage",
   },
   {
     title: "Wedding Invitation Template",
@@ -96,6 +97,7 @@ const projects = [
     thumbnail: "/gif/wedding_inv.gif",
     website: `${$config.public.siteUrl}/wedding-template`,
     source: "https://github.com/amirahdzh/wedding-inv",
+    accentBg: "bg-bloom",
   },
   {
     title: "Personal Website",
@@ -107,6 +109,7 @@ const projects = [
 
     website: "https://amiwspace.vercel.app",
     source: "https://github.com/amirahdzh/amiwspace",
+    accentBg: "bg-honey",
   },
   {
     title: "Daarul Ummahaat Website",
@@ -117,6 +120,7 @@ const projects = [
     thumbnail: "/gif/daarul_ummahaat.gif",
     website: "https://daarulummahaat.org",
     source: "https://github.com/amirahdzh/daarul-ummahaat",
+    accentBg: "bg-terracotta",
   },
   {
     title: "Miaw Discord Bot",
@@ -127,6 +131,7 @@ const projects = [
     thumbnail: "/img/miaw.jpg",
     // website: "https://daarulummahaat.org",
     source: "https://github.com/amirahdzh/amiw-bot",
+    accentBg: "bg-sage",
   },
 ];
 </script>

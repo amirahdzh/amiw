@@ -35,11 +35,6 @@
           <Card class="px-6 py-4 bg-primary">
             <div class="flex items-center justify-between">
               <div class="flex gap-4">
-                <img
-                  class="w-12 h-12 rounded-full"
-                  src="/img/maple.png"
-                  alt="Author Avatar"
-                />
                 <div>
                   <p class="text-lg font-medium text-secondary">Amiw Dzh</p>
                   <p class="text-sm text-secondary/80">@amiwdzh</p>
@@ -102,7 +97,7 @@
 
         <!-- Posts or Loading/Error -->
         <hr class="border-t border-primary" />
-        <div v-if="error" class="text-center text-red-500 font-semibold">
+        <div v-if="error" class="text-center text-destructive font-semibold">
           {{ error }}
         </div>
         <div v-else-if="isLoading" class="flex justify-center gap-3">
@@ -139,9 +134,12 @@
                   </p>
                 </div>
                 <!-- Thumbnail -->
-                <div class="w-full max-w-lg lg:max-w-[256px] lg:flex-shrink-0">
+                <div
+                  v-if="post.thumbnail"
+                  class="w-full max-w-lg lg:max-w-[256px] lg:flex-shrink-0"
+                >
                   <img
-                    :src="post.thumbnail || DEFAULT_THUMBNAIL"
+                    :src="post.thumbnail"
                     alt="Thumbnail"
                     class="w-full h-auto aspect-[5/3] object-cover rounded-lg"
                     v-motion-fade
@@ -174,6 +172,4 @@ onMounted(() => {
     blogStore.setCategory(storedCategory);
   }
 });
-
-const DEFAULT_THUMBNAIL = "/img/maple.png";
 </script>

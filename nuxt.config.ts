@@ -69,4 +69,8 @@ export default defineNuxtConfig({
   content: {
     documentDriven: true, // Set the content configuration here
   },
+  routeRules: {
+    // Memoir moved to "/" — send old bookmarks/links to the new home
+    '/memoir': { redirect: '/' },
+  },
 })

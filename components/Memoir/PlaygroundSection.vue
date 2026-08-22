@@ -52,79 +52,135 @@ const handleGameSelection = (game: string) => {
         <!-- ChatBox Playground -->
         <div
           v-motion-fade-visible
-          class="bg-secondary border border-border rounded-2xl p-6 cursor-pointer transition-transform hover:scale-[1.02] duration-300"
+          class="bg-secondary rounded-2xl p-8 cursor-pointer transition-transform hover:scale-[1.02] duration-300 relative overflow-hidden border border-r-4 border-b-4 border-primary"
           @click="showChatModal = true"
         >
-          <h3 class="text-xl font-semibold text-primary mb-2">
-            🧠 Talk with the Bot
-          </h3>
-          <p class="text-muted-foreground text-sm">
+          <div class="absolute top-0 left-0 right-0 h-2 bg-bloom"></div>
+
+          <div class="flex items-center justify-between gap-2 mb-3 mt-2">
+            <h3 class="text-2xl font-extrabold text-primary">
+              🧠 Talk with the Bot
+            </h3>
+            <span
+              class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-bloom text-primary"
+            >
+              Chat
+            </span>
+          </div>
+          <p class="text-muted-foreground text-base leading-relaxed">
             Chat with Amiw’s thoughtful bot, always ready to listen 💬
           </p>
         </div>
 
         <!-- Gaming Log Card -->
         <div
-          class="bg-secondary border border-border rounded-2xl p-6 cursor-pointer transition hover:scale-[1.02] duration-300 group"
+          v-motion-fade-visible
+          class="bg-secondary rounded-2xl p-8 cursor-pointer transition hover:scale-[1.02] duration-300 group relative overflow-hidden border border-r-4 border-b-4 border-primary"
           @click="openGameChoiceModal"
         >
-          <h3 class="text-xl font-semibold text-primary mb-2">
-            🎮 My Gaming Log
-          </h3>
-          <p class="text-muted-foreground text-sm">
+          <div class="absolute top-0 left-0 right-0 h-2 bg-terracotta"></div>
+
+          <div class="flex items-center justify-between gap-2 mb-3 mt-2">
+            <h3 class="text-2xl font-extrabold text-primary">
+              🎮 My Gaming Log
+            </h3>
+            <span
+              class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-terracotta text-secondary"
+            >
+              Play
+            </span>
+          </div>
+          <p class="text-muted-foreground text-base leading-relaxed">
             Track my progress in Mobile Legends & Valorant, from strategies to
             milestones!
           </p>
         </div>
 
-        <!-- Other Cards -->
+        <!-- Sustainable Living -->
         <div
           v-motion-fade-visible
-          class="bg-secondary border border-border rounded-2xl p-6 cursor-not-allowed transition hover:opacity-90 duration-300 group relative"
+          class="bg-secondary rounded-2xl p-8 cursor-not-allowed transition hover:opacity-90 duration-300 group relative overflow-hidden border border-r-4 border-b-4 border-primary"
         >
-          <h3 class="text-xl font-semibold text-primary mb-2">
-            🌱 Sustainable Living
-          </h3>
-          <p class="text-muted-foreground text-sm">
+          <div class="absolute top-0 left-0 right-0 h-2 bg-honey"></div>
+
+          <div class="flex items-center justify-between gap-2 mb-3 mt-2">
+            <h3 class="text-2xl font-extrabold text-primary">
+              🌱 Sustainable Living
+            </h3>
+            <span
+              class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-honey text-primary"
+            >
+              Eco
+            </span>
+          </div>
+          <p class="text-muted-foreground text-base leading-relaxed">
             Learn to reduce waste, live minimally, and love the Earth in small
             everyday choices.
           </p>
-          <div class="mt-4 text-center text-muted-foreground italic">
-            Under Development
+          <div class="mt-6 flex items-center justify-between">
+            <span class="text-sm italic text-muted-foreground"
+              >Under Development</span
+            >
+            <span class="text-honey text-xl">🌾</span>
           </div>
         </div>
 
         <!-- Homesteading Projects -->
         <div
           v-motion-fade-visible
-          class="bg-secondary border border-border rounded-2xl p-6 cursor-not-allowed transition hover:opacity-90 duration-300 group relative"
+          class="bg-secondary rounded-2xl p-8 cursor-not-allowed transition hover:opacity-90 duration-300 group relative overflow-hidden border border-r-4 border-b-4 border-primary"
         >
-          <h3 class="text-xl font-semibold text-primary mb-2">
-            🏡 Homesteading Projects
-          </h3>
-          <p class="text-muted-foreground text-sm">
+          <!-- Pink "bloom" accent strip -->
+          <div class="absolute top-0 left-0 right-0 h-2 bg-bloom"></div>
+
+          <div class="flex items-center justify-between gap-2 mb-3 mt-2">
+            <h3 class="text-2xl font-extrabold text-primary">
+              🏡 Homesteading Projects
+            </h3>
+            <span
+              class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-sage text-secondary"
+            >
+              Garden
+            </span>
+          </div>
+          <p class="text-muted-foreground text-base leading-relaxed">
             Future space for garden logs, DIY tools, and seasonal harvest notes
             from a quiet life.
           </p>
-          <div class="mt-4 text-center text-muted-foreground italic">
-            Coming Soon...
+          <div class="mt-6 flex items-center justify-between">
+            <span class="text-sm italic text-muted-foreground"
+              >Coming Soon...</span
+            >
+            <span class="text-terracotta text-xl">🌿</span>
           </div>
         </div>
 
         <!-- Pantry & Food Waste Tracker -->
         <div
           v-motion-fade-visible
-          class="bg-secondary border border-border rounded-2xl p-6 cursor-not-allowed transition hover:opacity-90 duration-300 group relative"
+          class="bg-secondary rounded-2xl p-8 cursor-not-allowed transition hover:opacity-90 duration-300 group relative overflow-hidden border border-r-4 border-b-4 border-primary"
         >
-          <h3 class="text-xl font-semibold text-primary mb-2">
-            🍽️ Food Waste Tracker
-          </h3>
-          <p class="text-muted-foreground text-sm">
+          <div class="absolute top-0 left-0 right-0 h-2 bg-terracotta"></div>
+
+          <div class="flex items-center justify-between gap-2 mb-3 mt-2">
+            <h3 class="text-2xl font-extrabold text-primary">
+              🍽️ Food Waste Tracker
+            </h3>
+            <span
+              class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-terracotta text-secondary"
+            >
+              Kitchen
+            </span>
+          </div>
+          <p class="text-muted-foreground text-base leading-relaxed">
             A simple tool to track what's in your pantry, save food, and plan
             meals more mindfully.
           </p>
-          <div class="mt-4 text-center text-muted-foreground italic">
-            Still in the kitchen...
+          <div class="mt-6 flex items-center justify-between">
+            <span class="text-sm italic text-muted-foreground"
+              >Still in the kitchen...</span
+            >
+            <span class="text-honey text-xl">🍞</span>
           </div>
         </div>
       </div>
@@ -139,23 +195,23 @@ const handleGameSelection = (game: string) => {
         <div
           v-show="showGameChoiceModal"
           ref="gameModalRef"
-          class="relative bg-white rounded-3xl shadow-2xl w-full max-w-xl p-8 border border-gray-200"
+          class="relative bg-secondary rounded-3xl shadow-2xl w-full max-w-xl p-8 border border-border"
         >
           <button
             @click="closeGameChoiceModal"
-            class="absolute top-4 right-6 text-gray-400 hover:text-red-500 transition text-xl"
+            class="absolute top-4 right-6 text-muted-foreground hover:text-destructive transition text-xl"
           >
             ×
           </button>
 
-          <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
+          <h3 class="text-2xl font-semibold text-foreground mb-6 text-center">
             Choose a Game
           </h3>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <!-- Valorant Card -->
             <div
-              class="cursor-pointer border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition"
+              class="cursor-pointer border border-border rounded-xl overflow-hidden hover:shadow-md transition"
               @click="handleGameSelection('valorant')"
             >
               <img
@@ -167,7 +223,7 @@ const handleGameSelection = (game: string) => {
 
             <!-- Mobile Legends Card -->
             <div
-              class="cursor-pointer border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition"
+              class="cursor-pointer border border-border rounded-xl overflow-hidden hover:shadow-md transition"
               @click="handleGameSelection('mobile-legends')"
             >
               <img
@@ -179,7 +235,7 @@ const handleGameSelection = (game: string) => {
 
             <!-- Dota 2 Card -->
             <!-- <div
-              class="cursor-pointer border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition"
+              class="cursor-pointer border border-border rounded-xl overflow-hidden hover:shadow-md transition"
               @click="handleGameSelection('mobile-legends')"
             >
               <img

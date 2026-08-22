@@ -15,7 +15,7 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
   <main class="max-w-3xl mx-auto px-4 py-16">
     <NuxtLink
       to="/memoir/gaming-log/valorant"
-      class="inline-flex items-center gap-1 mb-8 text-sm text-indigo-500 hover:underline"
+      class="inline-flex items-center gap-1 mb-8 text-sm text-[hsl(var(--amiw))] hover:underline"
     >
       ← Back to Valorant Logs
     </NuxtLink>
@@ -29,7 +29,7 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
           class="w-full mb-6 rounded-lg shadow"
         />
         <h1 class="mb-2">{{ doc.title }}</h1>
-        <p class="text-sm text-gray-500 mb-6">{{ doc.date }}</p>
+        <p class="text-sm text-muted-foreground mb-6">{{ doc.date }}</p>
 
         <ContentRenderer :value="doc" />
       </article>
@@ -52,13 +52,13 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
             alt="Cover"
             class="h-32 w-full object-cover"
           />
-          <div class="p-4 bg-white dark:bg-neutral-900">
+          <div class="p-4 bg-secondary">
             <h3
-              class="font-semibold text-lg group-hover:text-indigo-600 transition"
+              class="font-semibold text-lg group-hover:text-[hsl(var(--amiw))] transition"
             >
               {{ log.title }}
             </h3>
-            <p class="text-sm text-gray-500 mt-1 line-clamp-2">
+            <p class="text-sm text-muted-foreground mt-1 line-clamp-2">
               {{ log.description || "No description available." }}
             </p>
           </div>

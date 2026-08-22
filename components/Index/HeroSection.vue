@@ -8,32 +8,23 @@
     <div
       class="flex flex-col md:flex-row items-center justify-evenly max-w-6xl mx-auto"
     >
-      <section
-        class="w-full flex flex-wrap sm:flex-nowrap items-center justify-center text-left sm:gap-2 gap-4"
-      >
-        <!-- Profile Image -->
-        <img
-          src="/img/maple.png"
-          alt="Amiw Illustration"
-          class="sm:w-52 w-28 flex-shrink-0 border-2 border-primary rounded-lg"
-        />
-
+      <section class="w-full flex items-center justify-center">
         <!-- Intro Text & Buttons -->
         <div
-          class="w-full sm:max-w-sm flex flex-col items-center sm:items-start space-y-4 px-6"
+          class="w-full max-w-md flex flex-col items-center text-center space-y-4 px-6"
         >
           <h2 class="text-4xl text-primary">I am <b> Amiw</b>!</h2>
 
-          <div class="text-primary font-medium text-md sm:whitespace-nowrap">
-            <span class="block text-center sm:text-left text-md">
+          <div class="text-primary font-medium text-md">
+            <span class="block text-center text-md">
               <i>Frontend? Backend? Servers?</i> <br />
               Don't worry,
-              <span class="bg-white"> I'm a <b>full-stack dev</b></span
+              <span class="bg-bloom"> I'm a <b>full-stack dev</b></span
               >. <br />I do everything on my own.
             </span>
           </div>
 
-          <div class="flex gap-4 justify-center sm:justify-start w-full">
+          <div class="flex gap-4 justify-center w-full">
             <Button
               variant="default"
               class="bg-secondary hover:bg-secondary hover:text-primary border border-r-4 border-b-4 border-primary text-primary"
@@ -57,7 +48,7 @@
             </Button>
           </div>
           <div class="flex items-center gap-2 text-sm">
-            <span class="block text-center sm:text-left">
+            <span class="block text-center">
               Remote · Jakarta (GMT+7)
             </span>
           </div>
@@ -86,13 +77,13 @@
         beyond professional, I love to connect and collaborate with people:
         <br />
         <a href="https://discord.gg/Ye8J4Z4ANN" target="_blank"
-          ><span class="hover:underline bg-white">[join my community]</span></a
+          ><span class="hover:underline bg-bloom">[join my community]</span></a
         >
 
         <a
           href="mailto:amirahdzh@gmail.com?subject=Pitch%20Your%20Idea"
           target="_blank"
-          >&nbsp;<span class="hover:underline bg-white">[pitch your idea]</span>
+          >&nbsp;<span class="hover:underline bg-bloom">[pitch your idea]</span>
         </a>
       </p>
     </section>
@@ -100,7 +91,7 @@
     <!-- Tech Stack Icons -->
     <!-- <div class="flex justify-center mt-6">
       <div
-        class="flex items-center gap-6 px-6 py-4 rounded-full bg-white backdrop-blur-md"
+        class="flex items-center gap-6 px-6 py-4 rounded-full bg-bloom backdrop-blur-md"
       >
         <Icon name="simple-icons:nuxt" class="w-8 h-8 text-[#00DC82]" />
         <Icon name="simple-icons:vuedotjs" class="w-8 h-8 text-[#42B883]" />

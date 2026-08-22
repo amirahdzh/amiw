@@ -6,128 +6,140 @@
 
 @layer base {
   :root {
+    /* Garden & Bake palette — see DESIGN-garden-bake.md */
 
-    --background: 339, 81%, 85%; /* Soft Pink */
+    --background: 38 45% 95%; /* Warm cream ("buttermilk") */
 
-    --foreground: 0 0% 0%; /* Black */
-    
-    --header-background: 0 0% 100%; /* White */
+    --foreground: 20 35% 18%; /* Soil brown */
 
-    --alternate-background: 0 0% 98%;
+    --header-background: 40 60% 98%; /* Warm paper */
 
-    --amiw: 0 0% 0%;
+    --alternate-background: 36 30% 90%; /* Deeper cream stripe */
 
-    --pink: 339, 70%, 80%;
+    --amiw: 339 55% 58%; /* Rose — readable brand-accent text */
 
-    /* --header-foreground: 0 0% 0%;  */
+    --pink: 339 70% 82%; /* Blush — soft accent for highlights */
 
-    --card: 0 0% 100%;
+    --bloom: 339 81% 85%; /* The original signature pink, unchanged — bg accents/badges only */
 
-    --card-foreground: 0 0% 3.9%;
+    --sage: 100 20% 50%; /* Garden accent */
 
-    --popover: 0 0% 100%;
+    --terracotta: 20 55% 52%; /* Garden/baking accent */
 
-    --popover-foreground: 0 0% 3.9%;
+    --honey: 42 70% 58%; /* Baking accent */
 
-    --primary: 0 0% 9%;
+    --card: 40 60% 98%;
 
-    --primary-foreground: 0 0% 98%;
+    --card-foreground: 20 35% 18%;
 
-    --secondary: 0 0% 100%;
+    --popover: 40 60% 98%;
 
-    --secondary-foreground: 0 0% 9%;
+    --popover-foreground: 20 35% 18%;
 
-    --muted: 0 0% 96.1%;
+    --primary: 20 30% 24%; /* Soil brown — borders, buttons */
 
-    --muted-foreground: 0 0% 45.1%;
+    --primary-foreground: 38 45% 96%;
 
-    --accent: 0 0% 93%;
+    --secondary: 40 60% 98%; /* Warm paper, replaces stark white */
 
-    --accent-foreground: 0 0% 9%;
+    --secondary-foreground: 20 30% 24%;
 
-    --destructive: 0 84.2% 60.2%;
+    --muted: 36 30% 90%;
 
-    --destructive-foreground: 0 0% 98%;
+    --muted-foreground: 25 15% 42%; /* Warm taupe */
 
-    --border: 0 0% 89.8%;
+    --accent: 96 24% 88%; /* Pale sage hover fill */
 
-    --input: 0 0% 89.8%;
+    --accent-foreground: 20 30% 20%;
 
-    --ring: 0 0% 3.9%;
+    --destructive: 6 70% 48%; /* Warmed brick red */
 
-    --chart-1: 12 76% 61%;
+    --destructive-foreground: 38 45% 96%;
 
-    --chart-2: 173 58% 39%;
+    --border: 36 25% 82%; /* Warm hairline */
 
-    --chart-3: 197 37% 24%;
+    --input: 36 25% 82%;
 
-    --chart-4: 43 74% 66%;
+    --ring: 20 30% 30%;
 
-    --chart-5: 27 87% 67%;
+    --chart-1: 20 55% 52%;
 
-    --radius: 0.5rem
+    --chart-2: 100 20% 50%;
+
+    --chart-3: 42 70% 58%;
+
+    --chart-4: 339 55% 58%;
+
+    --chart-5: 20 30% 24%;
+
+    --radius: 0.75rem
   }
   .dark {
+    /* Cozy evening-kitchen mode */
 
-    --background: 215, 27.91%, 16.86%; 
-    /* --background: 0 0% 5%; */
+    --background: 20 25% 12%; /* Warm near-black brown, not slate */
 
-    --alternate-background: 0 0% 10%;
+    --alternate-background: 20 20% 16%;
 
-    --foreground: 0, 0%, 100%; 
-    
-    --header-background: 0 0% 5%; 
+    --foreground: 38 40% 92%;
 
-    --amiw: 339, 81%, 85%;
+    --header-background: 20 22% 14%;
 
-    --pink: 339, 81%, 85%;
-    /* --header-background: 217, 19%, 27%;  */
+    --amiw: 339 70% 78%; /* Pink pops brighter against the dark */
 
-    /* --header-foreground: 0 0% 100%;  */
+    --pink: 339 70% 78%;
 
-    --card: 0 0% 3.9%;
+    --bloom: 339 81% 85%; /* Same signature pink in both modes */
 
-    --card-foreground: 0 0% 98%;
+    --sage: 100 25% 55%;
 
-    --popover: 0 0% 3.9%;
+    --terracotta: 20 55% 58%;
 
-    --popover-foreground: 0 0% 98%;
+    --honey: 42 70% 62%;
 
-    --primary: 0 0% 98%;
+    --card: 20 20% 16%;
 
-    --primary-foreground: 0 0% 9%;
+    --card-foreground: 38 40% 92%;
 
-    --secondary: 0 0% 5%;
+    --popover: 20 20% 16%;
 
-    --secondary-foreground: 0 0% 98%;
+    --popover-foreground: 38 40% 92%;
 
-    --muted: 0 0% 14.9%;
+    --primary: 38 40% 92%;
 
-    --muted-foreground: 0 0% 63.9%;
+    --primary-foreground: 20 30% 18%;
 
-    --accent: 0 0% 14.9%;
+    --secondary: 20 20% 14%;
 
-    --accent-foreground: 0 0% 98%;
+    --secondary-foreground: 38 40% 92%;
 
-    --destructive: 0 62.8% 30.6%;
+    --muted: 20 15% 22%;
 
-    --destructive-foreground: 0 0% 98%;
+    --muted-foreground: 30 15% 65%;
 
-    --border: 0 0% 14.9%;
+    --accent: 20 15% 22%;
 
-    --input: 0 0% 14.9%;
+    --accent-foreground: 38 40% 92%;
 
-    --ring: 0 0% 83.1%;
+    --destructive: 6 60% 42%;
 
-    --chart-1: 220 70% 50%;
+    --destructive-foreground: 38 45% 96%;
 
-    --chart-2: 160 60% 45%;
+    --border: 20 15% 24%;
 
-    --chart-3: 30 80% 55%;
+    --input: 20 15% 24%;
 
-    --chart-4: 280 65% 60%;
+    --ring: 38 40% 80%;
 
-    --chart-5: 340 75% 55%
+    --chart-1: 20 55% 58%;
+
+    --chart-2: 100 25% 55%;
+
+    --chart-3: 42 70% 62%;
+
+    --chart-4: 339 70% 78%;
+
+    --chart-5: 38 40% 92%
   }
 }
 

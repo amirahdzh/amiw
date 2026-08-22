@@ -16,39 +16,31 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
       ← Back to Gaming Logs
     </NuxtLink>
 
-    <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">
+    <h1 class="text-4xl font-bold text-center mb-12 text-foreground">
       Valorant Gaming Logs
     </h1>
 
     <ul v-if="logs && logs.length" class="space-y-10">
       <li v-for="log in logs" :key="log._path" class="flex space-x-4">
-        <div class="flex-1 bg-white rounded-lg border border-gray-200 p-6">
-          <!-- Header with Avatar, Name, and Date -->
+        <div class="flex-1 bg-secondary rounded-lg border border-border p-6">
+          <!-- Header with Name and Date -->
           <div class="flex items-center gap-4 mb-3">
-            <!-- Avatar -->
-            <div class="w-14 h-14 rounded-full overflow-hidden">
-              <img
-                src="/img/maple.png"
-                alt="Amiw Avatar"
-                class="w-full h-full object-cover"
-              />
-            </div>
             <!-- Name and Date -->
             <div>
-              <p class="font-semibold text-gray-800">Amiw</p>
-              <p class="text-xs text-gray-400">
+              <p class="font-semibold text-foreground">Amiw</p>
+              <p class="text-xs text-muted-foreground">
                 {{ new Date(log.date).toLocaleDateString() }}
               </p>
             </div>
           </div>
 
-          <div class="border-t my-4"></div>
+          <div class="border-t border-border my-4"></div>
 
           <!-- Content -->
-          <h2 class="text-xl font-semibold text-gray-800 mb-2">
+          <h2 class="text-xl font-semibold text-foreground mb-2">
             {{ log.title }}
           </h2>
-          <p class="text-sm text-gray-600 mb-3">{{ log.description }}</p>
+          <p class="text-sm text-muted-foreground mb-3">{{ log.description }}</p>
 
           <!-- Cover Image -->
           <img
@@ -69,7 +61,7 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
       </li>
     </ul>
 
-    <p v-else class="text-center text-gray-400">No gaming logs found.</p>
+    <p v-else class="text-center text-muted-foreground">No gaming logs found.</p>
   </main>
 </template>
 

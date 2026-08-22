@@ -18,15 +18,15 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
           :to="log._path"
           class="block p-4 rounded-lg border hover:shadow transition"
         >
-          <p class="text-sm text-indigo-500 font-medium capitalize mb-1">
+          <p class="text-sm text-[hsl(var(--amiw))] font-medium capitalize mb-1">
             {{ log._dir }}
           </p>
           <h2 class="text-xl font-semibold">{{ log.title }}</h2>
-          <p class="text-sm text-gray-500">{{ log.description }}</p>
+          <p class="text-sm text-muted-foreground">{{ log.description }}</p>
         </NuxtLink>
       </li>
     </ul>
 
-    <p v-else class="text-gray-500">No gaming logs found.</p>
+    <p v-else class="text-muted-foreground">No gaming logs found.</p>
   </main>
 </template>

@@ -4,17 +4,20 @@ const innerJourney = [
     year: "2025",
     title: "Beauty in Simplicity",
     description: "Minimalism brought clarity to my mind and space.",
+    accentBg: "bg-sage",
   },
   {
     year: "2024",
     title: "Letting Go of Control",
     description: "I learned to surrender what's beyond me and found peace.",
+    accentBg: "bg-honey",
   },
 
   {
     year: "2022",
     title: "Reconnected with Faith",
     description: "Returned quietly to my spiritual roots.",
+    accentBg: "bg-terracotta",
   },
 ];
 
@@ -24,6 +27,7 @@ const journeyItems = [
     title: "Freelance Dev @ Sanbersy",
     description: "Backend dev using <strong>Laravel</strong> (remote).",
     emoji: "💻",
+    accentBg: "bg-terracotta",
   },
   {
     year: "2024",
@@ -31,6 +35,7 @@ const journeyItems = [
     description:
       "Graduated from <strong>Universitas Pendidikan Indonesia</strong>.",
     emoji: "🎓",
+    accentBg: "bg-honey",
   },
   {
     year: "2023",
@@ -38,6 +43,7 @@ const journeyItems = [
     description:
       "Built fullstack apps with <strong>Vue</strong> & <strong>Laravel</strong>.",
     emoji: "🛠️",
+    accentBg: "bg-sage",
   },
   {
     year: "2021",
@@ -45,6 +51,7 @@ const journeyItems = [
     description:
       "Met <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong>.",
     emoji: "🌱",
+    accentBg: "bg-bloom",
   },
 ];
 
@@ -54,7 +61,7 @@ const highlight = (text: string) =>
 
 <template>
   <section id="journey" class="py-16 px-6 max-w-4xl mx-auto">
-    <h2 class="text-2xl font-bold text-foreground mb-6">🛤️ Journey</h2>
+    <h2 class="text-3xl font-bold text-foreground mb-6">🛤️ Journey</h2>
     <p class="text-muted-foreground mb-10 text-sm">
       A mix of quiet shifts within and visible milestones outside ✨
     </p>
@@ -69,10 +76,13 @@ const highlight = (text: string) =>
           v-for="(item, index) in innerJourney"
           :key="'inner-' + index"
           v-motion-fade-visible
-          class="bg-[hsl(var(--alternate-background))] rounded-xl p-4 border border-border hover:shadow-sm transition"
+          class="relative overflow-hidden bg-secondary rounded-2xl p-4 border border-r-4 border-b-4 border-primary transition hover:scale-[1.02] duration-300"
         >
-          <p class="text-xs text-muted-foreground mb-1">{{ item.year }}</p>
-          <h4 class="font-semibold text-sm text-foreground mb-1">
+          <div class="absolute top-0 left-0 right-0 h-1.5" :class="item.accentBg"></div>
+          <p class="mt-1 text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1">
+            {{ item.year }}
+          </p>
+          <h4 class="font-bold text-sm text-foreground mb-1">
             {{ item.title }}
           </h4>
           <p class="text-xs text-muted-foreground">{{ item.description }}</p>
@@ -85,17 +95,29 @@ const highlight = (text: string) =>
       <h3 class="text-lg font-semibold text-foreground mb-3">
         🏁 Visible Milestones
       </h3>
-      <ul class="grid md:grid-cols-2 gap-4">
+      <ol class="relative border-l-2 border-primary/30 ml-4">
         <li
           v-for="(item, index) in journeyItems"
           :key="'outer-' + index"
           v-motion-fade-visible
-          class="bg-[hsl(var(--alternate-background))] rounded-xl p-4 border border-border hover:shadow-sm transition flex items-start gap-3"
+          class="relative pl-8 pb-8 last:pb-0"
         >
-          <div class="text-xl">{{ item.emoji }}</div>
-          <div>
-            <p class="text-xs text-muted-foreground mb-1">{{ item.year }}</p>
-            <h4 class="font-semibold text-sm text-foreground mb-1">
+          <!-- Marker on the timeline -->
+          <span
+            class="absolute -left-[19px] top-0 w-9 h-9 rounded-full border-2 border-primary ring-4 ring-background flex items-center justify-center text-base"
+            :class="item.accentBg"
+          >
+            {{ item.emoji }}
+          </span>
+
+          <div
+            class="relative overflow-hidden bg-secondary rounded-2xl p-4 border border-r-4 border-b-4 border-primary transition hover:scale-[1.02] duration-300"
+          >
+            <div class="absolute top-0 left-0 right-0 h-1.5" :class="item.accentBg"></div>
+            <p class="mt-1 text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1">
+              {{ item.year }}
+            </p>
+            <h4 class="font-bold text-sm text-foreground mb-1">
               {{ item.title }}
             </h4>
             <p
@@ -104,7 +126,7 @@ const highlight = (text: string) =>
             />
           </div>
         </li>
-      </ul>
+      </ol>
     </div>
   </section>
 </template>
