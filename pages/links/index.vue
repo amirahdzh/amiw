@@ -6,9 +6,13 @@
       <!-- Profile -->
       <div class="text-center mb-8">
         <div
-          class="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-r-4 border-b-4 border-[hsl(var(--pink))] bg-[hsl(var(--alternate-background))] flex items-center justify-center"
+          class="w-32 h-32 mx-auto mb-4 rounded-full border-2 border-r-4 border-b-4 border-[hsl(var(--pink))] bg-[hsl(var(--alternate-background))] overflow-hidden"
         >
-          <span class="font-mono text-4xl text-[hsl(var(--pink))]">A</span>
+          <img
+            src="/img/amiw.jpeg"
+            alt="Amiw"
+            class="w-full h-full object-cover"
+          />
         </div>
 
         <h1 class="text-2xl font-bold text-primary">{{ profile.name }}</h1>
@@ -40,7 +44,11 @@
           v-bind="
             link.disabled
               ? { 'aria-disabled': 'true' }
-              : { href: link.href, target: '_blank', rel: 'noopener noreferrer' }
+              : {
+                  href: link.href,
+                  target: '_blank',
+                  rel: 'noopener noreferrer',
+                }
           "
           class="relative overflow-hidden flex items-center gap-3 pl-5 pr-4 py-4 pt-5 rounded-2xl border border-r-4 border-b-4 border-primary bg-secondary text-primary transition-transform"
           :class="
@@ -49,7 +57,10 @@
               : 'hover:-translate-y-0.5 active:translate-y-0 active:border-r-2 active:border-b-2'
           "
         >
-          <div class="absolute top-0 left-0 right-0 h-1.5" :class="link.accentBg"></div>
+          <div
+            class="absolute top-0 left-0 right-0 h-1.5"
+            :class="link.accentBg"
+          ></div>
           <Icon :name="link.icon" class="w-5 h-5 shrink-0" />
           <div class="flex flex-col flex-1 min-w-0">
             <span class="font-semibold flex items-center gap-2">
@@ -61,7 +72,10 @@
           </div>
           <span
             class="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full shrink-0"
-            :class="[link.accentBg, link.disabled ? 'text-primary' : 'text-secondary']"
+            :class="[
+              link.accentBg,
+              link.disabled ? 'text-primary' : 'text-secondary',
+            ]"
           >
             {{ link.disabled ? "Soon" : "Live" }}
           </span>

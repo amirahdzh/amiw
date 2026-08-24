@@ -2,9 +2,7 @@
   <div
     class="py-20 px-4 min-h-screen bg-gradient-to-br from-[hsl(var(--alternate-background))] to-[hsl(var(--amiw)/0.08)]"
   >
-    <div
-      class="max-w-2xl mx-auto bg-white/80 dark:bg-black/40 rounded-xl shadow-lg p-8 mt-6"
-    >
+    <div class="max-w-2xl mx-auto bg-white/80 rounded-xl shadow-lg p-8 mt-6">
       <h1
         class="text-2xl font-bold mb-6 text-[hsl(var(--amiw))] flex items-center gap-2"
       >
@@ -23,7 +21,7 @@
         </svg>
         Amiw's Account List 🌺
       </h1>
-      <p class="mb-4 text-gray-600 dark:text-gray-300 text-sm">
+      <p class="mb-4 text-gray-600 text-sm">
         Note: The account data shown below may contain minor inconsistencies or
         outdated information. Please tell to <b>Amiw</b> if there are any
         issues.
@@ -33,7 +31,7 @@
           v-model="unlockCode"
           type="text"
           placeholder="Enter unlock code"
-          class="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[hsl(var(--amiw))] bg-white/80 dark:bg-black/30"
+          class="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[hsl(var(--amiw))] bg-white/80"
         />
         <button
           @click="tryUnlock"
@@ -46,21 +44,21 @@
         >
       </div>
       <div class="overflow-x-auto rounded-lg shadow">
-        <table class="min-w-full bg-white/90 dark:bg-black/30 rounded-lg">
+        <table class="min-w-full bg-white/90 rounded-lg">
           <thead>
             <tr>
               <th
-                class="px-6 py-3 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider bg-[hsl(var(--amiw)/0.1)]"
+                class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider bg-[hsl(var(--amiw)/0.1)]"
               >
                 Email
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider bg-[hsl(var(--amiw)/0.1)]"
+                class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider bg-[hsl(var(--amiw)/0.1)]"
               >
                 Password
               </th>
               <th
-                class="px-6 py-3 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider bg-[hsl(var(--amiw)/0.1)]"
+                class="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider bg-[hsl(var(--amiw)/0.1)]"
               >
                 Nickname
               </th>
@@ -72,19 +70,13 @@
               :key="index"
               class="hover:bg-[hsl(var(--amiw)/0.07)] transition"
             >
-              <td
-                class="px-6 py-4 font-mono text-[15px] text-gray-900 dark:text-gray-100"
-              >
+              <td class="px-6 py-4 font-mono text-[15px] text-gray-900">
                 {{ unlocked ? account.username : "••••••••••" }}
               </td>
-              <td
-                class="px-6 py-4 font-mono text-[15px] text-gray-900 dark:text-gray-100"
-              >
+              <td class="px-6 py-4 font-mono text-[15px] text-gray-900">
                 {{ unlocked ? account.password : "••••••••••" }}
               </td>
-              <td
-                class="px-6 py-4 text-[15px] text-gray-700 dark:text-gray-200"
-              >
+              <td class="px-6 py-4 text-[15px] text-gray-700">
                 {{ account.nickname }}
               </td>
             </tr>

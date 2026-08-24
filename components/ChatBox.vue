@@ -25,7 +25,7 @@
               {{ msg.role === "user" ? "You" : "Amiw's Bot" }}
             </span>
             <div
-              class="rounded-xl px-4 py-2 whitespace-pre-line text-sm prose prose-sm dark:prose-invert max-w-full sm:max-w-xs"
+              class="rounded-xl px-4 py-2 whitespace-pre-line text-sm prose prose-sm max-w-full sm:max-w-xs"
               :class="
                 msg.role === 'user'
                   ? 'bg-secondary border text-primary rounded-br-none'
@@ -148,7 +148,7 @@ const sendMessage = async () => {
       reply || {
         role: "assistant",
         content: "⚠️ I couldn't come up with a reply. Can you rephrase it?",
-      }
+      },
     );
   } catch (err) {
     console.error(err);

@@ -15,7 +15,7 @@ const quotes = [
 
 const randomQuote = useState(
   "randomQuote",
-  () => quotes[Math.floor(Math.random() * quotes.length)]
+  () => quotes[Math.floor(Math.random() * quotes.length)],
 );
 
 const slogans = ["SPACE", "PAGE", "DIARY"];
@@ -78,17 +78,18 @@ onBeforeUnmount(() => {
         <!-- Pink "bloom" accent strip -->
         <div class="absolute top-0 left-0 right-0 h-2 bg-bloom"></div>
 
-        <div class="flex items-center gap-5 mt-2">
+        <div class="flex flex-col md:flex-row md:items-center gap-8 mt-2">
           <!-- 🎨 Avatar badge -->
           <client-only>
-            <div class="relative shrink-0">
+            <div class="relative shrink-0 flex justify-center md:justify-start">
               <div
-                class="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-r-4 border-b-4 border-[hsl(var(--pink))] bg-[hsl(var(--alternate-background))] flex items-center justify-center"
+                class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-r-4 border-b-4 border-[hsl(var(--pink))] bg-[hsl(var(--alternate-background))] overflow-hidden"
               >
-                <span
-                  class="font-mono text-2xl md:text-3xl text-[hsl(var(--pink))]"
-                  >A</span
-                >
+                <img
+                  src="/img/amiw.jpeg"
+                  alt="Amiw"
+                  class="w-full h-full object-cover"
+                />
               </div>
 
               <!-- 🌟 Floating Emojis -->
@@ -142,7 +143,7 @@ onBeforeUnmount(() => {
             </div>
           </client-only>
 
-          <!-- 📌 Greeting -->
+          <!-- 📌 Welcome and intro -->
           <div class="flex-1 min-w-0">
             <p class="text-muted-foreground text-sm tracking-wide">
               Welcome to
@@ -153,22 +154,22 @@ onBeforeUnmount(() => {
               MY {{ currentText
               }}<span class="ml-1 animate-pulse font-thin">|</span>
             </h2>
+
+            <p
+              class="mt-5 italic text-md text-muted-foreground border-l-4 border-[hsl(var(--pink))] pl-4"
+            >
+              This place is mine — A resting point for souls wandering nowhere.
+            </p>
+
+            <div
+              v-motion-slide-bottom
+              class="bg-honey/30 text-primary px-4 py-3 rounded-xl shadow mt-6 w-fit rotate-[-1deg]"
+            >
+              <p class="text-sm italic">
+                Sometimes I write just to remember I exist.
+              </p>
+            </div>
           </div>
-        </div>
-
-        <p
-          class="mt-5 italic text-md text-muted-foreground border-l-4 border-[hsl(var(--pink))] pl-4"
-        >
-          This place is mine — A resting point for souls wandering nowhere.
-        </p>
-
-        <div
-          v-motion-slide-bottom
-          class="bg-honey/30 text-primary px-4 py-3 rounded-xl shadow mt-6 w-fit rotate-[-1deg]"
-        >
-          <p class="text-sm italic">
-            Sometimes I write just to remember I exist.
-          </p>
         </div>
 
         <!-- 🧭 In-page Nav -->

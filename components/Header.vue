@@ -21,6 +21,7 @@
                 :to="icon.link"
                 :target="icon.external ? '_blank' : undefined"
                 :rel="icon.external ? 'noopener noreferrer' : undefined"
+                @click="handleIconClick($event, icon)"
                 class="relative flex items-center justify-center p-1.5 sm:p-2 rounded-full transition-colors duration-300 hover:bg-accent"
               >
                 <Icon :name="icon.name" class="w-5 h-5" />
@@ -56,6 +57,7 @@
                 :to="icon.link"
                 :target="icon.external ? '_blank' : undefined"
                 :rel="icon.external ? 'noopener noreferrer' : undefined"
+                @click="handleIconClick($event, icon)"
                 class="relative flex items-center justify-center p-1.5 sm:p-2 rounded-full transition-colors duration-300 hover:bg-accent"
               >
                 <Icon :name="icon.name" class="w-5 h-5" />
@@ -75,28 +77,78 @@
             </TooltipContent>
           </Tooltip>
         </div>
-        <!-- Separator -->
-        <div class="w-[1px] h-6 bg-border"></div>
-
-        <!-- Theme Toggle (Disabled) -->
-        <Tooltip>
-          <TooltipTrigger as-child>
-            <button
-              disabled
-              class="flex items-center justify-center p-1.5 sm:p-2 rounded-full opacity-50 cursor-not-allowed"
-            >
-              <Icon name="lucide:moon" class="w-5 h-5" />
-            </button>
-          </TooltipTrigger>
-          <TooltipContent> Theme toggle (coming soon) </TooltipContent>
-        </Tooltip>
       </TooltipProvider>
     </div>
+
+    <Dialog v-model:open="isContactDialogOpen">
+      <DialogContent
+        class="border-2 border-r-4 border-b-4 border-primary bg-secondary text-primary"
+      >
+        <DialogHeader>
+          <DialogTitle class="text-2xl font-bold">
+            Open {{ pendingContact?.label }}?
+          </DialogTitle>
+          <DialogDescription class="text-muted-foreground">
+            A tiny hello is waiting for you. This will open
+            {{ pendingContact?.label }} in a new tab.
+          </DialogDescription>
+        </DialogHeader>
+
+        <DialogFooter class="gap-2 sm:gap-2">
+          <DialogClose
+            class="rounded-md border border-primary px-4 py-2 text-sm font-semibold text-primary hover:bg-accent"
+          >
+            Maybe later
+          </DialogClose>
+          <button
+            type="button"
+            class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-secondary hover:opacity-90"
+            @click="openPendingContact"
+          >
+            Yes, open it
+          </button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   </header>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
+
+type NavbarIcon = {
+  name: string;
+  link: string;
+  tooltip: string;
+  external?: boolean;
+};
+
+type ContactTarget = {
+  link: string;
+  label: string;
+};
+
+const isContactDialogOpen = ref(false);
+const pendingContact = ref<ContactTarget | null>(null);
+
+const handleIconClick = (event: MouseEvent, icon: NavbarIcon) => {
+  if (!icon.external) return;
+
+  event.preventDefault();
+  pendingContact.value = {
+    ...icon,
+    label: icon.tooltip,
+  };
+  isContactDialogOpen.value = true;
+};
+
+const openPendingContact = () => {
+  if (!pendingContact.value) return;
+
+  window.open(pendingContact.value.link, "_blank", "noopener,noreferrer");
+  isContactDialogOpen.value = false;
+  pendingContact.value = null;
+};
 
 // ShadCN Vue Tooltip components
 // import {
@@ -119,7 +171,7 @@ const handleScroll = () => {
 onMounted(() => window.addEventListener("scroll", handleScroll));
 onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 
-const icons = [
+const icons: NavbarIcon[] = [
   { name: "lucide:home", link: "/", tooltip: "Home" },
   { name: "lucide:briefcase", link: "/portfolio", tooltip: "Portfolio" },
   { name: "lucide:book-text", link: "/blog", tooltip: "Blog" },

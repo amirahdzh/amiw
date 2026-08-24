@@ -7,7 +7,7 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
     .where({ _path: { $ne: currentPath } })
     .only(["_path", "title", "description", "cover"])
     .sort({ date: -1 })
-    .find()
+    .find(),
 );
 </script>
 
@@ -21,7 +21,7 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
     </NuxtLink>
 
     <ContentDoc v-slot="{ doc }">
-      <article class="prose prose-neutral dark:prose-invert max-w-none">
+      <article class="prose prose-neutral max-w-none">
         <img
           v-if="doc.cover"
           :src="doc.cover"
