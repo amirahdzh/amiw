@@ -20,18 +20,25 @@
           {{ profile.nickname }}
         </p>
 
-        <div class="flex justify-center gap-4 mt-4">
-          <a
+        <div class="flex flex-wrap justify-center gap-4 mt-4">
+          <component
+            :is="social.external ? 'a' : NuxtLinkComponent"
             v-for="social in socials"
             :key="social.name"
-            :href="social.href"
-            target="_blank"
-            rel="noopener noreferrer"
+            v-bind="
+              social.external
+                ? {
+                    href: social.href,
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                  }
+                : { to: social.href }
+            "
             :aria-label="social.name"
             class="flex items-center justify-center w-11 h-11 rounded-full border-2 border-primary text-primary transition-colors hover:bg-primary hover:text-secondary"
           >
             <Icon :name="social.icon" class="w-5 h-5" />
-          </a>
+          </component>
         </div>
       </div>
 
@@ -90,6 +97,13 @@
 </template>
 
 <script setup lang="ts">
+import { resolveComponent } from "vue";
+
+// `:is="'NuxtLink'"` (a plain string) doesn't reliably resolve to the real
+// component — it was rendering as a literal, inert <nuxtlink> tag with no
+// href. resolveComponent() looks it up properly.
+const NuxtLinkComponent = resolveComponent("NuxtLink");
+
 useHead({
   title: "Amiw's Links",
   meta: [
@@ -107,24 +121,28 @@ const profile = {
 
 const socials = [
   {
+    name: "Website",
+    href: "/",
+    icon: "lucide:globe",
+    external: false,
+  },
+  {
     name: "WhatsApp",
     href: "https://wa.me/6282114643544",
     icon: "simple-icons:whatsapp",
+    external: true,
   },
   {
-    name: "Facebook",
-    href: "https://facebook.com/amiwdzh",
-    icon: "simple-icons:facebook",
-  },
-  {
-    name: "Medium",
-    href: "https://medium.com/@amiwdzh",
-    icon: "simple-icons:medium",
+    name: "GitHub",
+    href: "https://github.com/amirahdzh",
+    icon: "simple-icons:github",
+    external: true,
   },
   {
     name: "Email",
-    href: "mailto:hello@amiw.dev",
+    href: "mailto:amirahdzh@gmail.com",
     icon: "lucide:mail",
+    external: true,
   },
 ];
 

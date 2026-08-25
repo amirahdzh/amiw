@@ -25,6 +25,11 @@ const currentYear = new Date().getFullYear();
               >Portfolio</NuxtLink
             >
           </li>
+          <li>
+            <NuxtLink to="/links" class="hover:text-primary transition"
+              >Links</NuxtLink
+            >
+          </li>
         </ul>
       </nav>
 
@@ -33,6 +38,7 @@ const currentYear = new Date().getFullYear();
         <a
           href="https://facebook.com/amiwdzh"
           target="_blank"
+          rel="noopener noreferrer"
           class="hover:text-primary transition"
         >
           <Icon name="simple-icons:facebook" class="w-4 h-4" />
@@ -40,16 +46,26 @@ const currentYear = new Date().getFullYear();
         <a
           href="https://github.com/amirahdzh"
           target="_blank"
+          rel="noopener noreferrer"
           class="hover:text-primary transition"
         >
           <Icon name="simple-icons:github" class="w-4 h-4" />
         </a>
         <a
-          href="https://medium.com/@amiwdzh"
+          href="https://wa.me/6282114643544"
           target="_blank"
+          rel="noopener noreferrer"
           class="hover:text-primary transition"
         >
-          <Icon name="simple-icons:medium" class="w-4 h-4" />
+          <Icon name="simple-icons:whatsapp" class="w-4 h-4" />
+        </a>
+        <a
+          href="mailto:amirahdzh@gmail.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="hover:text-primary transition"
+        >
+          <Icon name="lucide:mail" class="w-4 h-4" />
         </a>
       </div>
 

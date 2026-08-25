@@ -21,10 +21,11 @@
       </NuxtLink>
 
       <p class="text-muted-foreground leading-relaxed mb-6">
-        Curious about my longer thoughts and stories? You can find those on the
+        Curious about my longer thoughts and stories? You can find those on
+        the
         <NuxtLink to="/blog" class="underline text-amiw hover:text-amiw/80"
           >Blog</NuxtLink
-        >, where I publish selected writings from my Medium.
+        >.
       </p>
       <NuxtLink
         to="/blog"
@@ -32,18 +33,6 @@
       >
         ✍️ Read My Blog
       </NuxtLink>
-
-      <p class="text-sm text-muted-foreground mt-6">
-        Or follow my journey on
-        <a
-          href="https://medium.com/@amiwdzh"
-          target="_blank"
-          class="underline hover:text-amiw"
-        >
-          Medium
-        </a>
-        directly.
-      </p>
     </div>
   </section>
 </template>

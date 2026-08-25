@@ -25,22 +25,11 @@
           class="relative overflow-hidden mt-6 rounded-2xl border border-r-4 border-b-4 border-primary bg-secondary p-5"
         >
           <div class="absolute top-0 left-0 right-0 h-1.5 bg-bloom"></div>
-          <div class="flex items-center justify-between gap-3 mt-1">
-            <div>
-              <p class="text-lg font-bold text-primary">Amiw Dzh</p>
-              <p class="text-sm text-muted-foreground">
-                Web Developer & Writer
-              </p>
-            </div>
-            <a
-              href="https://medium.com/@amiwdzh"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Also on Medium"
-              class="flex items-center justify-center w-9 h-9 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-secondary transition-colors shrink-0"
-            >
-              <Icon name="fa:medium" class="w-4 h-4" />
-            </a>
+          <div class="mt-1">
+            <p class="text-lg font-bold text-primary">Amiw Dzh</p>
+            <p class="text-sm text-muted-foreground">
+              Web Developer & Writer
+            </p>
           </div>
         </div>
 

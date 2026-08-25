@@ -52,10 +52,6 @@ export default defineNuxtConfig({
     },
     openRouterApiKey: process.env.OPENROUTER_API_KEY
   },
-  // Use the Nuxt Content module's configuration instead
-  content: {
-    documentDriven: true, // Set the content configuration here
-  },
   routeRules: {
     // Memoir moved to "/" — send old bookmarks/links to the new home
     '/memoir': { redirect: '/' },

@@ -82,30 +82,49 @@
 
     <Dialog v-model:open="isContactDialogOpen">
       <DialogContent
-        class="border-2 border-r-4 border-b-4 border-primary bg-secondary text-primary"
+        class="max-w-md gap-0 overflow-hidden rounded-xl border border-r-4 border-b-4 border-primary bg-card p-0 text-card-foreground shadow"
       >
-        <DialogHeader>
-          <DialogTitle class="text-2xl font-bold">
-            Open {{ pendingContact?.label }}?
-          </DialogTitle>
-          <DialogDescription class="text-muted-foreground">
+        <div class="h-2 w-full bg-bloom"></div>
+
+        <DialogHeader class="p-6 pb-2">
+          <div class="mb-2 flex items-center gap-3">
+            <div
+              class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-honey/25"
+            >
+              <Icon
+                :name="pendingContact?.name || 'lucide:send'"
+                class="h-5 w-5 text-primary"
+              />
+            </div>
+            <DialogTitle class="text-2xl font-bold text-primary">
+              Open {{ pendingContact?.label }}?
+            </DialogTitle>
+          </div>
+          <DialogDescription class="text-muted-foreground break-all">
             A tiny hello is waiting for you. This will open
-            {{ pendingContact?.label }} in a new tab.
+            <a
+              :href="pendingContact?.link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[hsl(var(--pink))] underline hover:opacity-80"
+            >{{ pendingContact?.link }}</a>
+            in a new tab.
           </DialogDescription>
         </DialogHeader>
 
-        <DialogFooter class="gap-2 sm:gap-2">
+        <DialogFooter class="gap-2 p-6 pt-4 sm:gap-2">
           <DialogClose
-            class="rounded-md border border-primary px-4 py-2 text-sm font-semibold text-primary hover:bg-accent"
+            class="rounded-full border border-border bg-muted px-4 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent"
           >
             Maybe later
           </DialogClose>
           <button
             type="button"
-            class="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-secondary hover:opacity-90"
+            class="flex items-center gap-1.5 rounded-full bg-sage px-4 py-2 text-sm font-bold text-secondary shadow-sm transition-transform hover:scale-105"
             @click="openPendingContact"
           >
             Yes, open it
+            <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
           </button>
         </DialogFooter>
       </DialogContent>
@@ -124,6 +143,7 @@ type NavbarIcon = {
 };
 
 type ContactTarget = {
+  name: string;
   link: string;
   label: string;
 };
@@ -181,6 +201,12 @@ const icons: NavbarIcon[] = [
   //   external: true,
   //   tooltip: "GitHub",
   // },
+  {
+    name: "simple-icons:instagram",
+    link: "https://instagram.com/amiw.dev",
+    external: true,
+    tooltip: "Instagram",
+  },
   // {
   //   name: "simple-icons:facebook",
   //   link: "https://facebook.com/amiwdzh",
