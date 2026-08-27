@@ -193,7 +193,7 @@ onUnmounted(() => window.removeEventListener("scroll", handleScroll));
 
 const icons: NavbarIcon[] = [
   { name: "lucide:home", link: "/", tooltip: "Home" },
-  { name: "lucide:briefcase", link: "/portfolio", tooltip: "Portfolio" },
+  { name: "lucide:palette", link: "/canvas", tooltip: "Art & Leisure" },
   { name: "lucide:book-text", link: "/blog", tooltip: "Blog" },
   // {
   //   name: "simple-icons:github",

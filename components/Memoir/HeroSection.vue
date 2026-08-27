@@ -325,12 +325,12 @@ onBeforeUnmount(() => {
             >
               🛤️ Journey
             </a>
-            <a
-              href="#playground"
+            <NuxtLink
+              to="/canvas"
               class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-honey hover:text-primary transition-colors"
             >
-              🎠 Playground
-            </a>
+              🎨 Art & Leisure
+            </NuxtLink>
           </nav>
         </div>
       </div>

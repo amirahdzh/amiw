@@ -9,26 +9,20 @@
 import { useTemplateRef, onMounted, onBeforeUnmount, computed, nextTick } from "vue";
 import { createElement, useCallback, useMemo } from "react";
 import { createRoot, type Root } from "react-dom/client";
-import { Tldraw, type Editor, type TLStoreSnapshot } from "tldraw";
+import { Tldraw, type Editor } from "tldraw";
 import { useSync, useSyncDemo } from "@tldraw/sync";
 import { createWorkerAssetStore, getWorkerBookmarkPreview } from "./workerAssetStore";
 import "tldraw/tldraw.css";
 
 const props = withDefaults(
   defineProps<{
-    /** "solo" = local-only board (persistenceKey/snapshot). "multiplayer" = live synced room. */
-    mode: "solo" | "multiplayer";
-    /** Required when mode is "multiplayer". Identifies the shared room. */
-    roomId?: string;
-    /** Local IndexedDB persistence key for solo mode (per-browser auto-restore). */
-    persistenceKey?: string;
-    /** Initial document to seed a solo board with, when nothing is persisted yet. */
-    snapshot?: TLStoreSnapshot;
+    /** Identifies the shared room everyone connecting sees the same document for. */
+    roomId: string;
     /**
      * Base URL of a self-hosted sync worker (e.g. the sync-worker/ deploy),
      * e.g. https://amiw-tldraw-sync.<account>.workers.dev — no trailing
-     * slash, no /api suffix. When omitted, multiplayer mode falls back to
-     * tldraw's public demo sync server for testing.
+     * slash, no /api suffix. When omitted, falls back to tldraw's public
+     * demo sync server for testing.
      */
     syncUri?: string;
     /** Whether the host div covers the full viewport (position: fixed; inset: 0). */
@@ -46,18 +40,11 @@ const hostStyle = computed(() =>
     : { position: "relative" as const, width: "100%", height: "100%" },
 );
 
-function SoloBoard() {
-  return createElement(Tldraw, {
-    persistenceKey: props.persistenceKey,
-    snapshot: props.snapshot,
-  });
-}
-
 // Captured once at mount time (see onMounted below) — these don't change for
 // the lifetime of a mounted board, so it's safe for a hook further down to
 // depend on them via a stable closure rather than needing to be reactive.
-function MultiplayerBoard() {
-  const roomId = props.roomId as string;
+function Board() {
+  const roomId = props.roomId;
   const syncUri = props.syncUri;
 
   const assets = useMemo(
@@ -94,8 +81,7 @@ onMounted(async () => {
   await nextTick();
   if (!hostEl.value) return;
   root = createRoot(hostEl.value);
-  const App = props.mode === "multiplayer" ? MultiplayerBoard : SoloBoard;
-  root.render(createElement(App));
+  root.render(createElement(Board));
 });
 
 onBeforeUnmount(() => {

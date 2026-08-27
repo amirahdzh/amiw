@@ -23,11 +23,14 @@ const schema = createTLSchema({
   // bindings: { ...defaultBindingSchemas },
 });
 
-// Caps total asset uploads per room, independent of the per-IP rate limiter
-// in worker.ts — that stops one IP from *bursting* uploads, this stops a
-// single shared room link from accumulating unlimited files over time (e.g.
-// spread across many visitors, or slowly over days).
-const MAX_UPLOADS_PER_ROOM = 30;
+// Caps total asset uploads for this room, independent of the per-IP rate
+// limiter in worker.ts — that stops one IP from *bursting* uploads, this
+// puts a ceiling on total accumulation over the room's lifetime. There's
+// only one room (the site's public canvas, see pages/canvas/index.vue), so
+// this is really a site-wide cap, not a per-link one — sized accordingly
+// (at the 5MB size cap in assetUploads.ts, 300 files is ~1.5GB max, well
+// under the R2 free tier's 10GB).
+const MAX_UPLOADS_PER_ROOM = 300;
 const UPLOAD_COUNT_KEY = "uploadCount";
 
 interface SocketAttachment {
