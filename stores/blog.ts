@@ -38,6 +38,22 @@ const PLACEHOLDER_POSTS: Post[] = [
     accentBg: "bg-bloom",
   },
   {
+    // TODO: write this one — mounting a React library (tldraw) inside a Vue/Nuxt
+    // app via a .client.vue wrapper, self-hosting real-time sync on a Cloudflare
+    // Worker (Durable Objects + R2), and the non-obvious bugs along the way
+    // (the .client.vue onMounted/nextTick ref timing issue is worth its own section).
+    id: "how-i-built-my-website-3",
+    title: "How I Built My Website (Part 3): A Real-Time Canvas with tldraw",
+    link: null,
+    description:
+      "Mounting a React library inside Vue, and self-hosting multiplayer sync on Cloudflare Workers instead of paying for someone else's — plus a timing bug that took way too long to find.",
+    pubDate: "2026-08-27",
+    categories: ["technology", "web-development"],
+    thumbnail: "/img/amiw.jpeg",
+    badge: "Series",
+    accentBg: "bg-sage",
+  },
+  {
     id: "why-i-chose-minimalism",
     title: "Why I Chose Minimalism",
     link: null,

@@ -1,0 +1,22 @@
+{
+  "name": "amiw-tldraw-sync-worker",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "types": "wrangler types"
+  },
+  "dependencies": {
+    "@tldraw/sync-core": "5.3.2",
+    "@tldraw/tlschema": "5.3.2",
+    "cloudflare-workers-unfurl": "^0.0.9",
+    "itty-router": "^5.0.24"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260827.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.127.0"
+  }
+}

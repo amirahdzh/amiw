@@ -1,0 +1,35 @@
+name = "amiw-tldraw-sync"
+main = "worker/worker.ts"
+compatibility_date = "2025-05-08"
+compatibility_flags = ["nodejs_compat"]
+
+[observability]
+enabled = true
+
+# Set up the durable object used for each tldraw room.
+[durable_objects]
+bindings = [{ name = "TLDRAW_DURABLE_OBJECT", class_name = "TldrawDurableObject" }]
+
+# Durable objects require migrations to create/modify/delete them.
+# Using new_sqlite_classes for SQLite-backed storage.
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["TldrawDurableObject"]
+
+# Uploaded images/videos live here. Room data itself lives in each Durable
+# Object's own SQLite storage, not in this bucket.
+# Create it first with: wrangler r2 bucket create amiw-tldraw-assets
+[[r2_buckets]]
+binding = "TLDRAW_BUCKET"
+bucket_name = "amiw-tldraw-assets"
+
+# Per-IP limit on the upload endpoint (see worker.ts). namespace_id just
+# needs to be a unique string you pick — it's not an external resource to
+# create, unlike the DO/R2 bindings above.
+[[ratelimits]]
+name = "UPLOAD_RATE_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60

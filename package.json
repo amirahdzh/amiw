@@ -15,6 +15,7 @@
     "@nuxt/icon": "^1.11.0",
     "@nuxtjs/tailwindcss": "^6.13.2",
     "@pinia/nuxt": "^0.10.1",
+    "@tldraw/sync": "^5.3.2",
     "@vueuse/motion": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -23,10 +24,13 @@
     "markdown-it": "^14.1.0",
     "nodemailer": "^6.10.0",
     "nuxt": "^3.16.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "reka-ui": "^2.2.0",
     "shadcn-nuxt": "^1.0.3",
     "tailwind-merge": "^3.0.2",
     "tailwindcss-animate": "^1.0.7",
+    "tldraw": "^5.3.2",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
@@ -36,6 +40,8 @@
     "@iconify-json/simple-icons": "^1.2.29",
     "@tailwindcss/typography": "^0.5.16",
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^22.13.14"
+    "@types/node": "^22.13.14",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5"
   }
 }

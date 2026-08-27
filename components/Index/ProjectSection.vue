@@ -90,7 +90,7 @@ const projects = [
     title: "Personal Website",
     date: "Apr 2024",
     description:
-      "My personal website showcasing my work, blog posts, thoughts, and everything about me. Built with Nuxt 3 and VueUse Motion.",
+      "My personal site — projects, blog posts, and whatever I feel like writing about. Built with Nuxt 3 and VueUse Motion.",
     tech: ["Nuxt 3", "VueUse Motion", "TailwindCSS"],
     thumbnail: "/gif/personal_web.gif",
 
@@ -102,7 +102,7 @@ const projects = [
     title: "Daarul Ummahaat Website",
     date: "Sept 2025",
     description:
-      "Official website for Daarul Ummahaat, non-profit organization focused on empowering humanity through education and social initiatives.",
+      "Website for Daarul Ummahaat, a non-profit that runs education and community programs.",
     tech: ["Nuxt 3", "Markdown", "TailwindCSS"],
     thumbnail: "/gif/daarul_ummahaat.gif",
     website: "https://daarulummahaat.org",
@@ -113,7 +113,7 @@ const projects = [
     title: "Miaw Discord Bot",
     date: "Sept 2025",
     description:
-      "Miaw Bott is a  customizable Discord bot designed for modern servers. It features both slash and prefix commands, dynamic reaction roles, public and private messaging, and is easy to extend for new features.",
+      "Miaw Bott is a customizable Discord bot with slash and prefix commands, dynamic reaction roles, and public/private messaging — easy to extend when I want to add something new.",
     tech: ["Node.js", "Discord.js", "Typescript"],
     thumbnail: "/img/miaw.jpg",
     // website: "https://daarulummahaat.org",

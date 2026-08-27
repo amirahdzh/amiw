@@ -33,6 +33,11 @@ export default defineNuxtConfig({
       baseURL: process.env.BASE_URL || "",
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL,
       siteName: process.env.NUXT_PUBLIC_SITE_NAME,
+      // Base URL of the self-hosted tldraw sync Worker (see sync-worker/),
+      // e.g. https://amiw-tldraw-sync.<account>.workers.dev. Leave unset to
+      // use tldraw's public demo sync server instead (fine for testing;
+      // data lasts 24h and rooms are public).
+      tldrawSyncUrl: process.env.NUXT_PUBLIC_TLDRAW_SYNC_URL || "",
       motion: {
         directives: {
           'pop-bottom': {
