@@ -20,11 +20,11 @@ const currentYear = new Date().getFullYear();
               >Blog</NuxtLink
             >
           </li>
-          <li>
+          <!-- <li>
             <NuxtLink to="/portfolio" class="hover:text-primary transition"
               >Portfolio</NuxtLink
             >
-          </li>
+          </li> -->
           <li>
             <NuxtLink to="/art-leisure" class="hover:text-primary transition"
               >Art & Leisure</NuxtLink

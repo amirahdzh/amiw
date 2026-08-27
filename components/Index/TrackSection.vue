@@ -1,172 +1,22 @@
-<template>
-  <section class="w-full pt-8 bg-[hsl(var(--alternate-background))]">
-    <div class="max-w-5xl mx-auto px-6">
-      <!-- <div class="grid md:grid-cols-2 gap-12"> -->
-      <div class="">
-        <!-- Work Experience -->
-        <div>
-          <h3 class="text-xl font-semibold mb-6">Work Experience</h3>
-          <ul class="space-y-3">
-            <li
-              v-for="(job, index) in work"
-              :key="index"
-              class="transition-all duration-300 hover:scale-[1.01]"
-            >
-              <div
-                @click="toggleExpand(index)"
-                :class="[
-                  'relative flex flex-col items-start group p-3 pl-5 rounded-2xl cursor-pointer select-none transition-all duration-300 overflow-hidden bg-secondary border border-r-4 border-b-4',
-                  expandedIndex === index
-                    ? 'border-[hsl(var(--amiw))] bg-muted '
-                    : 'border-primary max-h-20',
-                ]"
-                style="min-height: 64px"
-              >
-                <div
-                  class="absolute top-0 bottom-0 left-0 w-1.5"
-                  :class="job.accentBg"
-                ></div>
-                <div class="flex w-full">
-                  <img
-                    :src="job.logo"
-                    alt="logo"
-                    class="w-10 h-10 rounded-full object-contain mr-4 mt-1"
-                  />
-                  <div class="flex-1">
-                    <div
-                      class="text-lg font-bold text-foreground group-hover:text-[hsl(var(--amiw))] transition-colors"
-                    >
-                      <a
-                        v-if="job.link"
-                        :href="job.link"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="hover:text-[hsl(var(--amiw))]"
-                        @click.stop
-                      >
-                        {{ job.company }}
-                      </a>
-                      <span v-else>{{ job.company }}</span>
-                    </div>
-                    <div
-                      class="text-xs text-muted-foreground font-mono mt-1 sm:hidden"
-                    >
-                      {{ job.period }}
-                    </div>
-                    <div class="text-xs text-muted-foreground font-mono">
-                      {{ job.role }}
-                    </div>
-                  </div>
-                  <div
-                    class="text-sm text-muted-foreground text-right whitespace-nowrap ml-4 font-mono hidden sm:block"
-                  >
-                    {{ job.period }}
-                  </div>
-
-                  <span class="ml-2 text-lg">
-                    {{ expandedIndex === index ? "▲" : "▼" }}
-                  </span>
-                </div>
-                <transition name="fade">
-                  <div
-                    v-if="expandedIndex === index"
-                    class="w-full mt-2 p-3 text-sm text-foreground transition-all duration-300 break-words leading-relaxed space-y-2"
-                  >
-                    <div>{{ job.description }}</div>
-                    <div
-                      v-if="job.skills && job.skills.length"
-                      class="flex flex-wrap gap-2"
-                    >
-                      <span
-                        v-for="skill in job.skills"
-                        :key="skill"
-                        class="px-2 py-1 rounded bg-[hsl(var(--amiw)/0.12)] text-xs font-mono text-primary border border-[hsl(var(--amiw))]"
-                      >
-                        {{ skill }}
-                      </span>
-                    </div>
-                  </div>
-                </transition>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Education -->
-        <!-- <div v-motion-slide-right>
-          <h3 class="text-xl font-semibold mb-6">Education</h3>
-          <ul class="space-y-3">
-            <li
-              v-for="(edu, index) in education"
-              :key="index"
-              v-motion-fade
-              class="transition duration-200 hover:scale-[1.01]"
-            >
-              <a
-                v-if="edu.link"
-                :href="edu.link"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-start group p-2 rounded-lg bg-secondary border-2 border-primary transition-colors"
-              >
-                <img
-                  :src="edu.logo"
-                  alt="logo"
-                  class="w-10 h-10 rounded-full object-contain mr-4 mt-1"
-                />
-                <div class="flex-1">
-                  <div
-                    class="text-base font-semibold text-foreground group-hover:text-[hsl(var(--amiw))] transition-colors"
-                  >
-                    {{ edu.school }}
-                  </div>
-                  <div class="text-sm text-muted-foreground">
-                    {{ edu.degree }}
-                  </div>
-                </div>
-                <div
-                  class="text-sm text-muted-foreground text-right whitespace-nowrap ml-4"
-                >
-                  {{ edu.period }}
-                </div>
-              </a>
-              <div v-else class="flex items-start group p-2 rounded-lg">
-                <img
-                  :src="edu.logo"
-                  alt="logo"
-                  class="w-10 h-10 rounded-full object-contain mr-4 mt-1"
-                />
-                <div class="flex-1">
-                  <div
-                    class="text-base font-semibold text-foreground group-hover:text-[hsl(var(--amiw))] transition-colors"
-                  >
-                    {{ edu.school }}
-                  </div>
-                  <div class="text-sm text-muted-foreground">
-                    {{ edu.degree }}
-                  </div>
-                </div>
-                <div
-                  class="text-sm text-muted-foreground text-right whitespace-nowrap ml-4"
-                >
-                  {{ edu.period }}
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div> -->
-      </div>
-    </div>
-  </section>
-</template>
-
 <script setup lang="ts">
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
+import emblaCarouselVue from "embla-carousel-vue";
+
+const [emblaRef, emblaApi] = emblaCarouselVue({
+  loop: false,
+  align: "start",
+  dragFree: true,
+  containScroll: "trimSnaps",
+});
 
 const expandedIndex = ref<number | null>(null);
 
-function toggleExpand(index: number) {
+async function toggleExpand(index: number) {
   expandedIndex.value = expandedIndex.value === index ? null : index;
+  // Card width just changed, so the carousel's scroll bounds/snap points
+  // are stale until embla re-measures the track.
+  await nextTick();
+  emblaApi.value?.reInit();
 }
 
 const work = [
@@ -212,8 +62,6 @@ const work = [
   },
 ];
 
-console.log("Work items:", work.length, work);
-
 const education = [
   {
     school: "Universitas Pendidikan Indonesia",
@@ -232,7 +80,162 @@ const education = [
 ];
 </script>
 
+<template>
+  <section
+    id="experience"
+    class="w-full py-16 bg-[hsl(var(--alternate-background))]"
+  >
+    <div class="px-6 max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold text-foreground mb-6">
+        💼 Work Experience
+      </h2>
+
+      <div>
+        <h3 class="text-lg font-semibold text-foreground mb-3">
+          Where I've worked
+        </h3>
+        <p class="text-xs text-muted-foreground mb-4 italic">
+          🖱️ Drag sideways to explore
+        </p>
+
+        <div
+          ref="emblaRef"
+          class="overflow-hidden cursor-grab active:cursor-grabbing select-none -mx-1"
+        >
+          <div class="journey-track relative flex items-start gap-6 px-1 pb-2">
+            <div
+              v-for="(job, index) in work"
+              :key="index"
+              v-motion-fade-visible
+              class="relative z-10 shrink-0 transition-[width] duration-300 ease-in-out"
+              :class="expandedIndex === index ? 'w-96' : 'w-60'"
+            >
+              <!-- Marker on the timeline -->
+              <div
+                class="w-9 h-9 rounded-full border-2 border-primary ring-4 ring-background flex items-center justify-center overflow-hidden mb-4"
+                :class="job.accentBg"
+              >
+                <img
+                  :src="job.logo"
+                  alt=""
+                  class="w-full h-full object-contain p-1"
+                />
+              </div>
+
+              <div
+                @click="toggleExpand(index)"
+                class="relative overflow-hidden bg-secondary rounded-2xl p-4 border border-r-4 border-b-4 border-primary cursor-pointer select-none transition duration-300"
+                :class="{ 'hover:scale-[1.02]': expandedIndex !== index }"
+              >
+                <div
+                  class="absolute top-0 left-0 right-0 h-1.5"
+                  :class="job.accentBg"
+                ></div>
+                <div class="flex items-start justify-between gap-2">
+                  <div class="min-w-0">
+                    <p
+                      class="mt-1 text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1"
+                    >
+                      {{ job.period }}
+                    </p>
+                    <h4 class="font-bold text-sm text-foreground mb-1">
+                      <a
+                        :href="job.link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="hover:underline"
+                        @click.stop
+                      >
+                        {{ job.company }}
+                      </a>
+                    </h4>
+                  </div>
+                  <span class="shrink-0 mt-1 text-sm">
+                    {{ expandedIndex === index ? "▲" : "▼" }}
+                  </span>
+                </div>
+                <p class="text-xs text-muted-foreground">{{ job.role }}</p>
+
+                <transition name="fade">
+                  <div
+                    v-if="expandedIndex === index"
+                    class="mt-3 pt-3 border-t border-border text-xs text-muted-foreground leading-relaxed space-y-2"
+                  >
+                    <p>{{ job.description }}</p>
+                    <div class="flex flex-wrap gap-1.5">
+                      <span
+                        v-for="skill in job.skills"
+                        :key="skill"
+                        class="px-2 py-0.5 rounded bg-[hsl(var(--amiw)/0.12)] text-[10px] font-mono text-primary border border-[hsl(var(--amiw))]"
+                      >
+                        {{ skill }}
+                      </span>
+                    </div>
+                  </div>
+                </transition>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <!-- <div v-motion-slide-right>
+        <h3 class="text-xl font-semibold mb-6">Education</h3>
+        <ul class="space-y-3">
+          <li
+            v-for="(edu, index) in education"
+            :key="index"
+            v-motion-fade
+            class="transition duration-200 hover:scale-[1.01]"
+          >
+            <a
+              v-if="edu.link"
+              :href="edu.link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="flex items-start group p-2 rounded-lg bg-secondary border-2 border-primary transition-colors"
+            >
+              <img
+                :src="edu.logo"
+                alt="logo"
+                class="w-10 h-10 rounded-full object-contain mr-4 mt-1"
+              />
+              <div class="flex-1">
+                <div
+                  class="text-base font-semibold text-foreground group-hover:text-[hsl(var(--amiw))] transition-colors"
+                >
+                  {{ edu.school }}
+                </div>
+                <div class="text-sm text-muted-foreground">
+                  {{ edu.degree }}
+                </div>
+              </div>
+              <div
+                class="text-sm text-muted-foreground text-right whitespace-nowrap ml-4"
+              >
+                {{ edu.period }}
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div> -->
+    </div>
+  </section>
+</template>
+
 <style scoped>
+.journey-track::before {
+  content: "";
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 18px;
+  height: 2px;
+  background: hsl(var(--primary) / 0.3);
+  pointer-events: none;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s;

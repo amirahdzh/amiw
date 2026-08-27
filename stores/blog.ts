@@ -38,15 +38,33 @@ const PLACEHOLDER_POSTS: Post[] = [
     accentBg: "bg-bloom",
   },
   {
-    // TODO: write this one — mounting a React library (tldraw) inside a Vue/Nuxt
-    // app via a .client.vue wrapper, self-hosting real-time sync on a Cloudflare
-    // Worker (Durable Objects + R2), and the non-obvious bugs along the way
-    // (the .client.vue onMounted/nextTick ref timing issue is worth its own section).
+    // TODO: write this one. Beats worth hitting, roughly in the order they
+    // actually happened:
+    // 1. Mounting a React library (tldraw) inside Vue via a .client.vue
+    //    wrapper + manual createRoot/createElement — no Vue-React bridge lib.
+    // 2. The .client.vue onMounted/nextTick ref-timing bug: onMounted fires
+    //    one tick before the template ref is populated, so the board
+    //    silently never mounted until `await nextTick()` was added.
+    // 3. Self-hosting multiplayer sync on a Cloudflare Worker (Durable
+    //    Objects + R2) instead of paying for someone else's, adapted from
+    //    tldraw's official sync-cloudflare template.
+    // 4. The false lead: added a React ErrorBoundary assuming an uncaught
+    //    crash was blanking the board after a while. Reasonable diagnosis,
+    //    wrong — worth including as "here's how I was confidently wrong."
+    // 5. The actual culprit, found by live-debugging the deployed site:
+    //    tldraw's SDK deliberately hides the whole editor 5 seconds after
+    //    mount when unlicensed on a real domain (LicenseProvider.tsx,
+    //    shouldHideEditorAfterDelay + LICENSE_TIMEOUT) — no crash, no
+    //    error, just intentional silence. It *looked* intermittent because
+    //    early remounts kept resetting the 5s timer, until things settled
+    //    and it finally ran to completion.
+    // 6. Fixed with a real tldraw license key threaded through as an env
+    //    var, same pattern as the sync worker URL.
     id: "how-i-built-my-website-3",
     title: "How I Built My Website (Part 3): A Real-Time Canvas with tldraw",
     link: null,
     description:
-      "Mounting a React library inside Vue, and self-hosting multiplayer sync on Cloudflare Workers instead of paying for someone else's — plus a timing bug that took way too long to find.",
+      "Mounting a React library inside Vue, self-hosting multiplayer sync on Cloudflare Workers, and the licensing mystery that took way longer to find than it should have.",
     pubDate: "2026-08-27",
     categories: ["technology", "web-development"],
     thumbnail: "/img/amiw.jpeg",

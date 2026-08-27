@@ -1,91 +1,18 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { useMotion } from "@vueuse/motion";
-import { onClickOutside } from "@vueuse/core";
+import { computed, ref, watch, onMounted, onBeforeUnmount } from "vue";
+import { useHeroVibeStore, type HeroVibe } from "@/stores/heroVibe";
 
-const showBubble = ref(false);
-const avatarWrapperRef = ref(null);
+type Vibe = HeroVibe;
 
-const riddles = [
-  {
-    text: "I have keys but no locks, space but no room. What am I?",
-    answers: ["keyboard"],
-    success: "Ding ding ding! 🎉 You just typed your way to victory.",
-  },
-  {
-    text: "The more you take, the more you leave behind. What am I?",
-    answers: ["footsteps", "footprints", "footprint"],
-    success: "Yes! You really know how to walk the talk. 👣",
-  },
-  {
-    text: "I speak without a mouth and hear without ears. What am I?",
-    answers: ["echo"],
-    success: "Correct! ...correct! ...correct! 🔊 (sorry, had to.)",
-  },
-  {
-    text: "What has to be broken before you can use it?",
-    answers: ["egg", "eggs"],
-    success: "Cracked it! 🥚 Literally.",
-  },
-  {
-    text: "I'm always in front of you, but you'll never actually see me. What am I?",
-    answers: ["the future", "future", "tomorrow"],
-    success: "Exactly — always one step ahead of you. ⏳",
-  },
-  {
-    text: "What gets wetter the more it dries?",
-    answers: ["a towel", "towel"],
-    success: "Yep! Now go dry off that brain, genius. 🧺",
-  },
-];
+const heroVibeStore = useHeroVibeStore();
+const vibe = computed(() => heroVibeStore.vibe);
 
-const currentRiddle = useState(
-  "currentRiddle",
-  () => riddles[Math.floor(Math.random() * riddles.length)],
-);
-
-const guess = ref("");
-const isCorrect = ref(false);
-const wrongHint = ref(false);
-
-const normalize = (value: string) =>
-  value
-    .trim()
-    .toLowerCase()
-    .replace(/^(a|an|the)\s+/, "");
-
-const checkAnswer = () => {
-  if (!guess.value.trim()) return;
-  const normalized = normalize(guess.value);
-  if (currentRiddle.value.answers.some((a) => normalize(a) === normalized)) {
-    isCorrect.value = true;
-    wrongHint.value = false;
-  } else {
-    wrongHint.value = true;
-  }
+const toggleVibe = () => {
+  heroVibeStore.toggle();
 };
 
-const nextRiddle = () => {
-  let next = riddles[Math.floor(Math.random() * riddles.length)];
-  while (next.text === currentRiddle.value.text && riddles.length > 1) {
-    next = riddles[Math.floor(Math.random() * riddles.length)];
-  }
-  currentRiddle.value = next;
-  guess.value = "";
-  isCorrect.value = false;
-  wrongHint.value = false;
-};
-
-onClickOutside(avatarWrapperRef, () => {
-  showBubble.value = false;
-});
-
-// 👆 Periodic "click me" cursor cue on the avatar. `cuePulse` handles the
-// appear/disappear timing on its own loop; the computed then gates actual
-// visibility so it can only ever show while the riddle bubble is closed —
-// if the bubble opens mid-pulse, the cue disappears immediately.
+// 👆 Periodic "click me" cursor cue on the avatar, hinting it's clickable.
 const cuePulse = ref(false);
-const showClickCue = computed(() => cuePulse.value && !showBubble.value);
 
 let clickCueTimeout: ReturnType<typeof setTimeout> | null = null;
 let clickCueInterval: ReturnType<typeof setInterval> | null = null;
@@ -98,7 +25,17 @@ const pulseClickCue = () => {
   }, 2200);
 };
 
-const slogans = ["SPACE", "PAGE", "DIARY"];
+// Typewriter word bank per vibe — same "prefix + typed word" shape in both,
+// so switching vibes reads as a variation of the same mechanic rather than
+// a different widget bolted on.
+const vibeCopy: Record<Vibe, { prefix: string; words: string[] }> = {
+  diary: { prefix: "MY ", words: ["SPACE", "PAGE", "DIARY"] },
+  professional: {
+    prefix: "I'M A ",
+    words: ["FULL-STACK DEV", "BUILDER", "PROBLEM SOLVER"],
+  },
+};
+
 const sloganIndex = ref(0);
 const currentText = ref("");
 const isDeleting = ref(false);
@@ -109,8 +46,9 @@ const deleteSpeed = 60;
 const pauseAfterTyped = 1200;
 const pauseBeforeTyping = 300;
 
-const typeWriter = async () => {
-  const fullText = slogans[sloganIndex.value];
+const typeWriter = () => {
+  const words = vibeCopy[vibe.value].words;
+  const fullText = words[sloganIndex.value];
 
   if (isDeleting.value) {
     currentText.value = fullText.slice(0, currentText.value.length - 1);
@@ -125,12 +63,20 @@ const typeWriter = async () => {
     isDeleting.value = true;
   } else if (isDeleting.value && currentText.value === "") {
     isDeleting.value = false;
-    sloganIndex.value = (sloganIndex.value + 1) % slogans.length;
+    sloganIndex.value = (sloganIndex.value + 1) % words.length;
     delay = pauseBeforeTyping;
   }
 
   typewriterTimeout = setTimeout(typeWriter, delay);
 };
+
+watch(vibe, () => {
+  clearTimeout(typewriterTimeout);
+  sloganIndex.value = 0;
+  currentText.value = "";
+  isDeleting.value = false;
+  typeWriter();
+});
 
 onMounted(() => {
   typeWriter();
@@ -164,68 +110,15 @@ onBeforeUnmount(() => {
           <div class="absolute top-0 left-0 right-0 h-2 bg-bloom"></div>
         </div>
 
-        <div class="relative flex flex-col md:flex-row md:items-center gap-8 mt-2">
+        <div
+          class="relative flex flex-col md:flex-row md:items-center gap-8 mt-2"
+        >
           <!-- 🎨 Avatar badge -->
           <client-only>
-            <div
-              ref="avatarWrapperRef"
-              class="group relative shrink-0 w-fit mx-auto md:mx-0"
-            >
-              <!-- 💭 Speech bubble: below the avatar on mobile, above it on desktop -->
-              <transition name="pop">
-                <div
-                  v-if="showBubble"
-                  class="speech-bubble absolute top-full mt-5 md:top-auto md:bottom-full md:mt-0 md:mb-5 left-1/2 -translate-x-1/2 z-20 w-72 max-w-[85vw] rounded-[28px] border-2 border-[hsl(var(--pink))] bg-secondary px-5 py-4 text-sm text-foreground shadow-lg"
-                >
-                  <template v-if="!isCorrect">
-                    <p class="font-medium leading-snug">
-                      🤔 {{ currentRiddle.text }}
-                    </p>
-                    <div
-                      class="mt-3 flex items-center gap-2"
-                      :class="{ 'animate-shake': wrongHint }"
-                    >
-                      <input
-                        v-model="guess"
-                        type="text"
-                        placeholder="Your answer..."
-                        class="min-w-0 flex-1 rounded-full border border-border bg-background px-3 py-1.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-[hsl(var(--pink))]"
-                        @keyup.enter="checkAnswer"
-                        @input="wrongHint = false"
-                      />
-                      <button
-                        type="button"
-                        class="shrink-0 rounded-full bg-bloom px-3 py-1.5 text-xs font-bold text-primary transition-opacity hover:opacity-90"
-                        @click="checkAnswer"
-                      >
-                        Guess
-                      </button>
-                    </div>
-                    <p
-                      v-if="wrongHint"
-                      class="mt-1.5 text-xs text-muted-foreground"
-                    >
-                      Not quite — try again! 🤨
-                    </p>
-                  </template>
-                  <template v-else>
-                    <p class="font-medium leading-snug">
-                      {{ currentRiddle.success }}
-                    </p>
-                    <button
-                      type="button"
-                      class="mt-3 rounded-full bg-sage px-3 py-1.5 text-xs font-bold text-secondary transition-opacity hover:opacity-90"
-                      @click="nextRiddle"
-                    >
-                      🎲 Try another riddle
-                    </button>
-                  </template>
-                </div>
-              </transition>
-
+            <div class="group relative shrink-0 w-fit mx-auto md:mx-0">
               <div
                 class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-r-4 border-b-4 border-[hsl(var(--pink))] bg-[hsl(var(--alternate-background))] overflow-hidden cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_0_8px_hsl(var(--pink)/0.25)]"
-                @click="showBubble = !showBubble"
+                @click="toggleVibe"
               >
                 <img
                   src="/img/amiw.jpeg"
@@ -236,7 +129,7 @@ onBeforeUnmount(() => {
                 <!-- 🖱️ Periodic "click me" cursor cue -->
                 <transition name="fade">
                   <div
-                    v-if="showClickCue"
+                    v-if="cuePulse"
                     class="pointer-events-none absolute inset-0 flex items-center justify-center"
                   >
                     <span
@@ -265,74 +158,123 @@ onBeforeUnmount(() => {
               >
                 🌸
               </motion>
-              <!-- <motion
-                :initial="{ y: 0 }"
-                :enter="{
-                  y: [0, -6, 0],
-                  transition: {
-                    repeat: Infinity,
-                    duration: 3,
-                    ease: 'easeInOut',
-                  },
-                }"
-                class="absolute -top-2 -right-3 text-lg"
-              >
-                ✨
-              </motion> -->
-
             </div>
           </client-only>
 
           <!-- 📌 Welcome and intro -->
           <div class="flex-1 min-w-0">
-            <p class="text-muted-foreground text-sm tracking-wide">
-              Welcome to
-            </p>
-            <h2
-              class="text-3xl md:text-4xl font-extrabold text-foreground transition-all duration-500 ease-in-out"
-            >
-              MY {{ currentText
-              }}<span class="ml-1 animate-pulse font-thin">|</span>
-            </h2>
+            <transition name="fade" mode="out-in">
+              <div :key="vibe">
+                <p class="text-muted-foreground text-sm tracking-wide">
+                  {{ vibe === "diary" ? "Welcome to" : "Hi, I'm Amiw" }}
+                </p>
+                <h2
+                  class="text-3xl md:text-4xl font-extrabold text-foreground transition-all duration-500 ease-in-out"
+                  :class="{ 'font-mono': vibe === 'professional' }"
+                >
+                  {{ vibeCopy[vibe].prefix }}{{ currentText
+                  }}<span class="ml-1 animate-pulse font-thin">|</span>
+                </h2>
 
-            <p
-              class="mt-5 italic text-md text-muted-foreground border-l-4 border-[hsl(var(--pink))] pl-4"
-            >
-              This place is mine — A resting point for souls wandering nowhere.
-            </p>
+                <template v-if="vibe === 'diary'">
+                  <p
+                    class="mt-5 italic text-md text-muted-foreground border-l-4 border-[hsl(var(--pink))] pl-4"
+                  >
+                    This place is mine — A resting point for souls wandering
+                    nowhere.
+                  </p>
 
-            <div
-              v-motion-slide-bottom
-              class="bg-honey/30 text-primary px-4 py-3 rounded-xl shadow mt-6 w-fit rotate-[-1deg]"
-            >
-              <p class="text-sm italic">
-                Sometimes I write just to remember I exist.
-              </p>
-            </div>
+                  <div
+                    v-motion-slide-bottom
+                    class="bg-honey/30 text-primary px-4 py-3 rounded-xl shadow mt-6 w-fit rotate-[-1deg]"
+                  >
+                    <p class="text-sm italic">
+                      Sometimes I write just to remember I exist.
+                    </p>
+                  </div>
+                </template>
+                <template v-else>
+                  <p
+                    class="mt-5 text-sm leading-relaxed text-muted-foreground border-l-4 border-[hsl(var(--pink))] pl-4"
+                  >
+                    <i>Frontend? Backend? Servers?</i>
+                    Don't worry, <br />
+                    <span class="bg-bloom"
+                      >I'm a <b>full-stack developer</b></span
+                    >, I do it all, and well.
+                  </p>
+
+                  <div class="flex flex-wrap gap-3 mt-6">
+                    <Button
+                      variant="default"
+                      size="sm"
+                      class="bg-secondary hover:bg-secondary hover:text-primary border border-r-4 border-b-4 border-primary text-primary"
+                      as="a"
+                      href="https://wa.me/6282114643544"
+                      target="_blank"
+                    >
+                      <Icon name="simple-icons:whatsapp" class="w-4 h-4" />
+                      Contact Me
+                    </Button>
+
+                    <Button
+                      variant="default"
+                      size="sm"
+                      class="bg-primary text-secondary"
+                      as="a"
+                      href="https://docs.google.com/document/d/1JPOLI2oE2TByNBR7FCI7I6ZZaW7vDEOff67c0FaDrDA/edit?usp=drive_link"
+                      target="_blank"
+                    >
+                      <Icon
+                        name="heroicons-outline:external-link"
+                        class="w-4 h-4"
+                      />
+                      Resume
+                    </Button>
+                  </div>
+                </template>
+              </div>
+            </transition>
           </div>
         </div>
 
         <!-- 🧭 In-page Nav -->
         <div class="relative border-t border-border mt-6 pt-4">
           <nav class="flex flex-wrap items-center gap-2 text-sm">
-            <a
-              href="#essence"
-              class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-sage hover:text-secondary transition-colors"
-            >
-              🫧 Essence
-            </a>
-            <a
-              href="#journey"
-              class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-terracotta hover:text-secondary transition-colors"
-            >
-              🛤️ Journey
-            </a>
-            <NuxtLink
+            <template v-if="vibe === 'diary'">
+              <a
+                href="#essence"
+                class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-sage hover:text-secondary transition-colors"
+              >
+                🫧 Essence
+              </a>
+              <a
+                href="#journey"
+                class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-terracotta hover:text-secondary transition-colors"
+              >
+                🛤️ Journey
+              </a>
+            </template>
+            <template v-else>
+              <a
+                href="#services"
+                class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-sage hover:text-secondary transition-colors"
+              >
+                🛠️ Services
+              </a>
+              <a
+                href="#experience"
+                class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-terracotta hover:text-secondary transition-colors"
+              >
+                💼 Experience
+              </a>
+            </template>
+            <!-- <NuxtLink
               to="/art-leisure"
               class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-honey hover:text-primary transition-colors"
             >
               🎨 Art & Leisure
-            </NuxtLink>
+            </NuxtLink> -->
           </nav>
         </div>
       </div>
@@ -343,94 +285,6 @@ onBeforeUnmount(() => {
 <style scoped>
 html {
   scroll-behavior: smooth;
-}
-
-/* Speech bubble tail — on mobile the bubble sits below the avatar, so the
-   tail points up; on desktop (md+) the bubble sits above it, so the tail
-   flips to point down. Bordered outer triangle + inset bg-colored inner
-   triangle, in both cases. */
-.speech-bubble::before,
-.speech-bubble::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  width: 0;
-  height: 0;
-}
-
-.speech-bubble::before {
-  transform: translateX(-50%);
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 12px solid hsl(var(--pink));
-}
-
-.speech-bubble::after {
-  transform: translateX(-50%);
-  margin-bottom: -3px;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 9px solid hsl(var(--secondary));
-}
-
-@media (min-width: 768px) {
-  .speech-bubble::before,
-  .speech-bubble::after {
-    bottom: auto;
-    top: 100%;
-  }
-
-  .speech-bubble::before {
-    border-bottom: none;
-    border-top: 12px solid hsl(var(--pink));
-  }
-
-  .speech-bubble::after {
-    margin-bottom: 0;
-    margin-top: -3px;
-    border-bottom: none;
-    border-top: 9px solid hsl(var(--secondary));
-  }
-}
-
-.pop-enter-active {
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.pop-leave-active {
-  transition:
-    opacity 0.15s ease,
-    transform 0.15s ease;
-}
-.pop-enter-from,
-.pop-leave-to {
-  opacity: 0;
-  transform: translate(-50%, -6px) scale(0.92);
-}
-
-@keyframes shake {
-  10%,
-  90% {
-    transform: translateX(-2px);
-  }
-  20%,
-  80% {
-    transform: translateX(3px);
-  }
-  30%,
-  50%,
-  70% {
-    transform: translateX(-5px);
-  }
-  40%,
-  60% {
-    transform: translateX(5px);
-  }
-}
-.animate-shake {
-  animation: shake 0.4s ease;
 }
 
 .fade-enter-active,

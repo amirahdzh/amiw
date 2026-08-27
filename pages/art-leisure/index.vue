@@ -3,10 +3,14 @@
     <div class="max-w-5xl mx-auto px-4 md:px-6">
       <div class="mb-6">
         <h1 class="text-4xl font-bold text-primary mb-2">Art & Leisure</h1>
-        <!-- <p class="text-muted-foreground max-w-xl">
-          A shared canvas everyone can draw on, plus a chatbot, gaming logs,
-          and the other things I've built just because they were fun to make.
-        </p> -->
+        <p class="text-muted-foreground max-w-xl text-sm italic">
+          You can do whatever you want here. I won't record or track anything
+          you do. Leave a mark, draw a doddle, messing around (I'd rather you
+          didn't xD), or just relax and enjoy this shared space! ^^
+        </p>
+        <p class="text-muted-foreground max-w-xl text-xs mt-2">
+          Pro tip: add a new page to get your whole brand new canvas.
+        </p>
       </div>
 
       <div

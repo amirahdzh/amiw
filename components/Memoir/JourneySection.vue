@@ -71,12 +71,12 @@ const highlight = (text: string) =>
 <template>
   <section id="journey" class="py-16 px-6 max-w-4xl mx-auto">
     <h2 class="text-3xl font-bold text-foreground mb-6">🛤️ Journey</h2>
-    <p class="text-muted-foreground mb-10 text-sm">
+    <!-- <p class="text-muted-foreground mb-10 text-sm">
       A mix of quiet shifts within and visible milestones outside ✨
-    </p>
+    </p> -->
 
     <!-- Inner Shifts -->
-    <div class="mb-12">
+    <!-- <div class="mb-12">
       <h3 class="text-lg font-semibold text-foreground mb-3">
         🌊 Inner Shifts
       </h3>
@@ -97,18 +97,21 @@ const highlight = (text: string) =>
           <p class="text-xs text-muted-foreground">{{ item.description }}</p>
         </li>
       </ul>
-    </div>
+    </div> -->
 
     <!-- Visible Milestones -->
     <div>
       <h3 class="text-lg font-semibold text-foreground mb-3">
-        🏁 Visible Milestones
+        Finding extraordinary inside ordinary things
       </h3>
       <p class="text-xs text-muted-foreground mb-4 italic">
         🖱️ Drag sideways to explore
       </p>
 
-      <div ref="emblaRef" class="overflow-hidden cursor-grab active:cursor-grabbing select-none -mx-1">
+      <div
+        ref="emblaRef"
+        class="overflow-hidden cursor-grab active:cursor-grabbing select-none -mx-1"
+      >
         <div class="journey-track relative flex gap-6 px-1 pb-2">
           <div
             v-for="(item, index) in journeyItems"
@@ -127,8 +130,13 @@ const highlight = (text: string) =>
             <div
               class="relative overflow-hidden bg-secondary rounded-2xl p-4 border border-r-4 border-b-4 border-primary transition hover:scale-[1.02] duration-300"
             >
-              <div class="absolute top-0 left-0 right-0 h-1.5" :class="item.accentBg"></div>
-              <p class="mt-1 text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1">
+              <div
+                class="absolute top-0 left-0 right-0 h-1.5"
+                :class="item.accentBg"
+              ></div>
+              <p
+                class="mt-1 text-xs font-bold uppercase tracking-wide text-muted-foreground mb-1"
+              >
                 {{ item.year }}
               </p>
               <h4 class="font-bold text-sm text-foreground mb-1">
