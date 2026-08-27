@@ -9,7 +9,7 @@
 import { useTemplateRef, onMounted, onBeforeUnmount, computed, nextTick } from "vue";
 import { createElement, useCallback, useMemo } from "react";
 import { createRoot, type Root } from "react-dom/client";
-import { Tldraw, type Editor } from "tldraw";
+import { Tldraw, type Editor, ErrorBoundary, DefaultErrorFallback } from "tldraw";
 import { useSync, useSyncDemo } from "@tldraw/sync";
 import { createWorkerAssetStore, getWorkerBookmarkPreview } from "./workerAssetStore";
 import "tldraw/tldraw.css";
@@ -91,7 +91,23 @@ onMounted(async () => {
   await nextTick();
   if (!hostEl.value) return;
   root = createRoot(hostEl.value);
-  root.render(createElement(Board));
+  // <Tldraw>'s own internal error boundary only guards its own canvas
+  // rendering — it can't catch a crash in Board() itself (e.g. useSync
+  // throwing during a later reconnect). Without this outer boundary, any
+  // such crash unmounts the whole React root with nothing left behind:
+  // React 18 has no fallback of its own, so the box just goes silently and
+  // permanently blank. This is that fallback, using tldraw's own
+  // "Something went wrong — Refresh Page" UI instead of true silence.
+  root.render(
+    createElement(
+      ErrorBoundary,
+      {
+        fallback: DefaultErrorFallback,
+        onError: (error: unknown) => console.error("[CanvasTldrawBoard] crashed:", error),
+      },
+      createElement(Board),
+    ),
+  );
   emit("ready");
 });
 

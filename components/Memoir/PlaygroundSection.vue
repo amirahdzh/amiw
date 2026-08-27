@@ -45,15 +45,21 @@ const handleGameSelection = (game: string) => {
 <template>
   <section id="playground" class="py-20 bg-[hsl(var(--alternate-background))]">
     <div class="max-w-4xl mx-auto px-6">
-      <h2 class="text-3xl font-bold mb-6 text-foreground">🎠 Playground</h2>
+      <!-- <h2 class="text-3xl font-bold mb-6 text-foreground">🎠 Playground</h2> -->
 
       <!-- Playground Cards -->
       <div class="grid md:grid-cols-2 gap-6">
-        <!-- ChatBox Playground -->
+        <!--
+          ChatBox Playground — disabled for now, not deleted. The bot needs
+          more training before it's worth putting back in front of people;
+          re-enable by restoring `@click="showChatModal = true"` and the
+          cursor-pointer/hover styling below (see the still-live cards for
+          reference). The modal markup and showChatModal state further down
+          are left as-is so this is a one-line flip when it's ready again.
+        -->
         <div
           v-motion-fade-visible
-          class="bg-secondary rounded-2xl p-8 cursor-pointer transition-transform hover:scale-[1.02] duration-300 relative overflow-hidden border border-r-4 border-b-4 border-primary"
-          @click="showChatModal = true"
+          class="bg-secondary rounded-2xl p-8 cursor-not-allowed transition hover:opacity-90 duration-300 relative overflow-hidden border border-r-4 border-b-4 border-primary"
         >
           <div class="absolute top-0 left-0 right-0 h-2 bg-bloom"></div>
 
@@ -64,12 +70,18 @@ const handleGameSelection = (game: string) => {
             <span
               class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-bloom text-primary"
             >
-              Chat
+              Paused
             </span>
           </div>
           <p class="text-muted-foreground text-base leading-relaxed">
             Chat with Amiw’s thoughtful bot, always ready to listen 💬
           </p>
+          <div class="mt-6 flex items-center justify-between">
+            <span class="text-sm italic text-muted-foreground"
+              >In training...</span
+            >
+            <span class="text-bloom text-xl">🧠</span>
+          </div>
         </div>
 
         <!-- Gaming Log Card -->
