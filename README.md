@@ -76,16 +76,17 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 ## Canvas (tldraw)
 
-`/canvas` is one shared, public whiteboard — every visitor connects to the same room
-(`ROOM_ID` in [`pages/canvas/index.vue`](pages/canvas/index.vue)), live. It's React (tldraw)
-mounted inside Vue via
-[`components/Canvas/TldrawBoard.client.vue`](components/Canvas/TldrawBoard.client.vue).
+`/art-leisure` is one shared, public whiteboard — every visitor connects to the same room
+(`ROOM_ID` in [`pages/art-leisure/index.vue`](pages/art-leisure/index.vue)), live, with the
+Playground section (chatbot, gaming logs, etc.) below it. It's React (tldraw) mounted inside Vue
+via [`components/Canvas/TldrawBoard.client.vue`](components/Canvas/TldrawBoard.client.vue).
+`/canvas` redirects here (see `routeRules` in `nuxt.config.ts`) for anyone with the old link.
 
 ### Running locally
 
-No setup needed — `npm run dev` and visit `/canvas`. Multiplayer defaults to tldraw's public demo
-sync server (`useSyncDemo`), which is fine for testing but **not** for real use: demo rooms are
-public (anyone who guesses the room id can join) and data is dropped after 24h.
+No setup needed — `npm run dev` and visit `/art-leisure`. Multiplayer defaults to tldraw's public
+demo sync server (`useSyncDemo`), which is fine for testing but **not** for real use: demo rooms
+are public (anyone who guesses the room id can join) and data is dropped after 24h.
 
 ### Self-hosting the sync server
 

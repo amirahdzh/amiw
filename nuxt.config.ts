@@ -60,5 +60,7 @@ export default defineNuxtConfig({
   routeRules: {
     // Memoir moved to "/" — send old bookmarks/links to the new home
     '/memoir': { redirect: '/' },
+    // Canvas renamed to Art & Leisure — keep old shared links working
+    '/canvas': { redirect: '/art-leisure' },
   },
 })

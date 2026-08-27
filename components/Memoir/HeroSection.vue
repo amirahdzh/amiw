@@ -326,7 +326,7 @@ onBeforeUnmount(() => {
               🛤️ Journey
             </a>
             <NuxtLink
-              to="/canvas"
+              to="/art-leisure"
               class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-honey hover:text-primary transition-colors"
             >
               🎨 Art & Leisure
