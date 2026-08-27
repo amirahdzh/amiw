@@ -154,15 +154,17 @@ onBeforeUnmount(() => {
 <template>
   <section class="w-full pt-24 pb-16 bg-[hsl(var(--alternate-background))]">
     <div class="max-w-3xl mx-auto px-6">
-      <div
-        class="relative rounded-2xl bg-secondary border border-r-4 border-b-4 border-primary p-8 md:p-10"
-      >
-        <!-- Pink "bloom" accent strip -->
+      <div class="relative rounded-2xl p-8 md:p-10">
+        <!-- Card background + border, clipped so the accent strip's corners
+             can never render past the card's own rounded silhouette -->
         <div
-          class="absolute top-0 left-0 right-0 h-2 rounded-t-2xl bg-bloom"
-        ></div>
+          class="absolute inset-0 overflow-hidden rounded-2xl bg-secondary border border-r-4 border-b-4 border-primary"
+        >
+          <!-- Pink "bloom" accent strip -->
+          <div class="absolute top-0 left-0 right-0 h-2 bg-bloom"></div>
+        </div>
 
-        <div class="flex flex-col md:flex-row md:items-center gap-8 mt-2">
+        <div class="relative flex flex-col md:flex-row md:items-center gap-8 mt-2">
           <!-- 🎨 Avatar badge -->
           <client-only>
             <div
@@ -311,7 +313,7 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- 🧭 In-page Nav -->
-        <div class="border-t border-border mt-6 pt-4">
+        <div class="relative border-t border-border mt-6 pt-4">
           <nav class="flex flex-wrap items-center gap-2 text-sm">
             <a
               href="#essence"

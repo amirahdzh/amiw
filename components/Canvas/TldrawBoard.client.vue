@@ -25,6 +25,13 @@ const props = withDefaults(
      * demo sync server for testing.
      */
     syncUri?: string;
+    /**
+     * tldraw SDK license key (tldraw.dev/pricing). Without one, tldraw
+     * itself blanks the editor 5 seconds after mount on any real domain —
+     * see LicenseProvider.tsx's shouldHideEditorAfterDelay/LICENSE_TIMEOUT
+     * in @tldraw/editor. Harmless to omit on localhost.
+     */
+    licenseKey?: string;
     /** Whether the host div covers the full viewport (position: fixed; inset: 0). */
     fullscreen?: boolean;
   }>(),
@@ -81,7 +88,7 @@ function Board() {
   // <Tldraw store={syncState}> accepts the whole {status,store,error} object
   // directly (it's exactly the TLStoreWithStatus shape) and renders its own
   // connecting/error UI — no need to branch on status ourselves here.
-  return createElement(Tldraw, { store: syncState, onMount });
+  return createElement(Tldraw, { store: syncState, onMount, licenseKey: props.licenseKey });
 }
 
 onMounted(async () => {

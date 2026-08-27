@@ -16,6 +16,7 @@
           <CanvasTldrawBoard
             :room-id="ROOM_ID"
             :sync-uri="syncUri"
+            :license-key="licenseKey"
             :fullscreen="false"
             @ready="boardReady = true"
           />
@@ -52,6 +53,7 @@ const ROOM_ID = "amiw-public-canvas";
 
 const config = useRuntimeConfig();
 const syncUri = config.public.tldrawSyncUrl || undefined;
+const licenseKey = config.public.tldrawLicenseKey || undefined;
 
 const boardReady = ref(false);
 

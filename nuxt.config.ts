@@ -38,6 +38,11 @@ export default defineNuxtConfig({
       // use tldraw's public demo sync server instead (fine for testing;
       // data lasts 24h and rooms are public).
       tldrawSyncUrl: process.env.NUXT_PUBLIC_TLDRAW_SYNC_URL || "",
+      // Get one at tldraw.dev/pricing (free 100-day trial works). Without
+      // this, tldraw's own SDK deliberately blanks the editor 5 seconds
+      // after mount on any real (non-localhost) domain — see
+      // LicenseProvider.tsx's shouldHideEditorAfterDelay/LICENSE_TIMEOUT.
+      tldrawLicenseKey: process.env.NUXT_PUBLIC_TLDRAW_LICENSE_KEY || "",
       motion: {
         directives: {
           'pop-bottom': {
