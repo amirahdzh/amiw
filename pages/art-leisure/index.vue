@@ -17,15 +17,26 @@
             :room-id="ROOM_ID"
             :sync-uri="syncUri"
             :fullscreen="false"
+            @ready="boardReady = true"
           />
-          <template #fallback>
-            <div
-              class="w-full h-full flex items-center justify-center text-muted-foreground"
-            >
-              Loading canvas…
-            </div>
-          </template>
         </ClientOnly>
+
+        <!--
+          Not inside <ClientOnly> — this is plain SSR'd markup, so it's
+          already on screen before any JS runs. <ClientOnly>'s own
+          mount/fallback swap only covers the pre-hydration gap; it doesn't
+          cover the time spent downloading CanvasTldrawBoard's chunk
+          (tldraw+React, ~550KB, loaded lazily as a .client.vue), which is
+          exactly the gap that showed up as an empty box with nothing in it
+          on a cold load. This single overlay covers both gaps and only
+          goes away once the board actually confirms it rendered.
+        -->
+        <div
+          v-if="!boardReady"
+          class="absolute inset-0 flex items-center justify-center text-muted-foreground bg-secondary"
+        >
+          Loading canvas…
+        </div>
       </div>
     </div>
   </section>
@@ -41,6 +52,8 @@ const ROOM_ID = "amiw-public-canvas";
 
 const config = useRuntimeConfig();
 const syncUri = config.public.tldrawSyncUrl || undefined;
+
+const boardReady = ref(false);
 
 useHead({ title: "Art & Leisure — Amiw" });
 </script>

@@ -31,6 +31,16 @@ const props = withDefaults(
   { fullscreen: true },
 );
 
+// Fires once the React root has actually rendered something (not once the
+// sync connection is live — tldraw's own store={syncState} handling covers
+// the "connecting" sub-state with its own UI). This exists because this
+// component is a Nuxt .client.vue, loaded as its own async chunk bundling
+// tldraw+React (~550KB) — the parent's <ClientOnly> fallback only covers
+// the pre-hydration gap, not the time spent downloading *this* chunk, so
+// without a signal like this a caller has no way to show a placeholder for
+// that second gap and visitors can see a blank box while it loads.
+const emit = defineEmits<{ ready: [] }>();
+
 const hostEl = useTemplateRef<HTMLDivElement>("host");
 let root: Root | null = null;
 
@@ -82,6 +92,7 @@ onMounted(async () => {
   if (!hostEl.value) return;
   root = createRoot(hostEl.value);
   root.render(createElement(Board));
+  emit("ready");
 });
 
 onBeforeUnmount(() => {
