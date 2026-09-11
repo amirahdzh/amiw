@@ -1,19 +1,20 @@
 <template>
   <section
-    class="w-full min-h-screen pt-28 pb-16 bg-background flex flex-col items-center"
+    class="w-full min-h-screen pt-10 pb-16 bg-background flex flex-col items-center justify-start"
   >
     <div class="w-full max-w-md px-4 flex flex-col flex-1">
       <!-- Profile -->
       <div class="text-center mb-8">
-        <div
-          class="w-32 h-32 mx-auto mb-4 rounded-full border-2 border-r-4 border-b-4 border-[hsl(var(--pink))] bg-[hsl(var(--alternate-background))] overflow-hidden"
+        <NuxtLink
+          to="/"
+          class="block w-28 h-28 sm:w-36 sm:h-36 md:w-44 md:h-44 mx-auto mb-4 rounded-full border-2 border-r-4 border-b-4 border-[hsl(var(--pink))] bg-[hsl(var(--alternate-background))] overflow-hidden transition-transform hover:scale-105"
         >
           <img
             src="/img/amiw.jpeg"
             alt="Amiw"
             class="w-full h-full object-cover"
           />
-        </div>
+        </NuxtLink>
 
         <h1 class="text-2xl font-bold text-primary">{{ profile.name }}</h1>
         <p class="text-sm text-muted-foreground mt-1">
@@ -88,10 +89,6 @@
           </span>
         </component>
       </div>
-
-      <p class="text-center text-xs text-muted-foreground mt-auto pt-10">
-        © {{ new Date().getFullYear() }} Amiw
-      </p>
     </div>
   </section>
 </template>
@@ -116,7 +113,7 @@ useHead({
 
 const profile = {
   name: "Amiw",
-  nickname: "Web Developer | Technical & Content Writer",
+  nickname: "Software Engineer",
 };
 
 const socials = [

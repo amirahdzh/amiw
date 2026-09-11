@@ -31,7 +31,7 @@ const pulseClickCue = () => {
 const vibeCopy: Record<Vibe, { prefix: string; words: string[] }> = {
   diary: { prefix: "MY ", words: ["SPACE", "PAGE", "DIARY"] },
   professional: {
-    prefix: "I'M A ",
+    prefix: "A ",
     words: ["FULL-STACK DEV", "BUILDER", "PROBLEM SOLVER"],
   },
 };

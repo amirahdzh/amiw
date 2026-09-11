@@ -9,7 +9,7 @@
         <NuxtPage />
       </main>
 
-      <Footer /></div
+      <Footer v-if="route.path !== '/links'" /></div
   ></Html>
 </template>
 

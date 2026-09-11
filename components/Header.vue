@@ -77,6 +77,26 @@
             </TooltipContent>
           </Tooltip>
         </div>
+
+        <!-- Separator -->
+        <div class="w-[1px] h-6 bg-border"></div>
+
+        <!-- Links page -->
+        <div
+          class="transition-[margin,transform] duration-300 ease-out hover:scale-110 hover:mx-2"
+        >
+          <Tooltip>
+            <TooltipTrigger as-child>
+              <NuxtLink
+                to="/links"
+                class="relative flex items-center justify-center p-1.5 sm:p-2 rounded-full transition-colors duration-300 hover:bg-accent"
+              >
+                <Icon name="lucide:link" class="w-5 h-5" />
+              </NuxtLink>
+            </TooltipTrigger>
+            <TooltipContent> Links </TooltipContent>
+          </Tooltip>
+        </div>
       </TooltipProvider>
     </div>
 
