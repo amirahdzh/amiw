@@ -68,7 +68,10 @@ const services: Service[] = [
     class="w-full py-16 bg-[hsl(var(--alternate-background))]"
   >
     <div class="max-w-4xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-foreground mb-6">🛠️ Services</h2>
+      <h2 class="text-3xl font-bold text-foreground mb-6 inline-flex items-center gap-2">
+        <Icon name="lucide:wrench" class="w-7 h-7" />
+        Services
+      </h2>
       <h3 class="text-lg font-semibold text-foreground mb-4">What I Do?</h3>
 
       <div class="grid sm:grid-cols-2 gap-4">
@@ -115,7 +118,7 @@ const services: Service[] = [
                 name="heroicons-outline:external-link"
                 class="w-3.5 h-3.5"
               />
-              <span v-else>→</span>
+              <Icon v-else name="lucide:arrow-right" class="w-3.5 h-3.5" />
             </NuxtLink>
 
             <Button

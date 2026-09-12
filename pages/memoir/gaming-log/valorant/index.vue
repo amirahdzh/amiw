@@ -11,9 +11,10 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
   <main class="max-w-3xl mx-auto px-4 py-20">
     <NuxtLink
       to="/memoir/gaming-log"
-      class="text-sm text-primary hover:underline mb-8 block"
+      class="inline-flex items-center gap-1 text-sm text-primary hover:underline mb-8"
     >
-      ← Back to Gaming Logs
+      <Icon name="lucide:arrow-left" class="w-4 h-4" />
+      Back to Gaming Logs
     </NuxtLink>
 
     <h1 class="text-4xl font-bold text-center mb-12 text-foreground">

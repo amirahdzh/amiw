@@ -17,7 +17,8 @@
         to="/"
         class="inline-flex items-center justify-center gap-2 px-6 py-2 text-foreground border border-foreground rounded hover:bg-foreground/10 transition mb-4"
       >
-        🌿 Visit My Memoir
+        <Icon name="lucide:leaf" class="w-4 h-4" />
+        Visit My Memoir
       </NuxtLink>
 
       <p class="text-muted-foreground leading-relaxed mb-6">
@@ -31,7 +32,8 @@
         to="/blog"
         class="inline-flex items-center justify-center gap-2 px-6 py-2 text-foreground border border-foreground rounded hover:bg-foreground/10 transition"
       >
-        ✍️ Read My Blog
+        <Icon name="lucide:pen-line" class="w-4 h-4" />
+        Read My Blog
       </NuxtLink>
     </div>
   </section>

@@ -13,9 +13,10 @@
       @click="goToHome"
       @mouseenter="isHovered = true"
       @mouseleave="onMouseLeave"
-      class="fixed bottom-6 right-6 p-4 bg-secondary border-primary border text-primary rounded-full shadow-lg cursor-pointer animate-bounce z-50 transition-all duration-1000 font-medium"
+      class="fixed bottom-6 right-6 p-4 bg-secondary border-primary border text-primary rounded-full shadow-lg cursor-pointer animate-bounce z-50 transition-all duration-1000 font-medium inline-flex items-center gap-1.5"
     >
-      🚪 Peek
+      <Icon name="lucide:door-open" class="w-4 h-4" />
+      Peek
     </div>
   </transition>
 </template>

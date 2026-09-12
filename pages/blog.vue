@@ -15,8 +15,8 @@
         <div class="text-left space-y-4">
           <h2 class="text-5xl font-bold text-foreground">blog.</h2>
           <p class="text-muted-foreground text-base leading-relaxed">
-            Sharing thoughts, insights, and stories from this little corner
-            of the internet.
+            Sharing thoughts, insights, and stories from this little corner of
+            the internet.
           </p>
         </div>
 
@@ -28,7 +28,7 @@
           <div class="mt-1">
             <p class="text-lg font-bold text-primary">Amiw Dzh</p>
             <p class="text-sm text-muted-foreground">
-              Web Developer & Writer
+              Software Engineer & Blogger
             </p>
           </div>
         </div>
@@ -88,7 +88,10 @@
             v-motion-pop-visible
             class="relative overflow-hidden bg-secondary rounded-2xl p-6 border border-r-4 border-b-4 border-primary transition hover:scale-[1.01] duration-300"
           >
-            <div class="absolute top-0 left-0 right-0 h-1.5" :class="post.accentBg"></div>
+            <div
+              class="absolute top-0 left-0 right-0 h-1.5"
+              :class="post.accentBg"
+            ></div>
             <div
               class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mt-1"
             >

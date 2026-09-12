@@ -86,16 +86,18 @@ const education = [
     class="w-full py-16 bg-[hsl(var(--alternate-background))]"
   >
     <div class="px-6 max-w-4xl mx-auto">
-      <h2 class="text-3xl font-bold text-foreground mb-6">
-        💼 Work Experience
+      <h2 class="text-3xl font-bold text-foreground mb-6 inline-flex items-center gap-2">
+        <Icon name="lucide:briefcase" class="w-7 h-7" />
+        Work Experience
       </h2>
 
       <div>
         <h3 class="text-lg font-semibold text-foreground mb-3">
           Where I've worked
         </h3>
-        <p class="text-xs text-muted-foreground mb-4 italic">
-          🖱️ Drag sideways to explore
+        <p class="text-xs text-muted-foreground mb-4 italic inline-flex items-center gap-1.5">
+          <Icon name="lucide:move-horizontal" class="w-3.5 h-3.5" />
+          Drag sideways to explore
         </p>
 
         <div
@@ -150,9 +152,10 @@ const education = [
                       </a>
                     </h4>
                   </div>
-                  <span class="shrink-0 mt-1 text-sm">
-                    {{ expandedIndex === index ? "▲" : "▼" }}
-                  </span>
+                  <Icon
+                    :name="expandedIndex === index ? 'lucide:chevron-up' : 'lucide:chevron-down'"
+                    class="shrink-0 mt-1 w-4 h-4"
+                  />
                 </div>
                 <p class="text-xs text-muted-foreground">{{ job.role }}</p>
 

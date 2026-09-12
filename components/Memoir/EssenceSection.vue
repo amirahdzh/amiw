@@ -10,10 +10,10 @@
       <!-- 🎭 Essence Quote Box -->
       <blockquote class="group relative w-full">
         <span
-          class="absolute -top-4 left-3 text-4xl opacity-80 select-none z-10 transition-transform duration-300 group-hover:scale-[1.01]"
+          class="absolute -top-4 left-3 opacity-80 select-none z-10 transition-transform duration-300 group-hover:scale-[1.01]"
           aria-hidden="true"
         >
-          📍
+          <Icon name="lucide:map-pin" class="w-9 h-9 text-primary" />
         </span>
         <div
           class="relative overflow-hidden p-8 bg-secondary rounded-2xl border border-r-4 border-b-4 border-primary transition duration-300 group-hover:scale-[1.01]"
@@ -30,16 +30,16 @@
       <!-- 🌸 Essence Board Section -->
       <div class="group relative w-full max-w-4xl mx-auto">
         <span
-          class="absolute -top-4 left-3 text-4xl opacity-80 select-none z-10 transition-transform duration-300 group-hover:scale-[1.01]"
+          class="absolute -top-4 left-3 opacity-80 select-none z-10 transition-transform duration-300 group-hover:scale-[1.01]"
           aria-hidden="true"
         >
-          📌
+          <Icon name="lucide:pin" class="w-9 h-9 text-primary" />
         </span>
         <span
-          class="absolute -top-6 -right-4 text-5xl rotate-6 opacity-60 select-none z-10 transition-transform duration-300 group-hover:scale-[1.01]"
+          class="absolute -top-6 -right-4 rotate-6 opacity-60 select-none z-10 transition-transform duration-300 group-hover:scale-[1.01]"
           aria-hidden="true"
         >
-          💫
+          <Icon name="lucide:sparkles" class="w-11 h-11 text-honey" />
         </span>
         <div
           class="relative overflow-hidden flex flex-col gap-10 p-10 bg-secondary rounded-2xl border border-r-4 border-b-4 border-primary transition duration-300 group-hover:scale-[1.01]"
@@ -66,34 +66,40 @@
             class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-base font-semibold text-primary"
           >
             <div
-              class="bg-honey/25 px-4 py-3 rounded-xl shadow transform rotate-[-2deg] hover:rotate-0 transition"
+              class="bg-honey/25 px-4 py-3 rounded-xl shadow transform rotate-[-2deg] hover:rotate-0 transition inline-flex items-center gap-2"
             >
-              🕊️ Pre-dawn dreamer
+              <Icon name="lucide:sunrise" class="w-5 h-5 shrink-0" />
+              Pre-dawn dreamer
             </div>
             <div
-              class="bg-bloom/70 px-4 py-3 rounded-xl shadow transform rotate-[1.5deg] hover:rotate-0 transition"
+              class="bg-bloom/70 px-4 py-3 rounded-xl shadow transform rotate-[1.5deg] hover:rotate-0 transition inline-flex items-center gap-2"
             >
-              📖 Lost in pages
+              <Icon name="lucide:book-open" class="w-5 h-5 shrink-0" />
+              Lost in pages
             </div>
             <div
-              class="bg-sage/25 px-4 py-3 rounded-xl shadow transform rotate-[-1deg] hover:rotate-0 transition"
+              class="bg-sage/25 px-4 py-3 rounded-xl shadow transform rotate-[-1deg] hover:rotate-0 transition inline-flex items-center gap-2"
             >
-              🍵 Matcha over coffee
+              <Icon name="lucide:coffee" class="w-5 h-5 shrink-0" />
+              Matcha over coffee
             </div>
             <div
-              class="bg-terracotta/20 px-4 py-3 rounded-xl shadow transform rotate-[2deg] hover:rotate-0 transition"
+              class="bg-terracotta/20 px-4 py-3 rounded-xl shadow transform rotate-[2deg] hover:rotate-0 transition inline-flex items-center gap-2"
             >
-              🌱 Minimalist soul
+              <Icon name="lucide:sprout" class="w-5 h-5 shrink-0" />
+              Minimalist soul
             </div>
             <div
-              class="bg-honey/25 px-4 py-3 rounded-xl shadow transform rotate-[-1.5deg] hover:rotate-0 transition"
+              class="bg-honey/25 px-4 py-3 rounded-xl shadow transform rotate-[-1.5deg] hover:rotate-0 transition inline-flex items-center gap-2"
             >
-              🌍 Quiet wanderer
+              <Icon name="lucide:compass" class="w-5 h-5 shrink-0" />
+              Quiet wanderer
             </div>
             <div
-              class="bg-bloom/70 px-4 py-3 rounded-xl shadow transform rotate-[1deg] hover:rotate-0 transition"
+              class="bg-bloom/70 px-4 py-3 rounded-xl shadow transform rotate-[1deg] hover:rotate-0 transition inline-flex items-center gap-2"
             >
-              🎮 Nightly quests
+              <Icon name="lucide:gamepad-2" class="w-5 h-5 shrink-0" />
+              Nightly quests
             </div>
           </div>
         </div>

@@ -64,8 +64,9 @@ const handleGameSelection = (game: string) => {
           <div class="absolute top-0 left-0 right-0 h-2 bg-bloom"></div>
 
           <div class="flex items-center justify-between gap-2 mb-3 mt-2">
-            <h3 class="text-2xl font-extrabold text-primary">
-              🧠 Talk with the Bot
+            <h3 class="text-2xl font-extrabold text-primary inline-flex items-center gap-2">
+              <Icon name="lucide:brain" class="w-6 h-6" />
+              Talk with the Bot
             </h3>
             <span
               class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-bloom text-primary"
@@ -73,14 +74,15 @@ const handleGameSelection = (game: string) => {
               Paused
             </span>
           </div>
-          <p class="text-muted-foreground text-base leading-relaxed">
-            Chat with Amiw’s thoughtful bot, always ready to listen 💬
+          <p class="text-muted-foreground text-base leading-relaxed inline-flex items-center gap-1.5 flex-wrap">
+            Chat with Amiw’s thoughtful bot, always ready to listen
+            <Icon name="lucide:message-circle" class="w-4 h-4 shrink-0" />
           </p>
           <div class="mt-6 flex items-center justify-between">
             <span class="text-sm italic text-muted-foreground"
               >In training...</span
             >
-            <span class="text-bloom text-xl">🧠</span>
+            <Icon name="lucide:brain" class="w-5 h-5 text-bloom" />
           </div>
         </div>
 
@@ -93,8 +95,9 @@ const handleGameSelection = (game: string) => {
           <div class="absolute top-0 left-0 right-0 h-2 bg-terracotta"></div>
 
           <div class="flex items-center justify-between gap-2 mb-3 mt-2">
-            <h3 class="text-2xl font-extrabold text-primary">
-              🎮 My Gaming Log
+            <h3 class="text-2xl font-extrabold text-primary inline-flex items-center gap-2">
+              <Icon name="lucide:gamepad-2" class="w-6 h-6" />
+              My Gaming Log
             </h3>
             <span
               class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-terracotta text-secondary"
@@ -116,8 +119,9 @@ const handleGameSelection = (game: string) => {
           <div class="absolute top-0 left-0 right-0 h-2 bg-honey"></div>
 
           <div class="flex items-center justify-between gap-2 mb-3 mt-2">
-            <h3 class="text-2xl font-extrabold text-primary">
-              🌱 Sustainable Living
+            <h3 class="text-2xl font-extrabold text-primary inline-flex items-center gap-2">
+              <Icon name="lucide:sprout" class="w-6 h-6" />
+              Sustainable Living
             </h3>
             <span
               class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-honey text-primary"
@@ -133,7 +137,7 @@ const handleGameSelection = (game: string) => {
             <span class="text-sm italic text-muted-foreground"
               >Under Development</span
             >
-            <span class="text-honey text-xl">🌾</span>
+            <Icon name="lucide:wheat" class="w-5 h-5 text-honey" />
           </div>
         </div>
 
@@ -146,8 +150,9 @@ const handleGameSelection = (game: string) => {
           <div class="absolute top-0 left-0 right-0 h-2 bg-bloom"></div>
 
           <div class="flex items-center justify-between gap-2 mb-3 mt-2">
-            <h3 class="text-2xl font-extrabold text-primary">
-              🏡 Homesteading Projects
+            <h3 class="text-2xl font-extrabold text-primary inline-flex items-center gap-2">
+              <Icon name="lucide:home" class="w-6 h-6" />
+              Homesteading Projects
             </h3>
             <span
               class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-sage text-secondary"
@@ -163,7 +168,7 @@ const handleGameSelection = (game: string) => {
             <span class="text-sm italic text-muted-foreground"
               >Coming Soon...</span
             >
-            <span class="text-terracotta text-xl">🌿</span>
+            <Icon name="lucide:leaf" class="w-5 h-5 text-terracotta" />
           </div>
         </div>
 
@@ -175,8 +180,9 @@ const handleGameSelection = (game: string) => {
           <div class="absolute top-0 left-0 right-0 h-2 bg-terracotta"></div>
 
           <div class="flex items-center justify-between gap-2 mb-3 mt-2">
-            <h3 class="text-2xl font-extrabold text-primary">
-              🍽️ Food Waste Tracker
+            <h3 class="text-2xl font-extrabold text-primary inline-flex items-center gap-2">
+              <Icon name="lucide:utensils" class="w-6 h-6" />
+              Food Waste Tracker
             </h3>
             <span
               class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-terracotta text-secondary"
@@ -192,7 +198,7 @@ const handleGameSelection = (game: string) => {
             <span class="text-sm italic text-muted-foreground"
               >Still in the kitchen...</span
             >
-            <span class="text-honey text-xl">🍞</span>
+            <Icon name="lucide:sandwich" class="w-5 h-5 text-honey" />
           </div>
         </div>
       </div>
@@ -295,7 +301,8 @@ const handleGameSelection = (game: string) => {
                 trained AI model and may not always be accurate. Please use
                 discretion when interpreting or acting upon the information
                 provided. And Amiw can not see your chat history, so feel free
-                to interact! 🌸
+                to interact!
+                <Icon name="lucide:flower-2" class="inline w-3.5 h-3.5" />
               </p>
             </div>
           </div>

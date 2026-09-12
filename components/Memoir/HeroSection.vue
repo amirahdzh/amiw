@@ -32,7 +32,7 @@ const vibeCopy: Record<Vibe, { prefix: string; words: string[] }> = {
   diary: { prefix: "MY ", words: ["SPACE", "PAGE", "DIARY"] },
   professional: {
     prefix: "A ",
-    words: ["FULL-STACK DEV", "BUILDER", "PROBLEM SOLVER"],
+    words: ["DEVELOPER", "BUILDER", "SOLVER"],
   },
 };
 
@@ -154,9 +154,9 @@ onBeforeUnmount(() => {
                     ease: 'easeInOut',
                   },
                 }"
-                class="absolute -top-3 -left-3 text-lg"
+                class="absolute -top-3 -left-3"
               >
-                🌸
+                <Icon name="lucide:flower-2" class="w-4 h-4 text-[hsl(var(--pink))]" />
               </motion>
             </div>
           </client-only>
@@ -166,7 +166,7 @@ onBeforeUnmount(() => {
             <transition name="fade" mode="out-in">
               <div :key="vibe">
                 <p class="text-muted-foreground text-sm tracking-wide">
-                  {{ vibe === "diary" ? "Welcome to" : "Hi, I'm Amiw" }}
+                  {{ vibe === "diary" ? "Welcome to" : "I'm Amiw," }}
                 </p>
                 <h2
                   class="text-3xl md:text-4xl font-extrabold text-foreground transition-all duration-500 ease-in-out"
@@ -200,7 +200,7 @@ onBeforeUnmount(() => {
                     <i>Frontend? Backend? Servers?</i>
                     Don't worry, <br />
                     <span class="bg-bloom"
-                      >I'm a <b>full-stack developer</b></span
+                      >I'm a <b>full-stack engineer</b></span
                     >, I do it all, and well.
                   </p>
 
@@ -244,29 +244,33 @@ onBeforeUnmount(() => {
             <template v-if="vibe === 'diary'">
               <a
                 href="#essence"
-                class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-sage hover:text-secondary transition-colors"
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-sage hover:text-secondary transition-colors"
               >
-                🫧 Essence
+                <Icon name="lucide:droplet" class="w-3.5 h-3.5" />
+                Essence
               </a>
               <a
                 href="#journey"
-                class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-terracotta hover:text-secondary transition-colors"
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-terracotta hover:text-secondary transition-colors"
               >
-                🛤️ Journey
+                <Icon name="lucide:route" class="w-3.5 h-3.5" />
+                Journey
               </a>
             </template>
             <template v-else>
               <a
                 href="#services"
-                class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-sage hover:text-secondary transition-colors"
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-sage hover:text-secondary transition-colors"
               >
-                🛠️ Services
+                <Icon name="lucide:wrench" class="w-3.5 h-3.5" />
+                Services
               </a>
               <a
                 href="#experience"
-                class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-terracotta hover:text-secondary transition-colors"
+                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-terracotta hover:text-secondary transition-colors"
               >
-                💼 Experience
+                <Icon name="lucide:briefcase" class="w-3.5 h-3.5" />
+                Experience
               </a>
             </template>
             <!-- <NuxtLink

@@ -35,7 +35,7 @@ const journeyItems = [
     year: "2025",
     title: "Freelance Dev @ Sanbersy",
     description: "Backend dev using <strong>Laravel</strong> (remote).",
-    emoji: "💻",
+    icon: "lucide:laptop",
     accentBg: "bg-terracotta",
   },
   {
@@ -43,7 +43,7 @@ const journeyItems = [
     title: "Graduated B.Cs (Bachelor of Computer Science)",
     description:
       "Graduated from <strong>Universitas Pendidikan Indonesia</strong>.",
-    emoji: "🎓",
+    icon: "lucide:graduation-cap",
     accentBg: "bg-honey",
   },
   {
@@ -51,7 +51,7 @@ const journeyItems = [
     title: "Bootcamp & Projects",
     description:
       "Built fullstack apps with <strong>Vue</strong> & <strong>Laravel</strong>.",
-    emoji: "🛠️",
+    icon: "lucide:wrench",
     accentBg: "bg-sage",
   },
   {
@@ -59,7 +59,7 @@ const journeyItems = [
     title: "Started Coding",
     description:
       "Met <strong>HTML</strong>, <strong>CSS</strong>, and <strong>JavaScript</strong>.",
-    emoji: "🌱",
+    icon: "lucide:sprout",
     accentBg: "bg-bloom",
   },
 ];
@@ -70,7 +70,10 @@ const highlight = (text: string) =>
 
 <template>
   <section id="journey" class="py-16 px-6 max-w-4xl mx-auto">
-    <h2 class="text-3xl font-bold text-foreground mb-6">🛤️ Journey</h2>
+    <h2 class="text-3xl font-bold text-foreground mb-6 inline-flex items-center gap-2">
+      <Icon name="lucide:route" class="w-7 h-7" />
+      Journey
+    </h2>
     <!-- <p class="text-muted-foreground mb-10 text-sm">
       A mix of quiet shifts within and visible milestones outside ✨
     </p> -->
@@ -104,8 +107,9 @@ const highlight = (text: string) =>
       <h3 class="text-lg font-semibold text-foreground mb-3">
         Finding extraordinary inside ordinary things
       </h3>
-      <p class="text-xs text-muted-foreground mb-4 italic">
-        🖱️ Drag sideways to explore
+      <p class="text-xs text-muted-foreground mb-4 italic inline-flex items-center gap-1.5">
+        <Icon name="lucide:move-horizontal" class="w-3.5 h-3.5" />
+        Drag sideways to explore
       </p>
 
       <div
@@ -121,10 +125,10 @@ const highlight = (text: string) =>
           >
             <!-- Marker on the timeline -->
             <div
-              class="w-9 h-9 rounded-full border-2 border-primary ring-4 ring-background flex items-center justify-center text-base mb-4"
+              class="w-9 h-9 rounded-full border-2 border-primary ring-4 ring-background flex items-center justify-center mb-4"
               :class="item.accentBg"
             >
-              {{ item.emoji }}
+              <Icon :name="item.icon" class="w-4 h-4 text-foreground" />
             </div>
 
             <div

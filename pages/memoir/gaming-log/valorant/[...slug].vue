@@ -17,7 +17,8 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
       to="/memoir/gaming-log/valorant"
       class="inline-flex items-center gap-1 mb-8 text-sm text-[hsl(var(--amiw))] hover:underline"
     >
-      ← Back to Valorant Logs
+      <Icon name="lucide:arrow-left" class="w-4 h-4" />
+      Back to Valorant Logs
     </NuxtLink>
 
     <ContentDoc v-slot="{ doc }">
@@ -36,8 +37,9 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
     </ContentDoc>
 
     <section v-if="logs?.length" class="mt-16">
-      <h2 class="text-xl font-semibold mb-6 border-b pb-2">
-        🎮 More Valorant Logs
+      <h2 class="text-xl font-semibold mb-6 border-b pb-2 inline-flex items-center gap-2">
+        <Icon name="lucide:gamepad-2" class="w-5 h-5" />
+        More Valorant Logs
       </h2>
       <div class="grid sm:grid-cols-2 gap-4">
         <NuxtLink

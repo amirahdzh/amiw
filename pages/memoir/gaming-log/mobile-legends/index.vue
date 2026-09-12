@@ -9,9 +9,10 @@
       <!-- Link to go back to the previous page -->
       <NuxtLink
         to="javascript:history.back()"
-        class="text-[hsl(var(--amiw))] text-sm hover:underline"
+        class="inline-flex items-center gap-1 text-[hsl(var(--amiw))] text-sm hover:underline"
       >
-        ← Back to Previous Page
+        <Icon name="lucide:arrow-left" class="w-4 h-4" />
+        Back to Previous Page
       </NuxtLink>
     </div>
   </main>
