@@ -22,7 +22,26 @@
           class="w-full shrink-0 flex flex-col rounded-2xl border border-r-4 border-b-4 border-primary bg-secondary overflow-hidden transition-[height] duration-200 md:w-60 md:h-[70vh] md:min-h-[420px]"
           :class="isDrawerOpen ? 'h-56' : ''"
         >
-          <div class="flex items-center justify-between gap-2 px-4 py-3 border-b border-border">
+          <!--
+            The whole bar is the toggle now, not just the chevron — a much
+            easier target than a lone 28px icon, especially on mobile.
+            Collapsing only ever makes sense on mobile, where the drawer
+            competes with the canvas for vertical space by stacking above
+            it — on large screens (md:flex-row) it sits beside the canvas
+            with room to spare, so toggleDrawer() no-ops there (see its own
+            comment) rather than silently swapping the title/+ button out
+            from under a stray desktop click on this now much bigger area.
+          -->
+          <div
+            role="button"
+            tabindex="0"
+            @click="toggleDrawer"
+            @keydown.enter="toggleDrawer"
+            @keydown.space.prevent="toggleDrawer"
+            :aria-expanded="isDrawerOpen"
+            aria-label="Toggle rooms panel"
+            class="flex items-center justify-between gap-2 px-4 py-3 border-b border-border cursor-pointer md:cursor-default"
+          >
             <h2
               class="flex-1 min-w-0 truncate text-xs font-bold text-primary uppercase tracking-wide"
             >
@@ -33,30 +52,19 @@
               <button
                 v-if="isDrawerOpen"
                 type="button"
-                @click="startCreating"
+                @click.stop="startCreating"
                 class="p-1.5 rounded-md text-primary hover:bg-accent transition-colors"
                 aria-label="New room"
               >
                 <Icon name="lucide:plus" class="w-4 h-4" />
               </button>
-              <!--
-                Collapsing only ever makes sense on mobile, where the drawer
-                competes with the canvas for vertical space by stacking
-                above it — on large screens (md:flex-row) it sits beside the
-                canvas with room to spare, so the toggle is hidden there and
-                the panel just stays open.
-              -->
-              <button
-                type="button"
-                @click="isDrawerOpen = !isDrawerOpen"
-                class="md:hidden p-1.5 rounded-md text-primary hover:bg-accent transition-colors"
-                :aria-label="isDrawerOpen ? 'Collapse rooms panel' : 'Expand rooms panel'"
-              >
+              <!-- Decorative now — the whole bar above carries the click/keyboard handling. -->
+              <span class="md:hidden p-1.5 rounded-md text-primary" aria-hidden="true">
                 <Icon
                   :name="isDrawerOpen ? 'lucide:chevron-up' : 'lucide:chevron-down'"
                   class="w-4 h-4"
                 />
-              </button>
+              </span>
             </div>
           </div>
 
@@ -236,17 +244,25 @@
             at that point (see TldrawBoard.client.vue's hostStyle), so a
             button that stayed absolute here would scroll out of view along
             with this now-empty box while the fullscreen canvas stays put.
-            z-[200] clears tldraw's own internal layering (its panels/menus
-            run well above typical page z-indexes), so this reliably draws
-            on top instead of being buried under them. Fixed w-10 h-10 +
-            flex centering (rather than sizing from padding) guarantees a
-            true circle regardless of the icon's own rendered box.
+            Only needs to clear the canvas itself, not the whole page — the
+            canvas host now always sits in its own real stacking context
+            (z-index: 0 windowed, z-index: 60 fullscreen, see
+            TldrawBoard.client.vue's hostStyle), which properly contains
+            tldraw's own internal panels no matter how high they're layered
+            internally. So this only needs one step above whichever of
+            those two the canvas is currently using — going much higher
+            (the old z-[200]) meant this button also out-ranked page-level
+            modals (z-50) that are supposed to cover the whole page,
+            poking through them instead of being covered like everything
+            else. Fixed w-10 h-10 + flex centering (rather than sizing from
+            padding) guarantees a true circle regardless of the icon's own
+            rendered box.
           -->
           <button
             type="button"
             @click="isFullscreen = !isFullscreen"
-            class="z-[200] right-3 bottom-14 w-10 h-10 flex items-center justify-center rounded-full bg-secondary border border-primary text-primary shadow hover:bg-accent transition-colors"
-            :class="isFullscreen ? 'fixed' : 'absolute'"
+            class="right-3 bottom-14 w-10 h-10 flex items-center justify-center rounded-full bg-secondary border border-primary text-primary shadow hover:bg-accent transition-colors"
+            :class="isFullscreen ? 'fixed z-[61]' : 'absolute z-[1]'"
             :aria-label="isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'"
           >
             <Icon
@@ -259,7 +275,15 @@
     </div>
   </section>
 
-  <MemoirPlaygroundSection />
+  <!--
+    v-if, not v-show — this needs to actually unmount while fullscreen, not
+    just hide. Its own modals (game choice, chat) carry local open/closed
+    state that's otherwise untouched by anything on this page; if one was
+    already open before fullscreen was entered, unmounting is what actually
+    closes it, rather than leaving it sitting there fighting the canvas's
+    own stacking for the top spot.
+  -->
+  <MemoirPlaygroundSection v-if="!isFullscreen" />
 </template>
 
 <script setup lang="ts">
@@ -320,6 +344,16 @@ const isDrawerOpen = ref(true);
 const activeRoomName = computed(
   () => rooms.value.find((r) => r.id === activeRoomId.value)?.name ?? "",
 );
+
+function toggleDrawer() {
+  // Collapsing only exists on mobile — the header's md:hidden chevron and
+  // the aside's unconditional md: sizing above both assume this. Now that
+  // the whole bar (not just that 28px icon) triggers it, a stray click on
+  // desktop is much more likely, so guard here too rather than let it
+  // silently swap the title/+ button state with nothing visibly collapsing.
+  if (window.matchMedia("(min-width: 768px)").matches) return;
+  isDrawerOpen.value = !isDrawerOpen.value;
+}
 
 const isCreating = ref(false);
 const newRoomName = ref("");

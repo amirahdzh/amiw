@@ -56,7 +56,16 @@ const hostStyle = computed(() =>
     // zIndex above the site header (z-50, see Header.vue) so fullscreen
     // actually covers it instead of drawing underneath.
     ? { position: "fixed" as const, inset: 0, zIndex: 60 }
-    : { position: "relative" as const, width: "100%", height: "100%" },
+    // zIndex: 0 looks like a no-op but isn't — paired with position, ANY
+    // non-"auto" z-index creates a new CSS stacking context. tldraw's own
+    // toolbars/panels use much higher z-index values internally, and
+    // without this, position:relative alone doesn't contain them: they
+    // escape upward and get compared directly against unrelated page
+    // elements (e.g. a modal at z-50 elsewhere on the page), outranking
+    // it outright. This bounds them inside our own stacking context
+    // instead, so the whole canvas — however tldraw layers its own
+    // internals — occupies one single, low position in the page's stack.
+    : { position: "relative" as const, width: "100%", height: "100%", zIndex: 0 },
 );
 
 // Captured once at mount time (see onMounted below) — these don't change for
