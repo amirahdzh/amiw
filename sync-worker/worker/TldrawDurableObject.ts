@@ -25,11 +25,11 @@ const schema = createTLSchema({
 
 // Caps total asset uploads for this room, independent of the per-IP rate
 // limiter in worker.ts — that stops one IP from *bursting* uploads, this
-// puts a ceiling on total accumulation over the room's lifetime. There's
-// only one room (the site's public canvas, see pages/art-leisure/index.vue), so
-// this is really a site-wide cap, not a per-link one — sized accordingly
-// (at the 5MB size cap in assetUploads.ts, 300 files is ~1.5GB max, well
-// under the R2 free tier's 10GB).
+// puts a ceiling on total accumulation over the room's lifetime. Rooms are
+// also capped in total (see MAX_ROOMS in rooms.ts), so the worst case is
+// bounded on both axes — sized accordingly (at the 5MB size cap in
+// assetUploads.ts, 300 files is ~1.5GB max per room, well under the R2 free
+// tier's 10GB even across a handful of active rooms).
 const MAX_UPLOADS_PER_ROOM = 300;
 const UPLOAD_COUNT_KEY = "uploadCount";
 
@@ -99,7 +99,8 @@ export class TldrawDurableObject extends DurableObject {
 
   private readonly router = AutoRouter({ catch: (e) => error(e) })
     .get("/api/connect/:roomId", (request) => this.handleConnect(request))
-    .post("/api/upload-check", () => this.handleUploadCheck());
+    .post("/api/upload-check", () => this.handleUploadCheck())
+    .post("/api/purge", () => this.handlePurge());
 
   // Entry point for all requests to the Durable Object
   fetch(request: Request): Response | Promise<Response> {
@@ -138,6 +139,19 @@ export class TldrawDurableObject extends DurableObject {
     }
     await this.ctx.storage.put(UPLOAD_COUNT_KEY, count);
     return { ok: true, count };
+  }
+
+  // Called by worker.ts (rooms.ts's deleteRoom) when a room is deleted from
+  // the directory. Wipes this DO's SQLite storage so the drawing is actually
+  // gone, not just unlisted — without this, removing a room from the
+  // directory would leave its data sitting here indefinitely with nothing
+  // ever able to reach or reclaim it. Drops the in-memory room too, so a
+  // stale reference can't keep serving old data to anyone still connected.
+  async handlePurge() {
+    await this.ctx.storage.deleteAll();
+    this.room = null;
+    this.sessionIdToWs.clear();
+    return { ok: true };
   }
 
   // --- WebSocket Hibernation API handlers ---

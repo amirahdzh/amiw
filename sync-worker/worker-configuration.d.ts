@@ -10,4 +10,5 @@ interface Env {
   >;
   TLDRAW_BUCKET: R2Bucket;
   UPLOAD_RATE_LIMITER: RateLimit;
+  ROOMS_KV: KVNamespace;
 }

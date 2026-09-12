@@ -53,7 +53,9 @@ let root: Root | null = null;
 
 const hostStyle = computed(() =>
   props.fullscreen
-    ? { position: "fixed" as const, inset: 0 }
+    // zIndex above the site header (z-50, see Header.vue) so fullscreen
+    // actually covers it instead of drawing underneath.
+    ? { position: "fixed" as const, inset: 0, zIndex: 60 }
     : { position: "relative" as const, width: "100%", height: "100%" },
 );
 

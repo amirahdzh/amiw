@@ -1,6 +1,7 @@
 import { handleUnfurlRequest } from "cloudflare-workers-unfurl";
 import { AutoRouter, cors, error, IRequest } from "itty-router";
 import { handleAssetDownload, handleAssetUpload } from "./assetUploads";
+import { createRoom, deleteRoom, listRooms, renameRoom } from "./rooms";
 
 // make sure our sync durable object is made available to cloudflare
 export { TldrawDurableObject } from "./TldrawDurableObject";
@@ -33,6 +34,13 @@ const router = AutoRouter<IRequest, [env: Env, ctx: ExecutionContext]>({
     const room = env.TLDRAW_DURABLE_OBJECT.get(id);
     return room.fetch(request.url, { headers: request.headers, body: request.body });
   })
+
+  // the room directory backing the Art & Leisure drawer — which rooms exist
+  // and what they're called. See rooms.ts.
+  .get("/api/rooms", listRooms)
+  .post("/api/rooms", createRoom)
+  .patch("/api/rooms/:id", renameRoom)
+  .delete("/api/rooms/:id", deleteRoom)
 
   // assets can be uploaded to the bucket under /uploads. Gated by a per-IP
   // rate limit and (when the client tells us which room it's for) a

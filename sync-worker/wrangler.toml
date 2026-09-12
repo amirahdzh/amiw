@@ -33,3 +33,11 @@ namespace_id = "1001"
   [ratelimits.simple]
   limit = 10
   period = 60
+
+# Directory of rooms (id + display name) shown in the Art & Leisure drawer
+# (see worker/rooms.ts). Room content itself still lives in each room's own
+# Durable Object above — this only tracks which rooms exist.
+# Create it first with: wrangler kv namespace create ROOMS_KV
+[[kv_namespaces]]
+binding = "ROOMS_KV"
+id = "2e455eea0a2c4bf7b055dd3d4f56e0bd"
