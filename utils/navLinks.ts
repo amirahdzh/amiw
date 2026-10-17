@@ -1,33 +1,17 @@
 // Shared by the top bar (components/Header.vue) and the slim bar that returns
 // while scrolling (components/StickyNav.vue), so the two can't drift apart.
 
+import { places } from "./site";
+
 export const siteLinks = [
   { to: "/blog", label: "Blog" },
   { to: "/art-leisure", label: "Art & Leisure" },
   { to: "/links", label: "Links" },
 ];
 
-// Icons are shown on wider screens only; the same places are in the footer.
-export const socials = [
-  {
-    href: "https://instagram.com/amiw.dev",
-    label: "Instagram",
-    icon: "simple-icons:instagram",
-    external: true,
-  },
-  {
-    href: "https://wa.me/6282114643544",
-    label: "WhatsApp",
-    icon: "simple-icons:whatsapp",
-    external: true,
-  },
-  {
-    href: "mailto:amirahdzh@gmail.com",
-    label: "Email",
-    icon: "lucide:mail",
-    external: false,
-  },
-];
+// Icons are shown on wider screens only; the footer lists the same places.
+// The list itself lives in utils/site.ts.
+export const socials = places;
 
 // Every page, the blog included, uses the homepage's width (max-w-6xl with
 // 1.5rem sides), so the bars always match the content under them.

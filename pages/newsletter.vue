@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { CONTACT_EMAIL } from "~/utils/site";
+
 usePageSeo({
   title: "Newsletter | Amiw",
   description:
@@ -63,7 +65,7 @@ const underlineClass =
           A newsletter is one-way. If you'd rather talk, send me an email.
         </p>
         <a
-          href="mailto:amirahdzh@gmail.com"
+          :href="`mailto:${CONTACT_EMAIL}`"
           class="btn-outline mt-5 px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))]"
         >
           Say hello

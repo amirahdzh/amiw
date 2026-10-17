@@ -46,17 +46,19 @@
       <!-- Links -->
       <div class="flex flex-col gap-4">
         <component
-          :is="link.disabled ? 'div' : 'a'"
+          :is="link.disabled ? 'div' : link.internal ? NuxtLinkComponent : 'a'"
           v-for="link in links"
           :key="link.title"
           v-bind="
             link.disabled
               ? { 'aria-disabled': 'true' }
-              : {
-                  href: link.href,
-                  target: '_blank',
-                  rel: 'noopener noreferrer',
-                }
+              : link.internal
+                ? { to: link.href }
+                : {
+                    href: link.href,
+                    target: '_blank',
+                    rel: 'noopener noreferrer',
+                  }
           "
           class="relative overflow-hidden flex items-center gap-3 pl-5 pr-4 py-4 pt-5 rounded-2xl border border-r-4 border-b-4 border-primary bg-secondary text-primary transition-transform"
           :class="
@@ -95,6 +97,7 @@
 
 <script setup lang="ts">
 import { resolveComponent } from "vue";
+import { places } from "~/utils/site";
 
 // `:is="'NuxtLink'"` (a plain string) doesn't reliably resolve to the real
 // component — it was rendering as a literal, inert <nuxtlink> tag with no
@@ -111,39 +114,24 @@ const profile = {
   nickname: "Software Engineer",
 };
 
+// Website first, then the same places as the top bar and the footer.
 const socials = [
-  {
-    name: "Website",
-    href: "/",
-    icon: "lucide:globe",
-    external: false,
-  },
-  {
-    name: "WhatsApp",
-    href: "https://wa.me/6282114643544",
-    icon: "simple-icons:whatsapp",
+  { name: "Website", href: "/", icon: "lucide:globe", external: false },
+  ...places.map((p) => ({
+    name: p.label,
+    href: p.href,
+    icon: p.icon,
     external: true,
-  },
-  {
-    name: "GitHub",
-    href: "https://github.com/amirahdzh",
-    icon: "simple-icons:github",
-    external: true,
-  },
-  {
-    name: "Email",
-    href: "mailto:amirahdzh@gmail.com",
-    icon: "lucide:mail",
-    external: true,
-  },
+  })),
 ];
 
 const links = [
   {
     title: "Subscribe My Newsletter",
-    href: "https://newsletter.amiw.dev",
+    href: "/newsletter",
+    internal: true,
     icon: "lucide:mail",
-    disabled: true,
+    disabled: false,
     accentBg: "bg-honey",
   },
   {
@@ -156,7 +144,8 @@ const links = [
   },
   {
     title: "Real-World Projects",
-    href: "/",
+    href: "/#projects",
+    internal: true,
     desc: "how I solve digital problems",
     icon: "lucide:folder-open",
     disabled: false,

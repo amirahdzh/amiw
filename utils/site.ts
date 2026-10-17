@@ -15,6 +15,30 @@ export const SITE = {
   knowsAbout: ["C#/.NET", "TypeScript", "Linux infrastructure", "Software delivery"],
 };
 
+// Where to find Amiw. One list, used by the top bar, the slim bar, the footer
+// and the links page, so they always show the same places in the same order.
+// Change a handle or the email here and everywhere follows.
+export const CONTACT_EMAIL = "amirahdzh@gmail.com";
+export const WHATSAPP_URL = "https://wa.me/6282114643544";
+
+export interface Place {
+  label: string;
+  href: string;
+  icon: string;
+  // Opens in a new tab (false for mailto:)
+  external: boolean;
+  // Public profile that also goes into the hidden structured data below
+  profile?: boolean;
+}
+
+export const places: Place[] = [
+  { label: "GitHub", href: "https://github.com/amirahdzh", icon: "simple-icons:github", external: true, profile: true },
+  { label: "Instagram", href: "https://instagram.com/amiw.dev", icon: "simple-icons:instagram", external: true, profile: true },
+  { label: "Facebook", href: "https://facebook.com/amiw.dev", icon: "simple-icons:facebook", external: true, profile: true },
+  { label: "WhatsApp", href: WHATSAPP_URL, icon: "simple-icons:whatsapp", external: true },
+  { label: "Email", href: `mailto:${CONTACT_EMAIL}`, icon: "lucide:mail", external: false },
+];
+
 // Profiles that belong to the same person. They go into the page's hidden
 // structured data (JSON-LD "sameAs"), which is how search engines learn that
 // these accounts and this site are one person. Visitors never see this list.
@@ -22,9 +46,7 @@ export const SITE = {
 // Only list profiles that are public and that you are happy to have tied to
 // the site. Do not list a profile you want kept separate.
 export const profiles: string[] = [
-  "https://github.com/amirahdzh",
-  "https://instagram.com/amiw.dev",
-  "https://facebook.com/amiwdzh",
+  ...places.filter((p) => p.profile).map((p) => p.href),
   // LinkedIn is here on purpose, and only here. It sits in the page source for
   // search engines. The site does not link to LinkedIn anywhere visitors can
   // see (nothing in the header, footer, links page or any page text).

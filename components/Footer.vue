@@ -1,4 +1,6 @@
 <script setup>
+import { places } from "~/utils/site";
+
 const currentYear = new Date().getFullYear();
 
 const pages = [
@@ -9,13 +11,9 @@ const pages = [
   { to: "/links", label: "Links" },
 ];
 
-// Links that leave the site. They get a pink arrow.
-const elsewhere = [
-  { href: "https://github.com/amirahdzh", label: "GitHub", external: true },
-  { href: "https://wa.me/6282114643544", label: "WhatsApp", external: true },
-  { href: "mailto:amirahdzh@gmail.com", label: "Email", external: false },
-  { href: "https://facebook.com/amiwdzh", label: "Facebook", external: true },
-];
+// Same places, same order as the top bar and the links page (utils/site.ts).
+// Links that leave the site get a pink arrow.
+const elsewhere = places;
 
 const linkClass =
   "inline-block rounded py-1 font-mono text-[13px] text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none";

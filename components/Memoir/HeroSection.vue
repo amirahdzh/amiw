@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { WHATSAPP_URL } from "~/utils/site";
+
 // The diary side of this hero is archived in archive/diary/ (see its README).
 const proLinks = [
   { href: "#services", label: "Work with me" },
@@ -56,7 +58,7 @@ const proLinks = [
 
           <div class="mt-9 flex flex-wrap items-center gap-4">
             <a
-              href="https://wa.me/6282114643544"
+              :href="WHATSAPP_URL"
               target="_blank"
               rel="noopener noreferrer"
               class="btn-solid px-7 py-3.5 text-base focus-visible:ring-offset-background"

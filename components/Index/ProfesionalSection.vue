@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CONTACT_EMAIL, WHATSAPP_URL } from "~/utils/site";
 interface Offer {
   eyebrow: string;
   title: string;
@@ -25,7 +26,7 @@ const offers: Offer[] = [
     title: "Build something for you",
     description: "I start by understanding what you need, then make it happen.",
     cta: "Contact me",
-    href: "https://wa.me/6282114643544",
+    href: WHATSAPP_URL,
     external: true,
   },
   {
@@ -34,7 +35,7 @@ const offers: Offer[] = [
     description:
       "Community, non-profit and open projects. Tell me what you're working on.",
     cta: "Say hello",
-    href: "mailto:amirahdzh@gmail.com",
+    href: `mailto:${CONTACT_EMAIL}`,
     external: false,
   },
 ];
