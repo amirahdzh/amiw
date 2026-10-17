@@ -10,7 +10,7 @@
     >
       <!-- Sidebar -->
       <div
-        class="md:w-1/3 md:sticky pt-28 top-0 z-10 self-start md:max-w-[350px] md:min-w-[350px] px-8"
+        class="md:w-1/3 md:sticky pt-10 top-0 z-10 self-start md:max-w-[350px] md:min-w-[350px] px-8"
       >
         <div class="text-left space-y-4">
           <h2 class="text-5xl font-bold text-foreground">blog.</h2>
@@ -73,7 +73,7 @@
 
       <!-- Main Content -->
       <div
-        class="flex-1 py-8 md:w-2/3 bg-background md:py-28 border-t-4 px-8 md:border-t-0 md:border-l-2 border-primary"
+        class="flex-1 py-8 md:w-2/3 bg-background md:pt-10 md:pb-24 border-t-4 px-8 md:border-t-0 md:border-l-2 border-primary"
       >
         <!-- Display selected category -->
         <div v-if="selectedCategory" class="text-3xl font-bold mb-6">

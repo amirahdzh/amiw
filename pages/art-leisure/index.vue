@@ -1,5 +1,5 @@
 <template>
-  <section class="w-full min-h-screen pt-28 pb-16 bg-background">
+  <section class="w-full min-h-screen pt-10 pb-16 bg-background">
     <div class="max-w-5xl mx-auto px-4 md:px-6">
       <div class="mb-6">
         <h1 class="text-4xl font-bold text-primary mb-2">Art & Leisure</h1>

@@ -1,343 +1,128 @@
 <script setup lang="ts">
-import { computed, ref, watch, onMounted, onBeforeUnmount } from "vue";
-import { useHeroVibeStore, type HeroVibe } from "@/stores/heroVibe";
-
-type Vibe = HeroVibe;
-
-const heroVibeStore = useHeroVibeStore();
-const vibe = computed(() => heroVibeStore.vibe);
-
-const toggleVibe = () => {
-  heroVibeStore.toggle();
-};
-
-// 👆 Periodic "click me" cursor cue on the avatar, hinting it's clickable.
-const cuePulse = ref(false);
-
-let clickCueTimeout: ReturnType<typeof setTimeout> | null = null;
-let clickCueInterval: ReturnType<typeof setInterval> | null = null;
-
-const pulseClickCue = () => {
-  cuePulse.value = true;
-  if (clickCueTimeout) clearTimeout(clickCueTimeout);
-  clickCueTimeout = setTimeout(() => {
-    cuePulse.value = false;
-  }, 2200);
-};
-
-// Typewriter word bank per vibe — same "prefix + typed word" shape in both,
-// so switching vibes reads as a variation of the same mechanic rather than
-// a different widget bolted on.
-const vibeCopy: Record<Vibe, { prefix: string; words: string[] }> = {
-  diary: { prefix: "MY ", words: ["SPACE", "PAGE", "DIARY"] },
-  professional: {
-    prefix: "A ",
-    words: ["DEVELOPER", "BUILDER", "SOLVER"],
-  },
-};
-
-const sloganIndex = ref(0);
-const currentText = ref("");
-const isDeleting = ref(false);
-
-let typewriterTimeout: ReturnType<typeof setTimeout>;
-const typeSpeed = 100;
-const deleteSpeed = 60;
-const pauseAfterTyped = 1200;
-const pauseBeforeTyping = 300;
-
-const typeWriter = () => {
-  const words = vibeCopy[vibe.value].words;
-  const fullText = words[sloganIndex.value];
-
-  if (isDeleting.value) {
-    currentText.value = fullText.slice(0, currentText.value.length - 1);
-  } else {
-    currentText.value = fullText.slice(0, currentText.value.length + 1);
-  }
-
-  let delay = isDeleting.value ? deleteSpeed : typeSpeed;
-
-  if (!isDeleting.value && currentText.value === fullText) {
-    delay = pauseAfterTyped;
-    isDeleting.value = true;
-  } else if (isDeleting.value && currentText.value === "") {
-    isDeleting.value = false;
-    sloganIndex.value = (sloganIndex.value + 1) % words.length;
-    delay = pauseBeforeTyping;
-  }
-
-  typewriterTimeout = setTimeout(typeWriter, delay);
-};
-
-watch(vibe, () => {
-  clearTimeout(typewriterTimeout);
-  sloganIndex.value = 0;
-  currentText.value = "";
-  isDeleting.value = false;
-  typeWriter();
-});
-
-onMounted(() => {
-  typeWriter();
-
-  clickCueTimeout = setTimeout(() => {
-    pulseClickCue();
-  }, 2000);
-
-  clickCueInterval = setInterval(() => {
-    if (!cuePulse.value) pulseClickCue();
-  }, 4500);
-});
-
-onBeforeUnmount(() => {
-  clearTimeout(typewriterTimeout);
-  if (clickCueTimeout) clearTimeout(clickCueTimeout);
-  if (clickCueInterval) clearInterval(clickCueInterval);
-});
+// The diary side of this hero is archived in archive/diary/ (see its README).
+const proLinks = [
+  { href: "#services", label: "Work with me" },
+  { href: "#projects", label: "Projects" },
+  { href: "#experience", label: "Experience" },
+];
 </script>
 
 <template>
-  <section class="w-full pt-24 pb-16 bg-[hsl(var(--alternate-background))]">
-    <div class="max-w-3xl mx-auto px-6">
-      <div class="relative rounded-2xl p-8 md:p-10">
-        <!-- Card background + border, clipped so the accent strip's corners
-             can never render past the card's own rounded silhouette -->
-        <div
-          class="absolute inset-0 overflow-hidden rounded-2xl bg-secondary border border-r-4 border-b-4 border-primary"
-        >
-          <!-- Pink "bloom" accent strip -->
-          <div class="absolute top-0 left-0 right-0 h-2 bg-bloom"></div>
-        </div>
+  <!-- Open layout (no container): the illustration is cut off at the hips, so
+       it stands on the nav hairline below it. The top padding is small
+       because the site's top bar sits right above this section. -->
+  <section id="hero" class="w-full bg-background pt-5 md:pt-4">
+    <div class="max-w-6xl mx-auto px-6">
+      <div
+        class="grid items-end gap-4 md:grid-cols-[minmax(0,1fr)_22rem] md:gap-12 lg:grid-cols-[minmax(0,1fr)_26rem] lg:gap-16"
+      >
+        <div class="min-w-0 self-center pb-8 md:pb-16 md:pt-8">
+          <h1
+            class="font-mono text-5xl font-bold leading-[1.05] tracking-tight text-foreground md:text-6xl lg:text-7xl"
+          >
+            I'm Amiw
+          </h1>
+          <!-- Two deliberate lines so the break lands between phrases, not
+               inside "Linux Infrastructure". -->
+          <p
+            class="mt-4 font-mono text-[13px] leading-relaxed tracking-wide text-muted-foreground md:text-sm"
+          >
+            <span class="block">Software Engineer | C#/.NET, TypeScript,</span>
+            <span class="block">Linux Infrastructure &amp; Software Delivery</span>
+          </p>
 
-        <div
-          class="relative flex flex-col md:flex-row md:items-center gap-8 mt-2"
-        >
-          <!-- 🎨 Avatar badge -->
-          <client-only>
-            <div class="group relative shrink-0 w-fit mx-auto md:mx-0">
-              <div
-                class="w-32 h-32 md:w-40 md:h-40 rounded-full border-2 border-r-4 border-b-4 border-[hsl(var(--pink))] bg-[hsl(var(--alternate-background))] overflow-hidden cursor-pointer transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_0_0_8px_hsl(var(--pink)/0.25)]"
-                @click="toggleVibe"
-              >
-                <img
-                  src="/img/amiw.jpeg"
-                  alt="Amiw"
-                  class="w-full h-full object-cover"
-                />
+          <!-- Two sizes on purpose: the approach is the statement, and the
+               skills sit under it, smaller and muted, like the role line. -->
+          <p
+            class="mt-8 max-w-[34ch] text-xl leading-relaxed text-foreground md:text-2xl md:leading-relaxed"
+          >
+            I rarely write code. I focus on understanding what you need and
+            making it happen.
+          </p>
+          <p
+            class="mt-3.5 max-w-[46ch] text-[15px] leading-[1.6] text-muted-foreground md:text-[17px]"
+          >
+            <span class="whitespace-nowrap">Stack-agnostic.</span> Good at
+            <b
+              class="font-semibold bg-[linear-gradient(transparent_58%,hsl(var(--bloom))_58%)]"
+              >C#/.NET</b
+            >
+            and
+            <b
+              class="font-semibold bg-[linear-gradient(transparent_58%,hsl(var(--bloom))_58%)]"
+              >TypeScript</b
+            >. Happy with WordPress if that's what gets the job done.
+          </p>
 
-                <!-- 🖱️ Periodic "click me" cursor cue -->
-                <transition name="fade">
-                  <div
-                    v-if="cuePulse"
-                    class="pointer-events-none absolute inset-0 flex items-center justify-center"
-                  >
-                    <span
-                      class="absolute w-12 h-12 rounded-full bg-[hsl(var(--pink))]/50 cue-ripple"
-                    ></span>
-                    <Icon
-                      name="lucide:mouse-pointer-click"
-                      class="relative w-9 h-9 text-primary/50 drop-shadow-md cue-tap"
-                    />
-                  </div>
-                </transition>
-              </div>
-
-              <!-- 🌟 Floating Emojis -->
-              <motion
-                :initial="{ y: 0 }"
-                :enter="{
-                  y: [0, -8, 0],
-                  transition: {
-                    repeat: Infinity,
-                    duration: 2.5,
-                    ease: 'easeInOut',
-                  },
-                }"
-                class="absolute -top-3 -left-3"
-              >
-                <Icon name="lucide:flower-2" class="w-4 h-4 text-[hsl(var(--pink))]" />
-              </motion>
-            </div>
-          </client-only>
-
-          <!-- 📌 Welcome and intro -->
-          <div class="flex-1 min-w-0">
-            <transition name="fade" mode="out-in">
-              <div :key="vibe">
-                <p class="text-muted-foreground text-sm tracking-wide">
-                  {{ vibe === "diary" ? "Welcome to" : "I'm Amiw," }}
-                </p>
-                <h2
-                  class="text-3xl md:text-4xl font-extrabold text-foreground transition-all duration-500 ease-in-out"
-                  :class="{ 'font-mono': vibe === 'professional' }"
-                >
-                  {{ vibeCopy[vibe].prefix }}{{ currentText
-                  }}<span class="ml-1 animate-pulse font-thin">|</span>
-                </h2>
-
-                <template v-if="vibe === 'diary'">
-                  <p
-                    class="mt-5 italic text-md text-muted-foreground border-l-4 border-[hsl(var(--pink))] pl-4"
-                  >
-                    This place is mine — A resting point for souls wandering
-                    nowhere.
-                  </p>
-
-                  <div
-                    v-motion-slide-bottom
-                    class="bg-honey/30 text-primary px-4 py-3 rounded-xl shadow mt-6 w-fit rotate-[-1deg]"
-                  >
-                    <p class="text-sm italic">
-                      Sometimes I write just to remember I exist.
-                    </p>
-                  </div>
-                </template>
-                <template v-else>
-                  <p
-                    class="mt-5 text-sm leading-relaxed text-muted-foreground border-l-4 border-[hsl(var(--pink))] pl-4"
-                  >
-                    <i>Frontend? Backend? Servers?</i>
-                    Don't worry, <br />
-                    <span class="bg-bloom"
-                      >I'm a <b>full-stack engineer</b></span
-                    >, I do it all, and well.
-                  </p>
-
-                  <div class="flex flex-wrap gap-3 mt-6">
-                    <Button
-                      variant="default"
-                      size="sm"
-                      class="bg-secondary hover:bg-secondary hover:text-primary border border-r-4 border-b-4 border-primary text-primary"
-                      as="a"
-                      href="https://wa.me/6282114643544"
-                      target="_blank"
-                    >
-                      <Icon name="simple-icons:whatsapp" class="w-4 h-4" />
-                      Contact Me
-                    </Button>
-
-                    <Button
-                      variant="default"
-                      size="sm"
-                      class="bg-primary text-secondary"
-                      as="a"
-                      href="https://docs.google.com/document/d/1JPOLI2oE2TByNBR7FCI7I6ZZaW7vDEOff67c0FaDrDA/edit?usp=drive_link"
-                      target="_blank"
-                    >
-                      <Icon
-                        name="heroicons-outline:external-link"
-                        class="w-4 h-4"
-                      />
-                      Resume
-                    </Button>
-                  </div>
-                </template>
-              </div>
-            </transition>
+          <div class="mt-9 flex flex-wrap items-center gap-4">
+            <a
+              href="https://wa.me/6282114643544"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-solid px-7 py-3.5 text-base focus-visible:ring-offset-background"
+            >
+              Contact me
+            </a>
+            <a
+              href="https://docs.google.com/document/d/1JPOLI2oE2TByNBR7FCI7I6ZZaW7vDEOff67c0FaDrDA/edit?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 rounded px-2 py-2.5 text-base font-medium text-primary underline decoration-pink decoration-2 underline-offset-[6px] transition-colors hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
+            >
+              Resume
+              <Icon name="heroicons-outline:external-link" class="h-5 w-5" />
+            </a>
           </div>
         </div>
 
-        <!-- 🧭 In-page Nav -->
-        <div class="relative border-t border-border mt-6 pt-4">
-          <nav class="flex flex-wrap items-center gap-2 text-sm">
-            <template v-if="vibe === 'diary'">
-              <a
-                href="#essence"
-                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-sage hover:text-secondary transition-colors"
-              >
-                <Icon name="lucide:droplet" class="w-3.5 h-3.5" />
-                Essence
-              </a>
-              <a
-                href="#journey"
-                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-terracotta hover:text-secondary transition-colors"
-              >
-                <Icon name="lucide:route" class="w-3.5 h-3.5" />
-                Journey
-              </a>
-            </template>
-            <template v-else>
-              <a
-                href="#services"
-                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-sage hover:text-secondary transition-colors"
-              >
-                <Icon name="lucide:wrench" class="w-3.5 h-3.5" />
-                Services
-              </a>
-              <a
-                href="#experience"
-                class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-terracotta hover:text-secondary transition-colors"
-              >
-                <Icon name="lucide:briefcase" class="w-3.5 h-3.5" />
-                Experience
-              </a>
-            </template>
-            <!-- <NuxtLink
-              to="/art-leisure"
-              class="px-3 py-1 rounded-full bg-muted text-foreground font-medium hover:bg-honey hover:text-primary transition-colors"
-            >
-              🎨 Art & Leisure
-            </NuxtLink> -->
-          </nav>
+        <!-- Cut-out illustration on soft shapes. The shapes are pale sage and
+             honey, not pink, so the figure's own pink hijab and jacket keep
+             their edges. -->
+        <div
+          class="relative mx-auto aspect-[368/529] w-[min(88%,19rem)] md:mx-0 md:w-full md:max-w-[22rem] md:justify-self-end lg:max-w-[26rem]"
+        >
+          <span
+            aria-hidden="true"
+            class="absolute left-[4%] top-[15%] aspect-square w-[90%] rounded-[58%_42%_55%_45%/48%_56%_44%_52%] bg-accent"
+          ></span>
+          <span
+            aria-hidden="true"
+            class="absolute -left-[4%] bottom-[9%] aspect-square w-[30%] rounded-full bg-honey/35"
+          ></span>
+          <span
+            aria-hidden="true"
+            class="absolute right-[3%] top-[7%] aspect-square w-[10%] rounded-full bg-bloom"
+          ></span>
+          <img
+            src="/img/amiw-figure.webp"
+            alt="Illustration of Amiw from behind, wearing a pink hijab and a backpack"
+            width="760"
+            height="1093"
+            fetchpriority="high"
+            decoding="async"
+            class="absolute inset-0 h-full w-full object-contain object-bottom"
+          />
         </div>
       </div>
+
+      <nav
+        aria-label="Sections"
+        class="flex flex-wrap gap-x-8 gap-y-1 border-t border-border pb-8 pt-4 text-base"
+      >
+        <a
+          v-for="link in proLinks"
+          :key="link.href"
+          :href="link.href"
+          class="group inline-flex items-center rounded py-1 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
+        >
+          <span aria-hidden="true" class="mr-2 text-amiw">→</span>
+          <!-- Only the label is underlined, so the line is one straight line. -->
+          <span
+            class="underline-offset-4 decoration-bloom decoration-2 group-hover:underline group-focus-visible:underline"
+            >{{ link.label }}</span
+          >
+        </a>
+      </nav>
     </div>
   </section>
 </template>
-
-<style scoped>
-html {
-  scroll-behavior: smooth;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-/* Cursor press + ripple burst, sharing one timeline so the ripple fires at
-   the exact instant the cursor is smallest — i.e. the moment of "clicking" */
-@keyframes cue-tap {
-  0%,
-  30% {
-    transform: scale(1) translate(0, 0);
-  }
-  40% {
-    transform: scale(0.8) translate(-2px, 2px);
-  }
-  55% {
-    transform: scale(1.05) translate(0, 0);
-  }
-  70%,
-  100% {
-    transform: scale(1) translate(0, 0);
-  }
-}
-.cue-tap {
-  animation: cue-tap 1.4s ease-in-out infinite;
-}
-
-@keyframes cue-ripple {
-  0%,
-  39% {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  40% {
-    transform: scale(0.5);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(1.8);
-    opacity: 0;
-  }
-}
-.cue-ripple {
-  animation: cue-ripple 1.4s ease-out infinite;
-}
-</style>

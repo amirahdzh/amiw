@@ -6,15 +6,19 @@
 
 @layer base {
   :root {
-    /* Garden & Bake palette — see DESIGN-garden-bake.md */
+    /* Garden & Bake palette — see DESIGN-garden-bake.md.
+       Backgrounds (Oct 2026): near-white ground, pale cream band, and a single
+       blush band behind "Work with me". Text, sage, honey, terracotta unchanged. */
 
-    --background: 38 45% 95%; /* Warm cream ("buttermilk") */
+    --background: 40 55% 98.5%; /* Warm near-white ground */
 
     --foreground: 20 35% 18%; /* Soil brown */
 
     --header-background: 40 60% 98%; /* Warm paper */
 
-    --alternate-background: 36 30% 90%; /* Deeper cream stripe */
+    --alternate-background: 40 35% 95%; /* Pale cream band */
+
+    --blush-band: 339 62% 95%; /* Soft blush — the one pink band (Work with me) */
 
     --amiw: 339 55% 58%; /* Rose — readable brand-accent text */
 
@@ -56,9 +60,9 @@
 
     --destructive-foreground: 38 45% 96%;
 
-    --border: 36 25% 82%; /* Warm hairline */
+    --border: 36 22% 86%; /* Warm hairline */
 
-    --input: 36 25% 82%;
+    --input: 36 22% 86%;
 
     --ring: 20 30% 30%;
 
@@ -78,6 +82,34 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+@layer components {
+  /* Soft pink marker under a section heading (display:table keeps it as wide as the text) */
+  .heading-marker {
+    display: table;
+    background: linear-gradient(transparent 62%, hsl(var(--bloom)) 62%);
+  }
+
+  /* Pill buttons. Size (padding, text size, width) and the focus-ring offset
+     colour are set where they are used, because they depend on the
+     background the button sits on. */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-full border border-primary font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-reduce:transition-none;
+  }
+  .btn-solid {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-full bg-primary font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-reduce:transition-none;
+  }
+
+  /* Small uppercase label that sits above a title or beside a list */
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-widest text-muted-foreground;
+  }
+
+  /* Soft shadow for floating surfaces (replaces the old hard 4px edge) */
+  .shadow-soft {
+    box-shadow: 0 14px 30px -20px hsl(var(--foreground) / 0.45);
+  }
 }
 
 

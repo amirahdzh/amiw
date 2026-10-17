@@ -1,138 +1,163 @@
 <script setup lang="ts">
 import { useBlogStore } from "@/stores/blog";
 
-const store = useBlogStore();
-
-interface Service {
-  icon: string;
+interface Offer {
+  eyebrow: string;
   title: string;
   description: string;
-  link?: string;
-  ctaText: string;
-  isExternal: boolean;
-  extraButtonText?: string;
-  extraButtonLink?: string;
-  onClick?: () => void;
-  accentBg: string;
+  cta: string;
+  href: string;
+  external: boolean;
 }
 
-const services: Service[] = [
+// Organized by who is reading, not by skill. All three actions share one
+// button style on purpose: no one door is "the" primary action.
+const offers: Offer[] = [
   {
-    icon: "lucide:code",
-    title: "Web Development",
+    eyebrow: "Employers",
+    title: "Join your team",
     description:
-      "Building modern apps using <strong>Vue.js, Nuxt, and Laravel</strong>.",
-    link: "/portfolio",
-    ctaText: "Projects",
-    isExternal: false,
-    extraButtonText: "fa:github",
-    extraButtonLink: "https://github.com/amirahdzh",
-    accentBg: "bg-sage",
+      "Software engineer for teams that need solid C#/.NET and TypeScript, backed by Linux and delivery experience.",
+    cta: "Resume",
+    href: "https://docs.google.com/document/d/1JPOLI2oE2TByNBR7FCI7I6ZZaW7vDEOff67c0FaDrDA/edit?usp=drive_link",
+    external: true,
   },
   {
-    icon: "lucide:pen-tool",
-    title: "Technical Writing",
+    eyebrow: "Freelance clients",
+    title: "Build something for you",
+    description: "I start by understanding what you need, then make it happen.",
+    cta: "Contact me",
+    href: "https://wa.me/6282114643544",
+    external: true,
+  },
+  {
+    eyebrow: "Collaborators",
+    title: "Make something that matters",
     description:
-      "Simplifying <strong>web dev concepts</strong> through writing.",
-    link: "/blog",
-    ctaText: "Read",
-    isExternal: false,
-    onClick: () => store.setCategory("Web Development"),
-    accentBg: "bg-honey",
-  },
-  {
-    icon: "lucide:users",
-    title: "Freelance & Collab",
-    description: "Open for freelance projects and collaborations.",
-    link: "mailto:amirahdzh@gmail.com",
-    ctaText: "Contact",
-    isExternal: true,
-    accentBg: "bg-terracotta",
-  },
-  {
-    icon: "lucide:feather",
-    title: "Contemplative Writing",
-    description: "Poetry, thoughts, and everyday musings.",
-    link: "/blog",
-    ctaText: "Writings",
-    isExternal: false,
-    onClick: () => store.setCategory("Contemplating"),
-    accentBg: "bg-bloom",
+      "Community, non-profit and open projects with a purpose beyond the code.",
+    cta: "Say hello",
+    href: "mailto:amirahdzh@gmail.com",
+    external: false,
   },
 ];
+
+// Interests, not services: plain text.
+const passions = [
+  "writing",
+  "productivity",
+  "frugal",
+  "minimalism",
+  "sustainability",
+];
+
+// "Latest on the blog" teaser: always the newest post in the blog store, so it
+// updates itself when posts change. Posts without their own page (link: null)
+// send the reader to the blog index instead.
+const blogStore = useBlogStore();
+if (!blogStore.posts.length) blogStore.loadPosts();
+
+const latestPost = computed(
+  () =>
+    [...blogStore.posts].sort((a, b) => b.pubDate.localeCompare(a.pubDate))[0] ??
+    null,
+);
+
+// UTC on purpose: "2026-08-27" is a calendar date, and formatting it in a
+// negative-offset timezone would show the 26th.
+const latestDate = computed(() =>
+  latestPost.value
+    ? new Date(latestPost.value.pubDate).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        timeZone: "UTC",
+      })
+    : "",
+);
 </script>
 
 <template>
   <section
     id="services"
-    class="w-full py-16 bg-[hsl(var(--alternate-background))]"
+    class="w-full py-16 md:py-20 bg-[hsl(var(--blush-band))] [--border:339_22%_85%]"
   >
-    <div class="max-w-4xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-foreground mb-6 inline-flex items-center gap-2">
-        <Icon name="lucide:wrench" class="w-7 h-7" />
-        Services
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="heading-marker text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+        Work with me
       </h2>
-      <h3 class="text-lg font-semibold text-foreground mb-4">What I Do?</h3>
 
-      <div class="grid sm:grid-cols-2 gap-4">
-        <div
-          v-for="(service, index) in services"
-          :key="index"
-          v-motion-fade-visible
-          class="relative overflow-hidden bg-secondary rounded-2xl p-4 border border-r-4 border-b-4 border-primary transition hover:scale-[1.02] duration-300"
-          @click="service.onClick && service.onClick()"
+      <ul class="mt-9 border-b border-[hsl(var(--border))]">
+        <li
+          v-for="offer in offers"
+          :key="offer.title"
+          class="grid gap-3 border-t border-[hsl(var(--border))] py-6 md:grid-cols-[15.5rem_minmax(0,1fr)_auto] md:items-center md:gap-8 md:py-7"
         >
-          <div
-            class="absolute top-0 left-0 right-0 h-1.5"
-            :class="service.accentBg"
-          ></div>
-
-          <div class="flex items-center gap-3 mb-2">
-            <div
-              class="w-9 h-9 rounded-full border-2 border-primary flex items-center justify-center shrink-0"
-              :class="service.accentBg"
+          <div>
+            <span
+              class="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground"
             >
-              <Icon :name="service.icon" class="w-4 h-4 text-foreground" />
-            </div>
-            <h4 class="font-bold text-sm text-foreground">
-              {{ service.title }}
-            </h4>
+              {{ offer.eyebrow }}
+            </span>
+            <h3 class="font-mono text-xl font-bold leading-tight text-foreground">
+              {{ offer.title }}
+            </h3>
           </div>
 
-          <p
-            class="text-xs text-muted-foreground mb-3"
-            v-html="service.description"
-          ></p>
+          <p class="max-w-[44ch] text-base leading-relaxed text-foreground md:text-lg">
+            {{ offer.description }}
+          </p>
 
-          <div class="flex items-center gap-2">
-            <NuxtLink
-              v-if="service.link"
-              :to="service.link"
-              :target="service.isExternal ? '_blank' : '_self'"
-              :rel="service.isExternal ? 'noopener noreferrer' : ''"
-              class="flex items-center gap-1 text-xs font-medium text-primary hover:underline"
-            >
-              {{ service.ctaText }}
-              <Icon
-                v-if="service.isExternal"
-                name="heroicons-outline:external-link"
-                class="w-3.5 h-3.5"
-              />
-              <Icon v-else name="lucide:arrow-right" class="w-3.5 h-3.5" />
-            </NuxtLink>
+          <a
+            :href="offer.href"
+            :target="offer.external ? '_blank' : undefined"
+            :rel="offer.external ? 'noopener noreferrer' : undefined"
+            class="btn-outline w-44 justify-self-start px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))] md:justify-self-end"
+          >
+            {{ offer.cta }}
+            <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
+          </a>
+        </li>
+      </ul>
 
-            <Button
-              v-if="service.extraButtonText"
-              :href="service.extraButtonLink"
-              variant="ghost"
-              size="icon"
-              class="ml-auto h-6 w-6"
-              as="a"
-              target="_blank"
+      <div class="mt-6 space-y-2.5 font-mono text-[13px] text-muted-foreground md:text-sm">
+        <p class="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+          <span
+            class="mr-1 font-sans text-xs font-semibold uppercase tracking-widest"
+            >Passionate in</span
+          >
+          <template v-for="(item, i) in passions" :key="item">
+            <span v-if="i > 0" aria-hidden="true" class="text-pink">·</span>
+            <span>{{ item }}</span>
+          </template>
+        </p>
+
+        <div
+          v-if="latestPost"
+          class="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-dashed border-[hsl(var(--border))] pt-3.5 font-sans"
+        >
+          <span
+            class="text-xs font-semibold uppercase tracking-widest text-muted-foreground"
+          >
+            Latest on the blog
+          </span>
+          <NuxtLink
+            :to="latestPost.link ?? '/blog'"
+            :external="!!latestPost.link"
+            class="group inline-flex items-baseline gap-1.5 rounded text-[15px] font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--blush-band))] motion-reduce:transition-none"
+          >
+            <span
+              class="underline decoration-pink decoration-2 underline-offset-4 transition-colors group-hover:decoration-primary motion-reduce:transition-none"
+              >{{ latestPost.title }}</span
             >
-              <Icon :name="service.extraButtonText" class="w-3.5 h-3.5" />
-            </Button>
-          </div>
+            <span
+              aria-hidden="true"
+              class="text-amiw transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+              >→</span
+            >
+          </NuxtLink>
+          <time class="text-[13px] text-muted-foreground" :datetime="latestPost.pubDate">
+            {{ latestDate }}
+          </time>
         </div>
       </div>
     </div>

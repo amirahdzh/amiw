@@ -43,6 +43,15 @@ export default defineNuxtConfig({
       // after mount on any real (non-localhost) domain — see
       // LicenseProvider.tsx's shouldHideEditorAfterDelay/LICENSE_TIMEOUT.
       tldrawLicenseKey: process.env.NUXT_PUBLIC_TLDRAW_LICENSE_KEY || "",
+      // Footer newsletter form. Set NUXT_PUBLIC_NEWSLETTER_ACTION to the form
+      // action URL of whichever newsletter service you use (for example
+      // Buttondown's embed-subscribe URL), and NUXT_PUBLIC_NEWSLETTER_FIELD to
+      // the name of its email field if it isn't "email" (Mailchimp uses
+      // "EMAIL"). Leave the action unset and the footer shows the form
+      // switched off with "Opening soon", so no address is collected
+      // anywhere until a service is connected.
+      newsletterAction: process.env.NUXT_PUBLIC_NEWSLETTER_ACTION || "",
+      newsletterField: process.env.NUXT_PUBLIC_NEWSLETTER_FIELD || "email",
       motion: {
         directives: {
           'pop-bottom': {

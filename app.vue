@@ -3,6 +3,7 @@
     <div class="min-h-screen flex flex-col text-foreground">
       <!-- Header (hidden on /links — it's a standalone link-in-bio page) -->
       <Header v-if="route.path !== '/links'" />
+      <StickyNav v-if="route.path !== '/links'" />
 
       <!-- Content -->
       <main class="flex-grow">
