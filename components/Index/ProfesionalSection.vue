@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { CONTACT_EMAIL, WHATSAPP_URL } from "~/utils/site";
+import {
+  CONTACT_EMAIL,
+  WHATSAPP_URL,
+  RESUME_URL,
+  RESUME_UPDATED,
+  formatMonth,
+} from "~/utils/site";
 interface Offer {
   eyebrow: string;
   title: string;
@@ -7,12 +13,15 @@ interface Offer {
   cta: string;
   href: string;
   external: boolean;
-  // Show a link to /work-with-me under this row
-  details?: boolean;
+  // A second, plain button before the main one (a page on this site)
+  secondary?: { label: string; to: string };
+  // "YYYY-MM-DD": shown under the button as "updated Oct 2026"
+  updated?: string;
 }
 
-// Organized by who is reading, not by skill. All three actions share one
-// button style on purpose: no one door is "the" primary action.
+// Organized by who is reading, not by skill. The Freelance row has two buttons:
+// "How I work" (the page) and "Book a call", which is filled because it is the
+// action. The other rows have one outlined button.
 const offers: Offer[] = [
   {
     eyebrow: "Employers",
@@ -20,8 +29,9 @@ const offers: Offer[] = [
     description:
       "Software engineer for teams that use C#/.NET and TypeScript. I also bring Linux and cloud experience.",
     cta: "Resume",
-    href: "https://docs.google.com/document/d/1JPOLI2oE2TByNBR7FCI7I6ZZaW7vDEOff67c0FaDrDA/edit?usp=drive_link",
+    href: RESUME_URL,
     external: true,
+    updated: RESUME_UPDATED,
   },
   {
     eyebrow: "Freelance clients",
@@ -30,7 +40,7 @@ const offers: Offer[] = [
     cta: "Book a call",
     href: WHATSAPP_URL,
     external: true,
-    details: true,
+    secondary: { label: "How I work", to: "/work-with-me" },
   },
   {
     eyebrow: "Collaborators",
@@ -80,7 +90,6 @@ const latestDate = computed(() =>
         >
           <div
             class="grid gap-3 py-6 md:grid-cols-[15.5rem_minmax(0,1fr)_auto] md:items-center md:gap-8 md:py-7"
-            :class="offer.details ? 'md:pb-4' : ''"
           >
             <div>
               <span
@@ -97,37 +106,33 @@ const latestDate = computed(() =>
               {{ offer.description }}
             </p>
 
-            <a
-              :href="offer.href"
-              :target="offer.external ? '_blank' : undefined"
-              :rel="offer.external ? 'noopener noreferrer' : undefined"
-              class="btn-outline w-44 justify-self-start px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))] md:justify-self-end"
-            >
-              {{ offer.cta }}
-              <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
-            </a>
+            <div class="flex flex-wrap items-start gap-3 justify-self-start md:justify-self-end">
+              <NuxtLink
+                v-if="offer.secondary"
+                :to="offer.secondary.to"
+                class="btn-outline px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))]"
+              >
+                {{ offer.secondary.label }}
+                <Icon name="lucide:arrow-right" class="h-4 w-4" />
+              </NuxtLink>
+              <div class="grid w-44 justify-items-center gap-1.5">
+                <a
+                  :href="offer.href"
+                  :target="offer.external ? '_blank' : undefined"
+                  :rel="offer.external ? 'noopener noreferrer' : undefined"
+                  class="w-full px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))]"
+                  :class="offer.secondary ? 'btn-solid' : 'btn-outline'"
+                >
+                  {{ offer.cta }}
+                  <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
+                </a>
+                <span v-if="offer.updated" class="font-mono text-[12.5px] text-muted-foreground">
+                  updated <time :datetime="offer.updated">{{ formatMonth(offer.updated) }}</time>
+                </span>
+              </div>
+            </div>
           </div>
 
-          <!-- Link to the full process, under the description. -->
-          <div
-            v-if="offer.details"
-            class="pb-6 md:grid md:grid-cols-[15.5rem_minmax(0,1fr)_auto] md:gap-8 md:pb-7"
-          >
-            <NuxtLink
-              to="/work-with-me"
-              class="group inline-flex items-baseline gap-1.5 self-start rounded text-[15px] font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--blush-band))] md:col-span-2 md:col-start-2 md:justify-self-start motion-reduce:transition-none"
-            >
-              <span
-                class="underline decoration-pink decoration-2 underline-offset-4 transition-colors group-hover:decoration-primary motion-reduce:transition-none"
-                >See how I work and what to expect</span
-              >
-              <span
-                aria-hidden="true"
-                class="text-amiw transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-                >→</span
-              >
-            </NuxtLink>
-          </div>
         </li>
       </ul>
 

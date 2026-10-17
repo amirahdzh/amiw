@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { resolveComponent } from "vue";
-import { CONTACT_EMAIL, WHATSAPP_URL } from "~/utils/site";
+import { CONTACT_EMAIL, WHATSAPP_URL, formatMonth } from "~/utils/site";
 import { projects } from "~/utils/projects";
-import { facts, steps, faq, languageCodes, timezone } from "~/utils/workWithMe";
+import { facts, steps, faq, languageCodes, timezone, termsUpdated } from "~/utils/workWithMe";
 
 usePageSeo({
   title: "How I work | Amiw",
@@ -112,6 +112,10 @@ const focusClass =
               </p>
             </div>
           </div>
+
+          <p class="mt-3 font-mono text-[12.5px] text-muted-foreground">
+            Terms as of <time :datetime="termsUpdated">{{ formatMonth(termsUpdated) }}</time>
+          </p>
         </div>
 
         <div class="mt-12 grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:gap-16">

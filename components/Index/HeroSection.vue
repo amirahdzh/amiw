@@ -40,7 +40,7 @@
               variant="default"
               class="bg-primary text-secondary"
               as="a"
-              href="https://docs.google.com/document/d/1JPOLI2oE2TByNBR7FCI7I6ZZaW7vDEOff67c0FaDrDA/edit?usp=drive_link"
+              :href="RESUME_URL"
               target="_blank"
             >
               <Icon name="heroicons-outline:external-link" class="w-4 h-4" />
@@ -104,6 +104,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import { RESUME_URL } from "~/utils/site";
 
 const currentTime = ref("");
 let rafId: number | null = null;

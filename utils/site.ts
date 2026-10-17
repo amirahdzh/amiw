@@ -21,6 +21,22 @@ export const SITE = {
 export const CONTACT_EMAIL = "amirahdzh@gmail.com";
 export const WHATSAPP_URL = "https://wa.me/6282114643544";
 
+// The resume (a Google Doc). Every Resume link on the site uses this one URL.
+// Change RESUME_UPDATED whenever you edit the Doc: it's shown next to the
+// links as "updated Oct 2026", so a reader knows it's current before opening it.
+export const RESUME_URL =
+  "https://docs.google.com/document/d/1JPOLI2oE2TByNBR7FCI7I6ZZaW7vDEOff67c0FaDrDA/edit?usp=drive_link";
+export const RESUME_UPDATED = "2026-10-17";
+
+// "2026-10-17" -> "Oct 2026". UTC on purpose, same reason as formatPostDate.
+export function formatMonth(date: string): string {
+  return new Date(date).toLocaleDateString("en-US", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 export interface Place {
   label: string;
   href: string;

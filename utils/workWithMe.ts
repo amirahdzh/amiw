@@ -12,6 +12,11 @@ export const languageCodes = "EN / ID";
 export const city = "Jakarta";
 export const timezone = "GMT+7";
 
+// When the terms below (the four facts) last changed, "YYYY-MM-DD". Shown
+// under them as "Terms as of Oct 2026", so someone holding an older quote can
+// see the terms have moved on. Change it whenever you change a fact.
+export const termsUpdated = "2026-10-17";
+
 // The four big numbers at the top of the page: the things that reassure a
 // client most. `note` is the short line under the number. `question` and
 // `reason` open when someone taps "Why?" on it.

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { WHATSAPP_URL } from "~/utils/site";
+import { WHATSAPP_URL, RESUME_URL, RESUME_UPDATED, formatMonth } from "~/utils/site";
 import { languageCodes, city, timezone } from "~/utils/workWithMe";
 
 // The diary side of this hero is archived in archive/diary/ (see its README).
@@ -74,15 +74,21 @@ const proLinks = [
             >
               Contact me
             </a>
-            <a
-              href="https://docs.google.com/document/d/1JPOLI2oE2TByNBR7FCI7I6ZZaW7vDEOff67c0FaDrDA/edit?usp=drive_link"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-2 rounded px-2 py-2.5 text-base font-medium text-primary underline decoration-pink decoration-2 underline-offset-[6px] transition-colors hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
-            >
-              Resume
-              <Icon name="heroicons-outline:external-link" class="h-5 w-5" />
-            </a>
+            <!-- The date sits outside the link so it isn't underlined. -->
+            <span class="inline-flex items-center gap-1.5">
+              <a
+                :href="RESUME_URL"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded px-2 py-2.5 text-base font-medium text-primary underline decoration-pink decoration-2 underline-offset-[6px] transition-colors hover:decoration-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none"
+              >
+                Resume
+                <Icon name="heroicons-outline:external-link" class="h-5 w-5" />
+              </a>
+              <span class="font-mono text-[13px] text-muted-foreground">
+                updated <time :datetime="RESUME_UPDATED">{{ formatMonth(RESUME_UPDATED) }}</time>
+              </span>
+            </span>
           </div>
         </div>
 

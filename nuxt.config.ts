@@ -80,5 +80,9 @@ export default defineNuxtConfig({
     '/memoir': { redirect: '/' },
     // Canvas renamed to Art & Leisure — keep old shared links working
     '/canvas': { redirect: '/art-leisure' },
+    // The resume (public/resume.pdf) can be opened and downloaded by anyone
+    // with the link, but search engines are told not to list or cache it.
+    // (A robots.txt line alone would not stop it being listed.)
+    '/resume.pdf': { headers: { 'X-Robots-Tag': 'noindex, nofollow, noarchive' } },
   },
 })

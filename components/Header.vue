@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   siteLinks as links,
+  workLink,
   socials,
   navWidthClass,
   navFocusClass as focusClass,
@@ -40,6 +41,14 @@ const widthClass = computed(() => navWidthClass(route.path));
           :class="focusClass"
         >
           {{ link.label }}
+        </NuxtLink>
+
+        <NuxtLink
+          :to="workLink.to"
+          class="rounded-full border border-primary px-3.5 py-1 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground aria-[current=page]:bg-primary aria-[current=page]:text-primary-foreground motion-reduce:transition-none"
+          :class="focusClass"
+        >
+          {{ workLink.label }}
         </NuxtLink>
 
         <div

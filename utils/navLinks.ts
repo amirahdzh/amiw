@@ -8,6 +8,10 @@ export const siteLinks = [
   { to: "/art-leisure", label: "Art & Leisure" },
 ];
 
+// The one call-to-action in the bars: drawn as a small outlined pill instead of
+// a plain link, so it stands out from the navigation next to it.
+export const workLink = { to: "/work-with-me", label: "Work with me" };
+
 // Icons are shown on wider screens only; the footer lists the same places.
 // The list itself lives in utils/site.ts.
 export const socials = places;
