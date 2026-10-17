@@ -33,3 +33,10 @@ TODO.md
 
 # Resume draft (has phone number)
 resume-draft.md
+
+# Design mockups made while building pages (HTML + PNG, not part of the site)
+.preview/
+
+# Unfinished resume PDF. Remove this line when it is finished (see TODO.md),
+# then commit it and set RESUME_URL in utils/site.ts.
+public/resume.pdf
