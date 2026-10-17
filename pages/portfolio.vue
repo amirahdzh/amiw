@@ -80,6 +80,9 @@ onBeforeUnmount(() => {
   if (intervalId) clearInterval(intervalId);
   if (timeoutId) clearTimeout(timeoutId);
 });
+
+// Old page, kept but left out of search results.
+usePageSeo({ title: "Portfolio | Amiw", description: "Old portfolio page.", noindex: true });
 </script>
 
 <style scoped>

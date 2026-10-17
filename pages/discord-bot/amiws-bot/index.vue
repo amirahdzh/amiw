@@ -50,6 +50,9 @@
 
 <script setup lang="ts">
 // No script logic needed for static README page
+
+// Old page, kept but left out of search results.
+usePageSeo({ title: "Discord bot | Amiw", description: "Old Discord bot page.", noindex: true });
 </script>
 
 <style scoped>

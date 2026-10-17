@@ -1,5 +1,8 @@
 <script setup lang="ts">
 // Tidak perlu mengambil data dari Nuxt Content jika memilih hardcode
+
+// Old page, kept but left out of search results.
+usePageSeo({ title: "Gaming log | Amiw", description: "Old gaming log.", noindex: true });
 </script>
 
 <template>

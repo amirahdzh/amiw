@@ -17,7 +17,8 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
-      title: "Amiw's Space",
+      htmlAttrs: { lang: "en" },
+      title: "Amiw | Software Engineer (C#/.NET, TypeScript)",
       link: [
         {
           rel: "stylesheet",
@@ -71,6 +72,8 @@ export default defineNuxtConfig({
     },
     openRouterApiKey: process.env.OPENROUTER_API_KEY
   },
+  // The sitemap is a server route. Prerender it so it also exists on a static build.
+  nitro: { prerender: { routes: ["/sitemap.xml"] } },
   routeRules: {
     // Memoir moved to "/" — send old bookmarks/links to the new home
     '/memoir': { redirect: '/' },

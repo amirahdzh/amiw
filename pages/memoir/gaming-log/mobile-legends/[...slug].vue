@@ -6,6 +6,9 @@ const { data: logs } = await useAsyncData("gaming-logs", () =>
     .sort({ title: 1 })
     .find()
 );
+
+// Old page, kept but left out of search results.
+usePageSeo({ title: "Gaming log | Amiw", description: "Old gaming log.", noindex: true });
 </script>
 
 <template>

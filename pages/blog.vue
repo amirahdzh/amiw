@@ -151,6 +151,14 @@ const blogStore = useBlogStore();
 const { selectedCategory, allCategories, filteredPosts } =
   storeToRefs(blogStore);
 
+// Outside onMounted on purpose: the title and description have to be in the
+// HTML the server sends, not added later in the browser.
+usePageSeo({
+  title: "Blog | Amiw",
+  description:
+    "Sharing thoughts, insights and stories from Amiw's corner of the internet.",
+});
+
 onMounted(() => {
   blogStore.loadPosts();
 

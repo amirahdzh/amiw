@@ -482,5 +482,9 @@ onMounted(async () => {
   }
 });
 
-useHead({ title: "Art & Leisure — Amiw" });
+usePageSeo({
+  title: "Art & Leisure | Amiw",
+  description:
+    "A shared canvas on Amiw's site. Draw, doodle or just relax. Nothing you do there is recorded.",
+});
 </script>

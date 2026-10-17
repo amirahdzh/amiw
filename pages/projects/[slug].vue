@@ -15,9 +15,9 @@ if (!project || !project.details) {
 
 const details = project.details;
 
-useHead({
-  title: `${project.title} — Amiw`,
-  meta: [{ name: "description", content: details.tagline }],
+usePageSeo({
+  title: `${project.title} | Amiw`,
+  description: project.description,
 });
 
 // Key facts shown in the strip under the intro. Missing ones are left out.
@@ -39,6 +39,7 @@ const next = computed(() => {
 const buttonClass =
   "btn-outline px-5 py-2.5 text-sm focus-visible:ring-offset-background";
 const h2Class = "mb-3 font-mono text-xl font-bold text-foreground";
+const proseClass = "max-w-[62ch] leading-relaxed text-foreground";
 </script>
 
 <template>
@@ -165,7 +166,21 @@ const h2Class = "mb-3 font-mono text-xl font-bold text-foreground";
           </div>
         </section>
 
-        <section v-if="details.decisions?.length">
+        <section v-if="details.broke?.length">
+          <h2 :class="h2Class">What broke</h2>
+          <div class="grid gap-3">
+            <p v-for="(para, i) in details.broke" :key="i" :class="proseClass">{{ para }}</p>
+          </div>
+        </section>
+
+        <section v-if="details.choices?.length">
+          <h2 :class="h2Class">Choices I made</h2>
+          <div class="grid gap-3">
+            <p v-for="(para, i) in details.choices" :key="i" :class="proseClass">{{ para }}</p>
+          </div>
+        </section>
+
+        <section v-else-if="details.decisions?.length">
           <h2 :class="h2Class">Choices I made</h2>
           <ul class="grid max-w-[66ch] gap-2.5">
             <li
@@ -180,6 +195,27 @@ const h2Class = "mb-3 font-mono text-xl font-bold text-foreground";
               <b class="font-semibold">{{ item.title }}.</b> {{ item.text }}
             </li>
           </ul>
+        </section>
+
+        <section v-if="details.worked?.length">
+          <h2 :class="h2Class">Has it worked?</h2>
+          <div class="grid gap-3">
+            <p v-for="(para, i) in details.worked" :key="i" :class="proseClass">{{ para }}</p>
+          </div>
+        </section>
+
+        <section v-if="details.again?.length">
+          <h2 :class="h2Class">What I'd do differently</h2>
+          <div class="grid gap-3">
+            <p v-for="(para, i) in details.again" :key="i" :class="proseClass">{{ para }}</p>
+          </div>
+        </section>
+
+        <section v-if="details.leftOut?.length">
+          <h2 :class="h2Class">What I left out</h2>
+          <div class="grid gap-3">
+            <p v-for="(para, i) in details.leftOut" :key="i" :class="proseClass">{{ para }}</p>
+          </div>
         </section>
 
         <section v-if="details.privacy">

@@ -101,14 +101,9 @@ import { resolveComponent } from "vue";
 // href. resolveComponent() looks it up properly.
 const NuxtLinkComponent = resolveComponent("NuxtLink");
 
-useHead({
+usePageSeo({
   title: "Amiw's Links",
-  meta: [
-    {
-      name: "description",
-      content: "Amiw's links — get in touch, or see what I'm building.",
-    },
-  ],
+  description: "Amiw's links: get in touch, or see what I'm building.",
 });
 
 const profile = {

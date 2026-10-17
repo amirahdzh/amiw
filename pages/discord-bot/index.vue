@@ -33,6 +33,9 @@
 
 <script setup>
 // No script logic for this simple page
+
+// Old page, kept but left out of search results.
+usePageSeo({ title: "Discord bot | Amiw", description: "Old Discord bot page.", noindex: true });
 </script>
 
 <style scoped>

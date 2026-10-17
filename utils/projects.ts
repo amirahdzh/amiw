@@ -14,6 +14,12 @@
 // To give a project its own page, add a `details` object. Every field inside
 // is optional and a missing one is simply not shown. A project without
 // `details` has no page and no "Details" button.
+//
+// How to write the page (the four questions, the section menu, the rules):
+// docs/writing-project-pages.md. Short version: pick at most three of the
+// story sections (broke / choices / worked / again / leftOut), write each one
+// as a few first-person paragraphs, and leave out any section you have no
+// real answer for.
 
 export interface DetailItem {
   title: string;
@@ -34,6 +40,16 @@ export interface ProjectDetails {
   built?: DetailItem[];
   decisions?: DetailItem[];
   privacy?: string;
+
+  // The story sections. Each is a list of paragraphs in the first person, and
+  // each answers one of the four questions in docs/writing-project-pages.md.
+  // Use the ones you have a real answer for; skip the rest.
+  broke?: string[]; // "What broke": the problem that annoyed you most, and what you tried first
+  choices?: string[]; // "Choices I made": prose version of `decisions` (wins over it when both exist)
+  worked?: string[]; // "Has it worked?": did it change what you do? "Not really" is a fine answer
+  again?: string[]; // "What I'd do differently": if you started over
+  leftOut?: string[]; // "What I left out": something you decided not to build, and why
+
   // Shown under the main image, e.g. to say it is an illustration.
   imageCaption?: string;
 }

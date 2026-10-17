@@ -18,6 +18,11 @@
   </main>
 </template>
 
+<script setup>
+// Old page, kept but left out of search results.
+usePageSeo({ title: "Gaming log | Amiw", description: "Old gaming log.", noindex: true });
+</script>
+
 <style scoped>
 /* Center the content vertically and horizontally */
 main {
