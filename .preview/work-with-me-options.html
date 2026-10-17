@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Work with me: layout options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: hsl(40 55% 98.5%);
+    --fg: hsl(20 35% 18%);
+    --primary: hsl(20 30% 24%);
+    --muted: hsl(25 15% 42%);
+    --border: hsl(36 22% 86%);
+    --blush: hsl(339 62% 95%);
+    --blush-border: hsl(339 22% 85%);
+    --pink: hsl(339 70% 82%);
+    --bloom: hsl(339 81% 85%);
+    --amiw: hsl(339 55% 58%);
+    --cream: hsl(40 35% 95%);
+    --page: hsl(36 20% 92%);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page); color: var(--fg); font-family: Poppins, system-ui, sans-serif; line-height: 1.5; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1.doc { font-family: "Fira Mono", monospace; font-size: 22px; margin: 0 0 4px; }
+  .lead { color: var(--muted); margin: 0 0 28px; font-size: 14.5px; max-width: 70ch; }
+  .opt { margin-bottom: 44px; }
+  .opt-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-bottom: 4px; }
+  .badge { font-family: "Fira Mono", monospace; font-size: 12px; font-weight: 700; background: var(--fg); color: var(--bg); border-radius: 999px; padding: 2px 10px; }
+  .badge.rec { background: var(--amiw); }
+  .opt h2 { font-size: 18px; margin: 0; }
+  .tradeoff { font-size: 13.5px; color: var(--muted); margin: 2px 0 12px; max-width: 80ch; }
+  .tradeoff b { color: var(--fg); }
+
+  /* mini browser */
+  .browser { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 14px 30px -22px hsl(20 35% 18% / .5); margin-bottom: 14px; }
+  .bar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: var(--cream); border-bottom: 1px solid var(--border); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border); }
+  .url { margin-left: 8px; font-family: "Fira Mono", monospace; font-size: 11.5px; color: var(--muted); background: var(--bg); border: 1px solid var(--border); border-radius: 999px; padding: 1px 12px; }
+  .inner { padding: 0; }
+
+  /* homepage band, as it is today */
+  .band { background: var(--blush); padding: 36px 28px 30px; --b: var(--blush-border); }
+  .band h3 { font-size: 26px; font-weight: 700; margin: 0 0 22px; letter-spacing: -.01em; display: table; background: linear-gradient(transparent 62%, var(--bloom) 62%); }
+  .rows { border-bottom: 1px solid var(--b); }
+  .row { display: grid; grid-template-columns: 170px 1fr auto; gap: 24px; align-items: center; padding: 18px 0; border-top: 1px solid var(--b); }
+  .eyebrow { font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 2px; }
+  .row h4 { font-family: "Fira Mono", monospace; font-size: 16px; margin: 0; line-height: 1.25; }
+  .row p { margin: 0; font-size: 14px; max-width: 44ch; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--primary); color: var(--primary); border-radius: 999px; padding: 8px 18px; font-size: 13.5px; font-weight: 500; white-space: nowrap; background: transparent; }
+  .btn.solid { background: var(--primary); color: var(--bg); }
+  .btns { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .hl { outline: 2px dashed var(--amiw); outline-offset: 6px; border-radius: 8px; }
+  .passion { margin-top: 16px; font-family: "Fira Mono", monospace; font-size: 12px; color: var(--muted); }
+
+  /* arrow between frames */
+  .go { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 2px 0 14px; font-family: "Fira Mono", monospace; font-size: 12.5px; color: var(--muted); }
+  .go span.a { color: var(--amiw); font-size: 20px; }
+
+  /* steps */
+  .steps { list-style: none; margin: 0; padding: 0; counter-reset: s; }
+  .steps li { counter-increment: s; position: relative; }
+  .steps .t { font-family: "Fira Mono", monospace; font-weight: 700; font-size: 14.5px; }
+  .steps .d { font-size: 13px; color: var(--muted); line-height: 1.45; }
+  .steps.v li { display: grid; grid-template-columns: 38px 1fr; gap: 0 12px; padding: 14px 0; border-top: 1px solid var(--border); }
+  .steps.v li::before { content: counter(s); grid-row: span 2; width: 30px; height: 30px; border-radius: 50%; background: var(--bloom); font-family: "Fira Mono", monospace; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+  .steps.v { border-bottom: 1px solid var(--border); }
+  .steps.h { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .steps.h li { padding-top: 12px; border-top: 2px solid var(--fg); }
+  .steps.h li::before { content: counter(s, decimal-leading-zero); display: block; font-family: "Fira Mono", monospace; font-size: 11.5px; font-weight: 700; color: var(--amiw); margin-bottom: 2px; }
+  .steps.h .t { font-size: 13px; display: block; }
+  .steps.h .d { font-size: 12px; }
+  .strip { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-family: "Fira Mono", monospace; font-size: 12.5px; font-weight: 500; }
+  .strip i { color: var(--pink); font-style: normal; }
+
+  /* page body */
+  .page { padding: 40px 36px 36px; }
+  .page .eyebrow { margin-bottom: 4px; }
+  .page h1 { font-size: 34px; line-height: 1.15; letter-spacing: -.02em; margin: 6px 0 10px; display: table; background: linear-gradient(transparent 62%, var(--bloom) 62%); }
+  .page .sub { font-size: 16px; color: var(--muted); max-width: 46ch; margin: 0 0 24px; }
+  .cols { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 36px; }
+  .page h5 { font-family: "Fira Mono", monospace; font-size: 15px; margin: 0 0 8px; }
+  .ul { margin: 0 0 20px; padding: 0; list-style: none; font-size: 13.5px; }
+  .ul li { padding: 7px 0; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+  .ul li b { font-family: "Fira Mono", monospace; min-width: 96px; }
+  .ul li span { color: var(--muted); }
+  .cta { background: var(--blush); padding: 26px 36px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; }
+  .cta h5 { margin: 0; font-size: 17px; font-family: "Fira Mono", monospace; }
+  .cta p { margin: 2px 0 0; font-size: 13.5px; }
+
+  .more { font-size: 13px; font-weight: 600; display: inline-flex; gap: 6px; align-items: baseline; margin-top: 14px; }
+  .more u { text-decoration-color: var(--pink); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .more span { color: var(--amiw); }
+  .inline-panel { grid-column: 1 / -1; padding: 6px 0 22px; }
+  .panel-box { background: var(--bg); border: 1px solid var(--blush-border); border-radius: 10px; padding: 20px 20px 18px; }
+  .panel-grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+  .exp { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 18px; font-size: 12.5px; margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--blush-border); }
+  .exp b { font-family: "Fira Mono", monospace; display: block; font-size: 12.5px; }
+  .exp span { color: var(--muted); }
+  .chev { display: inline-block; transform: rotate(90deg); color: var(--amiw); }
+
+  .note { font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+  .compare { margin-top: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 18px 22px; font-size: 14px; }
+  .compare h2 { font-size: 16px; margin: 0 0 8px; }
+  .compare ul { margin: 0; padding-left: 18px; }
+  .compare li { margin: 4px 0; }
+
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 1fr; gap: 10px; }
+    .btns { justify-content: flex-start; }
+    .cols { grid-template-columns: 1fr; gap: 20px; }
+    .steps.h { grid-template-columns: repeat(2, 1fr); }
+    .exp { grid-template-columns: 1fr; }
+    .page { padding: 28px 18px; }
+    .cta { padding: 22px 18px; }
+    .band { padding: 28px 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="doc">Where does "how I work" live?</h1>
+  <p class="lead">Three ways to do it, shown on a desktop-width homepage (the "Work with me" band you have today). The steps, wording and prices are placeholders: the point here is the layout.</p>
+
+  <!-- ============ OPTION A ============ -->
+  <section class="opt">
+    <div class="opt-head"><span class="badge">A</span><h2>A separate page</h2></div>
+    <p class="tradeoff"><b>Homepage stays short.</b> The Freelance row gets a second button; clicking it opens a full page. Room for pricing and expectations. <b>Cost:</b> one click away, so people who don't click never see the process.</p>
+
+    <div class="browser">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">amiw.dev</span></div>
+      <div class="inner">
+        <div class="band">
+          <h3>Work with me</h3>
+          <div class="rows">
+            <div class="row">
+              <div><span class="eyebrow">Employers</span><h4>Join your team</h4></div>
+              <p>Software engineer for teams that use C#/.NET and TypeScript. I also bring Linux and cloud experience.</p>
+              <div class="btns"><span class="btn">Resume ↗</span></div>
+            </div>
+            <div class="row">
+              <div><span class="eyebrow">Freelance clients</span><h4>Build something for you</h4></div>
+              <p>I start by understanding what you need, then make it happen. First call is free.</p>
+              <div class="btns hl"><span class="btn">How I work →</span><span class="btn">Book a call ↗</span></div>
+            </div>
+            <div class="row">
+              <div><span class="eyebrow">Collaborators</span><h4>Work on something together</h4></div>
+              <p>Community, non-profit and open projects. Tell me what you're working on.</p>
+              <div class="btns"><span class="btn">Say hello ↗</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="go"><span class="a">↓</span> opens <b>amiw.dev/work-with-me</b></div>
+
+    <div class="browser">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">amiw.dev/work-with-me</span></div>
+      <div class="inner">
+        <div class="page">
+          <span class="eyebrow">Work with me</span>
+          <h1>How I work</h1>
+          <p class="sub">A clear process, so you always know what happens next and what it costs.</p>
+          <div class="cols">
+            <div>
+              <h5>The process</h5>
+              <ol class="steps v">
+                <li><span class="t">Free intro call</span><span class="d">We talk about what you need. No cost, no commitment.</span></li>
+                <li><span class="t">Proposal</span><span class="d">Scope, price and timeline, in writing.</span></li>
+                <li><span class="t">Agreement &amp; deposit</span><span class="d">Contract and first invoice.</span></li>
+                <li><span class="t">Kickoff</span><span class="d">Welcome doc, access, and a call to align.</span></li>
+                <li><span class="t">Build, with check-ins</span><span class="d">Revisions included.</span></li>
+                <li><span class="t">Handover</span><span class="d">Delivery, a walkthrough, final payment.</span></li>
+              </ol>
+            </div>
+            <div>
+              <h5>What to expect</h5>
+              <ul class="ul">
+                <li><b>Replies</b><span>within one working day</span></li>
+                <li><b>Time zone</b><span>Jakarta, GMT+7</span></li>
+                <li><b>Ownership</b><span>the code is yours at the end</span></li>
+                <li><b>Prices</b><span>from Rp X, quoted per project</span></li>
+              </ul>
+              <h5>What I offer</h5>
+              <ul class="ul">
+                <li><b>Websites</b><span>for people and communities</span></li>
+                <li><b>Web apps</b><span>C#/.NET and TypeScript</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="cta">
+          <div><h5>Ready to talk?</h5><p>The first call is free.</p></div>
+          <span class="btn">Book a call ↗</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OPTION B ============ -->
+  <section class="opt">
+    <div class="opt-head"><span class="badge">B</span><h2>Everything on the homepage</h2></div>
+    <p class="tradeoff"><b>Nobody leaves the page.</b> The process opens under the Freelance row (shown open here; closed by default, one click to open). <b>Cost:</b> the homepage gets longer and denser, and employers scroll past freelance detail.</p>
+
+    <div class="browser">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">amiw.dev</span></div>
+      <div class="inner">
+        <div class="band">
+          <h3>Work with me</h3>
+          <div class="rows">
+            <div class="row">
+              <div><span class="eyebrow">Employers</span><h4>Join your team</h4></div>
+              <p>Software engineer for teams that use C#/.NET and TypeScript. I also bring Linux and cloud experience.</p>
+              <div class="btns"><span class="btn">Resume ↗</span></div>
+            </div>
+            <div class="row" style="border-bottom:0">
+              <div><span class="eyebrow">Freelance clients</span><h4>Build something for you</h4></div>
+              <p>I start by understanding what you need, then make it happen. First call is free.</p>
+              <div class="btns"><span class="btn">How it works <span class="chev">›</span></span><span class="btn solid">Book a call ↗</span></div>
+            </div>
+            <div class="inline-panel">
+              <div class="panel-box">
+                <ol class="steps h">
+                  <li><span class="t">Free intro call</span><span class="d">What you need. No cost.</span></li>
+                  <li><span class="t">Proposal</span><span class="d">Scope, price, timeline.</span></li>
+                  <li><span class="t">Agreement &amp; deposit</span><span class="d">Contract + first invoice.</span></li>
+                  <li><span class="t">Kickoff</span><span class="d">Welcome doc, access, call.</span></li>
+                  <li><span class="t">Build</span><span class="d">Check-ins, revisions included.</span></li>
+                  <li><span class="t">Handover</span><span class="d">Delivery, walkthrough.</span></li>
+                </ol>
+                <div class="exp">
+                  <div><b>Replies</b><span>within one working day</span></div>
+                  <div><b>Time zone</b><span>Jakarta, GMT+7</span></div>
+                  <div><b>Prices</b><span>from Rp X, per project</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div><span class="eyebrow">Collaborators</span><h4>Work on something together</h4></div>
+              <p>Community, non-profit and open projects. Tell me what you're working on.</p>
+              <div class="btns"><span class="btn">Say hello ↗</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OPTION C ============ -->
+  <section class="opt">
+    <div class="opt-head"><span class="badge rec">C</span><h2>A short glimpse on the homepage, full page for the detail</h2><span class="eyebrow" style="color:var(--amiw)">my pick</span></div>
+    <p class="tradeoff"><b>Best of both.</b> One line on the homepage shows the six steps, so everyone sees you have a clear process. A link opens the full page (same as A) for pricing and expectations. <b>Cost:</b> two places to keep in sync, but the homepage part is just the step names.</p>
+
+    <div class="browser">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">amiw.dev</span></div>
+      <div class="inner">
+        <div class="band">
+          <h3>Work with me</h3>
+          <div class="rows">
+            <div class="row">
+              <div><span class="eyebrow">Employers</span><h4>Join your team</h4></div>
+              <p>Software engineer for teams that use C#/.NET and TypeScript. I also bring Linux and cloud experience.</p>
+              <div class="btns"><span class="btn">Resume ↗</span></div>
+            </div>
+            <div class="row" style="border-bottom:0">
+              <div><span class="eyebrow">Freelance clients</span><h4>Build something for you</h4></div>
+              <p>I start by understanding what you need, then make it happen. First call is free.</p>
+              <div class="btns"><span class="btn">Book a call ↗</span></div>
+            </div>
+            <div style="padding:0 0 20px" class="hl-wrap">
+              <div class="hl" style="padding:12px 14px;margin:0 -2px">
+                <div class="strip">
+                  <span>Free call</span><i>→</i><span>Proposal</span><i>→</i><span>Agreement</span><i>→</i><span>Kickoff</span><i>→</i><span>Build</span><i>→</i><span>Handover</span>
+                </div>
+                <span class="more"><u>See how I work, what to expect and pricing</u><span>→</span></span>
+              </div>
+            </div>
+            <div class="row">
+              <div><span class="eyebrow">Collaborators</span><h4>Work on something together</h4></div>
+              <p>Community, non-profit and open projects. Tell me what you're working on.</p>
+              <div class="btns"><span class="btn">Say hello ↗</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="note">The page it links to is the same as in A.</p>
+  </section>
+
+  <div class="compare">
+    <h2>How I'd choose</h2>
+    <ul>
+      <li><b>A</b> if you want the homepage to stay exactly as light as it is now.</li>
+      <li><b>B</b> only if you expect most freelance clients to arrive on the homepage and never click anything.</li>
+      <li><b>C</b> if you want the homepage to show you have a process (that alone reassures clients) while the long detail stays on its own page.</li>
+    </ul>
+    <p class="note">Not shown: phone layout. In all three, the steps stack in one column on a phone.</p>
+  </div>
+</div>
+</body>
+</html>

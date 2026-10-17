@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Social card options</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:hsl(40 55% 98.5%);--fg:hsl(20 35% 18%);--muted:hsl(25 15% 42%);--blush:hsl(339 62% 95%);--pink:hsl(339 70% 82%);--bloom:hsl(339 81% 85%);--amiw:hsl(339 55% 58%);--cream:hsl(40 35% 95%);--page:hsl(36 20% 92%);--accent:hsl(96 24% 88%);--honey:hsl(42 70% 58%)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--fg);font-family:Poppins,system-ui,sans-serif;line-height:1.5}
+  .wrap{max-width:820px;margin:0 auto;padding:28px 16px 56px}
+  h1.doc{font-family:"Fira Mono",monospace;font-size:20px;margin:0 0 6px}
+  .why{font-size:13.5px;color:var(--muted);margin:0 0 10px;max-width:90ch}
+  .opt{display:flex;gap:10px;align-items:baseline;margin:30px 0 4px;padding-top:12px;border-top:2px solid var(--fg)}
+  .opt h3{font-size:16px;margin:0}
+  .badge{font-family:"Fira Mono",monospace;font-size:12px;font-weight:700;background:var(--fg);color:var(--bg);border-radius:999px;padding:2px 10px}
+  .badge.rec{background:var(--amiw)}
+  .pick{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--amiw)}
+  .scale{width:720px;height:378px;border-radius:10px;overflow:hidden;box-shadow:0 14px 30px -20px hsl(20 35% 18%/.55);margin-top:8px;max-width:100%}
+
+  /* the 1200 x 630 card */
+  .card{width:1200px;height:630px;background:var(--bg);position:relative;transform:scale(.6);transform-origin:0 0;overflow:hidden;display:flex}
+  .left{width:720px;padding:84px 56px 56px 84px;display:flex;flex-direction:column}
+  .right{position:absolute;right:0;top:0;bottom:0;width:480px;background:var(--blush)}
+  .right .blob{position:absolute;left:60px;top:105px;width:360px;height:360px;border-radius:50%;background:var(--accent)}
+  .right .sun{position:absolute;left:-50px;bottom:60px;width:130px;height:130px;border-radius:50%;background:hsl(42 70% 58%/.35)}
+  .right .pk{position:absolute;right:50px;top:70px;width:44px;height:44px;border-radius:50%;background:var(--bloom)}
+  .right img{position:absolute;left:80px;bottom:-40px;width:330px}
+  .name{font-family:"Fira Mono",monospace;font-weight:700;font-size:132px;line-height:1;letter-spacing:-.03em;display:table;background:linear-gradient(transparent 62%,var(--bloom) 62%)}
+  .role{font-family:"Fira Mono",monospace;font-size:30px;line-height:1.5;color:var(--muted);margin-top:34px}
+  .role b{color:var(--fg);font-weight:700}
+  .offer{font-family:Poppins,sans-serif;font-size:36px;font-weight:600;line-height:1.3;color:var(--fg);margin-top:16px;max-width:19ch}
+  .stack{font-family:"Fira Mono",monospace;font-size:24px;color:var(--muted);margin-top:18px}
+  .url{margin-top:auto;font-family:Poppins,sans-serif;font-weight:600;font-size:28px}
+  .big{font-size:50px;font-weight:600;line-height:1.25;margin-top:30px;max-width:15ch}
+  .say{font-size:37px;font-weight:500;line-height:1.35;margin-top:30px;max-width:19ch}
+  .eyebrow{font-size:22px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .h2{font-weight:700;font-size:96px;line-height:1.05;letter-spacing:-.025em;margin:14px 0 0;display:table;background:linear-gradient(transparent 62%,var(--bloom) 62%)}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:38px;background:var(--cream);border-radius:20px;overflow:hidden;max-width:560px}
+  .fact{padding:20px 26px}
+  .fact:nth-child(even){border-left:2px solid hsl(36 22% 86%)}
+  .fact:nth-child(n+3){border-top:2px solid hsl(36 22% 86%)}
+  .fact b{display:block;font-family:"Fira Mono",monospace;font-size:38px;line-height:1.1}
+  .fact:first-child b{color:var(--amiw)}
+  .fact span{font-size:20px;color:var(--muted)}
+  .small-fig .right img{width:300px;left:90px}
+</style></head>
+<body><div class="wrap">
+<h1 class="doc">Social card options</h1>
+<p class="why">What shows when your link is shared (WhatsApp, LinkedIn, Instagram). Shown at 60% of real size (1200 × 630). Same illustration and colours as the site. The text on each card is the only thing that differs.</p>
+
+<div class="opt"><span class="badge rec">A</span><h3>Engineer first, plus what you offer</h3><span class="pick">my pick</span></div>
+<p class="why">Keeps "Software Engineer" for credibility, adds one line for small-business owners, and shrinks the stack to a quiet last line. Drops the Linux line.</p>
+<div class="scale"><div class="card">
+  <div class="left"><div class="name">Amiw</div>
+    <div class="role">Software Engineer</div>
+    <div class="offer">Websites &amp; automation for small businesses</div>
+    <div class="stack">C#/.NET · TypeScript</div>
+    <div class="url">amiw.dev</div></div>
+  <div class="right"><span class="blob"></span><span class="sun"></span><span class="pk"></span><img src="../public/img/amiw-figure.webp" alt=""></div>
+</div></div>
+
+<div class="opt"><span class="badge">B</span><h3>What you do first, the title second</h3></div>
+<p class="why">Leads with the offer, so a small-business owner understands at a glance. The engineer title and stack follow in small type. The strongest pitch for clients, a little less obvious for recruiters.</p>
+<div class="scale"><div class="card">
+  <div class="left"><div class="name">Amiw</div>
+    <div class="big">I build websites &amp; automation for small businesses.</div>
+    <div class="stack" style="margin-top:26px">Software Engineer · C#/.NET · TypeScript</div>
+    <div class="url">amiw.dev</div></div>
+  <div class="right"><span class="blob"></span><span class="sun"></span><span class="pk"></span><img src="../public/img/amiw-figure.webp" alt=""></div>
+</div></div>
+
+<div class="opt"><span class="badge">C</span><h3>Your own line from the homepage</h3></div>
+<p class="why">Uses the sentence from your hero. It has the most personality and says how you work, but it doesn't say what you build.</p>
+<div class="scale"><div class="card">
+  <div class="left"><div class="name">Amiw</div>
+    <div class="say">I focus on understanding what you need and making it happen.</div>
+    <div class="stack" style="margin-top:20px;font-size:21px">Software Engineer · websites &amp; automation</div>
+    <div class="url">amiw.dev</div></div>
+  <div class="right"><span class="blob"></span><span class="sun"></span><span class="pk"></span><img src="../public/img/amiw-figure.webp" alt=""></div>
+</div></div>
+
+<div class="opt"><span class="badge">D</span><h3>A separate card for the "How I work" page</h3></div>
+<p class="why">Not a replacement for A, B or C: a second card used only when /work-with-me is shared, for example when you send it to a client. It shows the four facts. Pick one of A, B or C for the rest of the site, and add D if you like it.</p>
+<div class="scale"><div class="card small-fig">
+  <div class="left" style="padding-top:70px"><div class="eyebrow">Work with me</div><div class="h2">How I work</div>
+    <div class="facts"><div class="fact"><b>Free</b><span>first call</span></div><div class="fact"><b>50 / 50</b><span>pay half to start</span></div><div class="fact"><b>2 rounds</b><span>of changes</span></div><div class="fact"><b>30 days</b><span>of bug fixes</span></div></div>
+    <div class="url">amiw.dev/work-with-me</div></div>
+  <div class="right"><span class="blob"></span><span class="sun"></span><span class="pk"></span><img src="../public/img/amiw-figure.webp" alt=""></div>
+</div></div>
+</div></body></html>

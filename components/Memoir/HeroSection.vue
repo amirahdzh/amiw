@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { WHATSAPP_URL } from "~/utils/site";
+import { languageCodes, city, timezone } from "~/utils/workWithMe";
 
 // The diary side of this hero is archived in archive/diary/ (see its README).
 const proLinks = [
@@ -19,6 +20,14 @@ const proLinks = [
         class="grid items-end gap-4 md:grid-cols-[minmax(0,1fr)_22rem] md:gap-12 lg:grid-cols-[minmax(0,1fr)_26rem] lg:gap-16"
       >
         <div class="min-w-0 self-center pb-8 md:pb-16 md:pt-8">
+          <!-- Where I am and what I speak: the same quiet label as on every page. -->
+          <p class="eyebrow mb-3 flex flex-wrap items-center gap-x-2.5">
+            {{ languageCodes }}
+            <span aria-hidden="true" class="text-pink">·</span>
+            {{ city }}
+            <span aria-hidden="true" class="text-pink">·</span>
+            {{ timezone }}
+          </p>
           <h1
             class="font-mono text-5xl font-bold leading-[1.05] tracking-tight text-foreground md:text-6xl lg:text-7xl"
           >

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Process details preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:hsl(40 55% 98.5%);--fg:hsl(20 35% 18%);--primary:hsl(20 30% 24%);--muted:hsl(25 15% 42%);--border:hsl(36 22% 86%);--blush:hsl(339 62% 95%);--pink:hsl(339 70% 82%);--bloom:hsl(339 81% 85%);--amiw:hsl(339 55% 58%);--cream:hsl(40 35% 95%);--page:hsl(36 20% 92%);--ring:hsl(20 30% 30%)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--fg);font-family:Poppins,system-ui,sans-serif;line-height:1.5}
+  .wrap{max-width:1100px;margin:0 auto;padding:28px 16px 56px}
+  h1.doc{font-family:"Fira Mono",monospace;font-size:20px;margin:0 0 6px}
+  .why{font-size:13.5px;color:var(--muted);margin:0 0 10px;max-width:105ch}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin:10px 0 16px;align-items:center}
+  .new{display:inline-block;font-family:"Fira Mono",monospace;font-size:9.5px;font-weight:700;letter-spacing:.08em;background:var(--amiw);color:#fff;border-radius:999px;padding:1px 7px;vertical-align:middle;margin-left:6px}
+  .ph{background:var(--bloom);border-radius:4px;padding:0 4px}
+  .browser{background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 14px 30px -22px hsl(20 35% 18%/.5)}
+  .bar{display:flex;align-items:center;gap:6px;padding:7px 12px;background:var(--cream);border-bottom:1px solid var(--border)}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--border)}
+  .url{margin-left:8px;font-family:"Fira Mono",monospace;font-size:11.5px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:1px 12px}
+  .pg{padding:36px 44px 40px}
+  .cols{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:48px}
+  h2.s{font-family:"Fira Mono",monospace;font-size:17px;margin:0 0 14px}
+
+  /* timeline */
+  .tl{list-style:none;margin:0;padding:0}
+  .step{position:relative;padding:0 0 22px 52px}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:attr(data-n);position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;background:var(--bloom);font-family:"Fira Mono",monospace;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;z-index:1}
+  .step::after{content:"";position:absolute;left:16px;top:34px;bottom:0;width:2px;background:var(--pink)}
+  .step:last-child::after{display:none}
+  .t{font-family:"Fira Mono",monospace;font-weight:700;font-size:16px;line-height:34px;display:block}
+  .d{font-size:14.5px;color:var(--muted);display:block;max-width:50ch;margin-top:-2px}
+  .more{all:unset;cursor:pointer;display:inline-flex;gap:6px;align-items:center;margin-top:8px;padding:2px 4px;margin-left:-4px;border-radius:6px;font-family:"Fira Mono",monospace;font-size:12.5px;font-weight:700}
+  .more span{text-decoration:underline;text-decoration-color:var(--pink);text-decoration-thickness:2px;text-underline-offset:4px}
+  .more:hover span{text-decoration-color:var(--primary)}
+  .more:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+  .more i{font-style:normal;color:var(--amiw);font-size:15px;line-height:1;display:inline-block;transition:transform .15s}
+  .step.open .more i{transform:rotate(45deg)}
+  .panel{display:none;margin-top:10px;background:var(--cream);border-radius:12px;padding:6px 18px}
+  .step.open .panel{display:block}
+  .row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;padding:11px 0;border-top:1px solid var(--border);font-size:14px}
+  .row:first-child{border-top:0}
+  .row b{font-family:"Fira Mono",monospace;font-size:12px;color:var(--fg);padding-top:1px}
+  .row span{color:var(--muted);line-height:1.5}
+  .row span a,.chips a{color:var(--fg);font-weight:600;text-decoration:underline;text-decoration-color:var(--pink);text-decoration-thickness:2px;text-underline-offset:4px}
+
+  /* faq */
+  .faq{border-bottom:1px solid var(--border)}
+  .q{border-top:1px solid var(--border)}
+  .q .h{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0;font-family:"Fira Mono",monospace;font-weight:700;font-size:14.5px;cursor:pointer}
+  .q .h s{text-decoration:none;color:var(--amiw);font-size:20px;line-height:1;transition:transform .15s}
+  .q.open .h s{transform:rotate(45deg)}
+  .q p{display:none;margin:0 0 14px;font-size:14.5px;color:var(--muted);max-width:56ch}
+  .q.open p{display:block}
+  .chips{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+
+  /* proof band */
+  .band{background:var(--cream);padding:34px 44px}
+  .band h2{font-family:"Fira Mono",monospace;font-size:17px;margin:0 0 14px;display:flex;align-items:center}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+  .card b{font-family:"Fira Mono",monospace;font-size:15px;display:block}
+  .card span{font-size:13.5px;color:var(--muted);display:block;margin-top:4px;line-height:1.45}
+  .card small{display:block;margin-top:10px;font-family:"Fira Mono",monospace;font-size:11.5px;color:var(--muted)}
+  .all{display:inline-block;margin-top:14px;font-size:14.5px;font-weight:600;text-decoration:underline;text-decoration-color:var(--pink);text-decoration-thickness:2px;text-underline-offset:4px}
+  .cta{background:var(--blush);padding:28px 44px;display:flex;justify-content:space-between;align-items:center}
+  .cta h5{margin:0;font-family:"Fira Mono",monospace;font-size:18px}
+  .cta p{margin:6px 0 0;font-size:14.5px;max-width:50ch}
+  .btn{display:inline-flex;border:1px solid var(--primary);color:var(--primary);border-radius:999px;padding:10px 22px;font-size:15px;font-weight:500;white-space:nowrap}
+  .faint{opacity:.45;font-family:"Fira Mono",monospace;font-size:12px;margin:0 0 22px}
+</style></head>
+<body><div class="wrap">
+<h1 class="doc">Process details: how it would look</h1>
+<p class="why">Click any <b>How it works +</b> or question to open or close it. The six steps stay as short as today, and each opens into the same few rows. <b>The wording is example text, not your commitments:</b> the highlighted <span class="ph">[numbers]</span> are guesses I need you to answer.</p>
+<div class="legend"><span><span class="new" style="margin-left:0">NEW</span> = something you might be missing, shown where it would live</span><span><span class="ph">[ ]</span> = a number or choice only you can decide</span></div>
+
+<div class="browser"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">amiw.dev/work-with-me</span></div>
+<div class="pg">
+  <p class="faint">…facts band stays as it is…</p>
+  <div class="cols">
+    <div>
+      <h2 class="s">The process</h2>
+      <ol class="tl" id="tl"></ol>
+    </div>
+    <div>
+      <h2 class="s">Good to know</h2>
+      <div class="faq" id="faq"></div>
+    </div>
+  </div>
+</div>
+<div class="band">
+  <h2>Recent work <span class="new">NEW</span></h2>
+  <div class="cards">
+    <div class="card"><b>Mindful App</b><span>Android app that makes me say why before I open a distracting app.</span><small>Kotlin · Go · Docker</small></div>
+    <div class="card"><b>Daarul Ummahaat Website</b><span>Website for a non-profit foundation, so its administrator can update everything without a developer.</span><small>Next.js · Payload CMS</small></div>
+    <div class="card"><b>Miaw Discord Bot</b><span>Discord bot with slash commands, quizzes, and an LLM that turns new words into flashcards.</span><small>TypeScript · discord.js</small></div>
+  </div>
+  <a class="all">See all projects →</a>
+</div>
+<div class="cta"><div><h5>Ready to talk?</h5><p>The first call is free. Tell me what you want, any deadline and a rough budget. I reply within one working day.</p></div><span class="btn">Book a call ↗</span></div>
+</div>
+</div>
+
+<script>
+const steps = [
+  { t:"Free intro call", d:"We talk about what you need. No cost, no commitment.", open:true, rows:[
+    ["What happens","I listen first. You tell me what you need, and I ask questions until we both see the problem clearly."],
+    ["Where","A video call or WhatsApp call, about <span class='ph'>[30]</span> minutes."],
+    ["Before it","An optional two-minute form: what you want, a deadline, a rough budget. <a>Open the form ↗</a> <span class='new'>NEW</span>"],
+    ["You get","A short written summary of what we agreed, within <span class='ph'>[1]</span> working day. Plain words, no jargon. <span class='new'>NEW</span>"] ]},
+  { t:"Proposal", d:"Scope, price and timeline, in writing.", rows:[
+    ["What happens","I write what I will build, what is not included, the price and the timeline."],
+    ["You get","A <span class='ph'>[PDF]</span> within <span class='ph'>[3]</span> working days, valid for <span class='ph'>[14]</span> days. <a>See a sample proposal ↗</a> <span class='new'>NEW</span>"] ]},
+  { t:"Contract & invoice", d:"Terms in writing, and the first invoice.", open:true, rows:[
+    ["What happens","You receive the contract and an invoice for the first 50%. Work starts when it is paid."],
+    ["How","Sent as <span class='ph'>[PDF]</span> by email. Payment is due in <span class='ph'>[7]</span> days. <a>See a sample invoice ↗</a>"],
+    ["If it's late","Work pauses until the payment arrives, and the start date moves with it. <span class='new'>NEW</span>"] ]},
+  { t:"Kickoff", d:"A welcome document, an access list, and a call to get on the same page.", rows:[
+    ["What happens","We go through the welcome document, agree who does what, and I list the access I need."],
+    ["Where","A <span class='ph'>[30]</span>-minute video call. <a>See a sample welcome document ↗</a> <span class='new'>NEW</span>"] ]},
+  { t:"Build, with check-ins", d:"You see progress along the way, not only at the end.", open:true, rows:[
+    ["Check-ins","Every <span class='ph'>[week]</span>: a short written update, or a <span class='ph'>[20]</span>-minute call if you prefer."],
+    ["See it live","A private preview link, so you can open the work in progress at any time. <span class='new'>NEW</span>"],
+    ["Feedback","Send your changes in one batch, so I can work through them in one go. Two rounds are included."] ]},
+  { t:"Handover", d:"Delivery and a walkthrough, so you know how everything works.", rows:[
+    ["What happens","I deliver the work, then walk you through it on a <span class='ph'>[30]</span>-minute call."],
+    ["You get","The finished work, the accounts moved to your name, and a short <span class='ph'>[recorded walkthrough + written notes]</span>. The other 50% is due now."] ]}
+];
+const faq = [
+  { q:"What does it cost?", a:"Every project is quoted after the first call. You pay 50% to start and 50% at handover." },
+  { q:"Can I see samples of your documents?", isNew:true, open:true, a:"Yes. These are fictional examples, with no client details:<div class='chips'><a>Sample proposal ↗</a><a>Sample welcome document ↗</a><a>Sample invoice ↗</a></div>" },
+  { q:"What if my plans change, or I go quiet?", isNew:true, a:"Tell me and we adjust the plan. If I haven't heard from you for <span class='ph'>[14]</span> days, the project pauses and your slot may move. Changes to the scope are quoted before I start them." },
+  { q:"How long does it take?", a:"A small site takes 2 to 4 weeks…" },
+  { q:"What if I want more changes?", a:"Two rounds are included…" },
+  { q:"What happens after launch?", a:"Bugs from my work are fixed free for 30 days…" },
+  { q:"Who owns the work?", a:"You do…" },
+  { q:"…and the rest as today", a:"" }
+];
+const tl = document.getElementById("tl");
+steps.forEach((s,i) => {
+  const li = document.createElement("li"); li.className = "step" + (s.open ? " open" : ""); li.dataset.n = i+1;
+  li.innerHTML = `<span class="t">${s.t}</span><span class="d">${s.d}</span>
+    <button class="more" type="button" aria-expanded="${!!s.open}"><span>How it works</span><i aria-hidden="true">+</i></button>
+    <div class="panel">${s.rows.map(r => `<div class="row"><b>${r[0]}</b><span>${r[1]}</span></div>`).join("")}</div>`;
+  li.querySelector(".more").addEventListener("click", e => { li.classList.toggle("open"); e.currentTarget.setAttribute("aria-expanded", li.classList.contains("open")); });
+  tl.appendChild(li);
+});
+const fq = document.getElementById("faq");
+faq.forEach(f => {
+  const d = document.createElement("div"); d.className = "q" + (f.open ? " open" : "");
+  d.innerHTML = `<div class="h">${f.q}${f.isNew ? '<span class="new">NEW</span>' : ''}<s>+</s></div><p>${f.a}</p>`;
+  d.querySelector(".h").addEventListener("click", () => d.classList.toggle("open"));
+  fq.appendChild(d);
+});
+</script>
+</body></html>

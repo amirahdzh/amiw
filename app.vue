@@ -1,7 +1,8 @@
 <template>
   <Html>
     <div class="min-h-screen flex flex-col text-foreground">
-      <!-- Header (hidden on /links — it's a standalone link-in-bio page) -->
+      <!-- Header and footer are hidden on /links: it's a standalone
+           link-in-bio page (pages/links/index.vue) -->
       <Header v-if="route.path !== '/links'" />
       <StickyNav v-if="route.path !== '/links'" />
 
@@ -10,8 +11,9 @@
         <NuxtPage />
       </main>
 
-      <Footer v-if="route.path !== '/links'" /></div
-  ></Html>
+      <Footer v-if="route.path !== '/links'" />
+    </div>
+  </Html>
 </template>
 
 <script setup lang="ts">

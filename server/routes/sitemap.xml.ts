@@ -17,6 +17,7 @@ export default defineEventHandler(async (event) => {
     "/newsletter",
     "/art-leisure",
     "/links",
+    "/work-with-me",
     ...projects.filter((p) => p.details).map((p) => `/projects/${p.slug}`),
     ...posts.filter((p) => !p.draft).map((p) => p._path as string),
   ];

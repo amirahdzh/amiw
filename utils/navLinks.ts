@@ -6,7 +6,6 @@ import { places } from "./site";
 export const siteLinks = [
   { to: "/blog", label: "Blog" },
   { to: "/art-leisure", label: "Art & Leisure" },
-  { to: "/links", label: "Links" },
 ];
 
 // Icons are shown on wider screens only; the footer lists the same places.

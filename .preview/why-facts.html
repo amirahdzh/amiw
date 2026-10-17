@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Key facts with "Why?"</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:hsl(40 55% 98.5%);--fg:hsl(20 35% 18%);--primary:hsl(20 30% 24%);--muted:hsl(25 15% 42%);--border:hsl(36 22% 86%);--blush:hsl(339 62% 95%);--pink:hsl(339 70% 82%);--bloom:hsl(339 81% 85%);--amiw:hsl(339 55% 58%);--cream:hsl(40 35% 95%);--page:hsl(36 20% 92%);--ring:hsl(20 30% 30%)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--fg);font-family:Poppins,system-ui,sans-serif;line-height:1.5}
+  .wrap{max-width:1100px;margin:0 auto;padding:28px 16px 56px}
+  h1.doc{font-family:"Fira Mono",monospace;font-size:20px;margin:0 0 6px}
+  .why{font-size:13.5px;color:var(--muted);margin:0 0 14px;max-width:95ch}
+  .label{display:inline-block;font-family:"Fira Mono",monospace;font-size:12px;font-weight:700;background:var(--fg);color:var(--bg);border-radius:999px;padding:2px 10px;margin:28px 0 8px}
+  .browser{background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 14px 30px -22px hsl(20 35% 18%/.5)}
+  .bar{display:flex;align-items:center;gap:6px;padding:8px 12px;background:var(--cream);border-bottom:1px solid var(--border)}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--border)}
+  .url{margin-left:8px;font-family:"Fira Mono",monospace;font-size:11.5px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:1px 12px}
+  .pg{padding:40px 48px 44px}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block}
+  h1{font-size:40px;line-height:1.15;letter-spacing:-.02em;margin:6px 0 8px;display:table;background:linear-gradient(transparent 62%,var(--bloom) 62%)}
+  .sub{font-size:18px;color:var(--muted);max-width:48ch;margin:0 0 28px}
+  .faint{opacity:.5;font-family:"Fira Mono",monospace;font-size:13px;margin-top:26px;border-top:1px solid var(--border);padding-top:14px}
+
+  /* ---- the facts band ---- */
+  .facts-wrap{position:relative}
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);background:var(--cream);border-radius:12px;list-style:none;margin:0;padding:0;overflow:hidden}
+  .fact{padding:20px 22px 16px;border-left:1px solid var(--border);transition:background .15s;display:flex;flex-direction:column;align-items:flex-start}
+  .fact:first-child{border-left:0}
+  .fact.on{background:hsl(40 35% 92%)}
+  .fact .v{font-family:"Fira Mono",monospace;font-size:28px;font-weight:700;line-height:1.1;margin:0}
+  .fact:first-child .v{color:var(--amiw)}
+  .fact .n{font-size:13.5px;color:var(--muted);line-height:1.35;margin:4px 0 0}
+  .fact button{all:unset;cursor:pointer;display:inline-flex;gap:6px;align-items:center;margin-top:auto;padding:2px 4px;margin-left:-4px;border-radius:6px;font-family:"Fira Mono",monospace;font-size:12.5px;font-weight:700;color:var(--fg)}
+  .fact button span{text-decoration:underline;text-decoration-color:var(--pink);text-decoration-thickness:2px;text-underline-offset:4px}
+  .fact .n{margin-bottom:12px}
+  .fact button:hover span{text-decoration-color:var(--primary)}
+  .fact button:focus-visible{outline:2px solid var(--ring);outline-offset:2px}
+  .fact button i{font-style:normal;color:var(--amiw);font-size:15px;line-height:1;text-decoration:none;display:inline-block;transition:transform .15s}
+  .fact button[aria-expanded="true"] i{transform:rotate(45deg)}
+
+  /* ---- the reason drawer, under the band ---- */
+  .drawer{position:relative;margin-top:12px;background:var(--bg);border:1px solid var(--pink);border-radius:12px;padding:18px 22px;display:none}
+  .drawer.open{display:block}
+  .drawer::before{content:"";position:absolute;top:-8px;left:var(--x,40px);width:14px;height:14px;background:var(--bg);border-left:1px solid var(--pink);border-top:1px solid var(--pink);transform:rotate(45deg)}
+  .drawer h4{margin:0 0 4px;font-family:"Fira Mono",monospace;font-size:15px}
+  .drawer p{margin:0;font-size:15px;line-height:1.6;color:var(--muted);max-width:70ch}
+
+  /* ---- mobile frame ---- */
+  .phone{width:390px;max-width:100%;margin:0 auto}
+  .phone .pg{padding:28px 20px 32px}
+  .phone h1{font-size:34px}
+  .phone .sub{font-size:16px}
+  .phone .facts{grid-template-columns:repeat(2,1fr)}
+  .phone .fact{padding:16px 16px 12px}
+  .phone .fact:nth-child(odd){border-left:0}
+  .phone .fact:nth-child(n+3){border-top:1px solid var(--border)}
+  .phone .fact .v{font-size:23px}
+  .phone .fact .n{font-size:13px}
+  .phone .drawer{padding:16px 16px}
+  .phone .drawer p{font-size:14.5px}
+</style></head>
+<body><div class="wrap">
+<h1 class="doc">Key facts with "Why?"</h1>
+<p class="why">Interactive: click any "Why?" to open its reason, click again (or another one) to close. The reason opens in a card right under the band, with a small pointer to the fact it belongs to. Everything else on the page stays as it is.</p>
+
+<span class="label">Desktop</span>
+<div class="browser"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">amiw.dev/work-with-me</span></div>
+<div class="pg" id="desk">
+  <span class="eyebrow">Work with me</span><h1>How I work</h1>
+  <p class="sub">Websites for small businesses, and automation for repetitive work. I have also built a GDPR-compliance app.</p>
+  <div class="facts-wrap"><ul class="facts"></ul><div class="drawer" role="region" aria-live="polite"></div></div>
+  <div class="faint">The process, Good to know, and the rest of the page continue below as before.</div>
+</div></div>
+
+<span class="label">Phone</span>
+<div class="browser phone"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">amiw.dev/work-with-me</span></div>
+<div class="pg" id="mob">
+  <span class="eyebrow">Work with me</span><h1>How I work</h1>
+  <p class="sub">Websites for small businesses, and automation for repetitive work. I have also built a GDPR-compliance app.</p>
+  <div class="facts-wrap"><ul class="facts"></ul><div class="drawer" role="region" aria-live="polite"></div></div>
+  <div class="faint">The process continues below.</div>
+</div></div>
+</div>
+
+<script>
+  const FACTS = [
+    { v: "Free", n: "first call, no commitment", q: "Why is the first call free?",
+      a: "You're probably in the middle of a problem, and I don't want you to spend a penny until you're convinced I'm the right person. If I'm not the right fit, you're free to walk away." },
+    { v: "50 / 50", n: "pay half to start, half at handover", q: "Why 50 / 50?",
+      a: "Half at the start lets me set aside time for your project and begin right away. The other half is due only when you have the finished work in your hands. That way neither of us carries all the risk." },
+    { v: "2 rounds", n: "of changes are included", q: "Why two rounds?",
+      a: "The first round catches what you only notice once you see it, and the second polishes. Two rounds keep the project moving and the price fair. Anything beyond that is quoted separately, so the price you agreed stays honest." },
+    { v: "30 days", n: "of free bug fixes after launch", q: "Why 30 days?",
+      a: "Real visitors find things testing never does. For 30 days after launch I fix any bug from my work for free, so you're not on your own just as the site meets the public. New features or changes aren't bugs. Those are quoted separately." }
+  ];
+
+  function init(root, openIndex) {
+    const list = root.querySelector(".facts"), drawer = root.querySelector(".drawer");
+    let current = -1;
+    FACTS.forEach((f, i) => {
+      const li = document.createElement("li"); li.className = "fact";
+      li.innerHTML = `<p class="v">${f.v}</p><p class="n">${f.n}</p>
+        <button type="button" aria-expanded="false" aria-controls="d-${root.id}"><span>Why?</span><i aria-hidden="true">+</i></button>`;
+      li.querySelector("button").addEventListener("click", () => show(i === current ? -1 : i));
+      list.appendChild(li);
+    });
+    drawer.id = "d-" + root.id;
+    function show(i) {
+      current = i;
+      [...list.children].forEach((li, k) => {
+        li.classList.toggle("on", k === i);
+        li.querySelector("button").setAttribute("aria-expanded", String(k === i));
+      });
+      if (i < 0) { drawer.classList.remove("open"); return; }
+      drawer.innerHTML = `<h4>${FACTS[i].q}</h4><p>${FACTS[i].a}</p>`;
+      drawer.classList.add("open");
+      place();
+    }
+    function place() {
+      if (current < 0) return;
+      const li = list.children[current], w = list.getBoundingClientRect();
+      const r = li.getBoundingClientRect();
+      drawer.style.setProperty("--x", (r.left - w.left + 24) + "px");
+    }
+    addEventListener("resize", place);
+    show(openIndex);
+  }
+  init(document.getElementById("desk"), 1);
+  init(document.getElementById("mob"), 2);
+</script>
+</body></html>

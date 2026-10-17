@@ -7,6 +7,8 @@ interface Offer {
   cta: string;
   href: string;
   external: boolean;
+  // Show a link to /work-with-me under this row
+  details?: boolean;
 }
 
 // Organized by who is reading, not by skill. All three actions share one
@@ -16,7 +18,7 @@ const offers: Offer[] = [
     eyebrow: "Employers",
     title: "Join your team",
     description:
-      "Software engineer for teams that use C#/.NET and TypeScript. I also bring Linux and delivery experience.",
+      "Software engineer for teams that use C#/.NET and TypeScript. I also bring Linux and cloud experience.",
     cta: "Resume",
     href: "https://docs.google.com/document/d/1JPOLI2oE2TByNBR7FCI7I6ZZaW7vDEOff67c0FaDrDA/edit?usp=drive_link",
     external: true,
@@ -24,10 +26,11 @@ const offers: Offer[] = [
   {
     eyebrow: "Freelance clients",
     title: "Build something for you",
-    description: "I start by understanding what you need, then make it happen.",
-    cta: "Contact me",
+    description: "I start by understanding what you need, then make it happen. First call is free.",
+    cta: "Book a call",
     href: WHATSAPP_URL,
     external: true,
+    details: true,
   },
   {
     eyebrow: "Collaborators",
@@ -73,32 +76,58 @@ const latestDate = computed(() =>
         <li
           v-for="offer in offers"
           :key="offer.title"
-          class="grid gap-3 border-t border-[hsl(var(--border))] py-6 md:grid-cols-[15.5rem_minmax(0,1fr)_auto] md:items-center md:gap-8 md:py-7"
+          class="border-t border-[hsl(var(--border))]"
         >
-          <div>
-            <span
-              class="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground"
+          <div
+            class="grid gap-3 py-6 md:grid-cols-[15.5rem_minmax(0,1fr)_auto] md:items-center md:gap-8 md:py-7"
+            :class="offer.details ? 'md:pb-4' : ''"
+          >
+            <div>
+              <span
+                class="mb-1 block text-xs font-semibold uppercase tracking-widest text-muted-foreground"
+              >
+                {{ offer.eyebrow }}
+              </span>
+              <h3 class="font-mono text-xl font-bold leading-tight text-foreground">
+                {{ offer.title }}
+              </h3>
+            </div>
+
+            <p class="max-w-[44ch] text-base leading-relaxed text-foreground md:text-lg">
+              {{ offer.description }}
+            </p>
+
+            <a
+              :href="offer.href"
+              :target="offer.external ? '_blank' : undefined"
+              :rel="offer.external ? 'noopener noreferrer' : undefined"
+              class="btn-outline w-44 justify-self-start px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))] md:justify-self-end"
             >
-              {{ offer.eyebrow }}
-            </span>
-            <h3 class="font-mono text-xl font-bold leading-tight text-foreground">
-              {{ offer.title }}
-            </h3>
+              {{ offer.cta }}
+              <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
+            </a>
           </div>
 
-          <p class="max-w-[44ch] text-base leading-relaxed text-foreground md:text-lg">
-            {{ offer.description }}
-          </p>
-
-          <a
-            :href="offer.href"
-            :target="offer.external ? '_blank' : undefined"
-            :rel="offer.external ? 'noopener noreferrer' : undefined"
-            class="btn-outline w-44 justify-self-start px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))] md:justify-self-end"
+          <!-- Link to the full process, under the description. -->
+          <div
+            v-if="offer.details"
+            class="pb-6 md:grid md:grid-cols-[15.5rem_minmax(0,1fr)_auto] md:gap-8 md:pb-7"
           >
-            {{ offer.cta }}
-            <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
-          </a>
+            <NuxtLink
+              to="/work-with-me"
+              class="group inline-flex items-baseline gap-1.5 self-start rounded text-[15px] font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--blush-band))] md:col-span-2 md:col-start-2 md:justify-self-start motion-reduce:transition-none"
+            >
+              <span
+                class="underline decoration-pink decoration-2 underline-offset-4 transition-colors group-hover:decoration-primary motion-reduce:transition-none"
+                >See how I work and what to expect</span
+              >
+              <span
+                aria-hidden="true"
+                class="text-amiw transition-transform group-hover:translate-x-0.5 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
+                >→</span
+              >
+            </NuxtLink>
+          </div>
         </li>
       </ul>
 

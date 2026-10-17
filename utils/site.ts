@@ -9,7 +9,7 @@ export const SITE = {
   url: "https://amiw.dev",
   title: "Amiw | Software Engineer (C#/.NET, TypeScript)",
   description:
-    "Amiw is a software engineer working in C#/.NET and TypeScript, with Linux infrastructure and software delivery experience. Projects, work history and writing.",
+    "Amiw is a software engineer in Jakarta building websites and automation for small businesses, in C#/.NET and TypeScript. Projects, work history and writing.",
   jobTitle: "Software Engineer",
   image: "/og.png",
   knowsAbout: ["C#/.NET", "TypeScript", "Linux infrastructure", "Software delivery"],

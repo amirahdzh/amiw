@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>og card A</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:hsl(40 55% 98.5%);--fg:hsl(20 35% 18%);--muted:hsl(25 15% 42%);--blush:hsl(339 62% 95%);--bloom:hsl(339 81% 85%);--accent:hsl(96 24% 88%)}
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg)}
+  .card{width:1200px;height:630px;background:var(--bg);position:relative;overflow:hidden;display:flex;color:var(--fg)}
+  .left{width:720px;padding:84px 56px 56px 84px;display:flex;flex-direction:column}
+  .right{position:absolute;right:0;top:0;bottom:0;width:480px;background:var(--blush)}
+  .right .blob{position:absolute;left:60px;top:105px;width:360px;height:360px;border-radius:50%;background:var(--accent)}
+  .right .sun{position:absolute;left:-50px;bottom:60px;width:130px;height:130px;border-radius:50%;background:hsl(42 70% 58%/.35)}
+  .right .pk{position:absolute;right:50px;top:70px;width:44px;height:44px;border-radius:50%;background:var(--bloom)}
+  .right img{position:absolute;left:80px;bottom:-40px;width:330px}
+  .name{align-self:flex-start;font-family:"Fira Mono",monospace;font-weight:700;font-size:132px;line-height:1;letter-spacing:-.03em;display:table;background:linear-gradient(transparent 62%,var(--bloom) 62%)}
+  .role{font-family:"Fira Mono",monospace;font-size:30px;line-height:1.5;color:var(--muted);margin-top:34px}
+  .offer{font-family:Poppins,sans-serif;font-size:36px;font-weight:600;line-height:1.3;margin-top:16px;max-width:19ch}
+  .stack{font-family:"Fira Mono",monospace;font-size:24px;color:var(--muted);margin-top:18px}
+  .url{margin-top:auto;font-family:Poppins,sans-serif;font-weight:600;font-size:28px}
+</style></head>
+<body><div class="card">
+  <div class="left"><div class="name">Amiw</div>
+    <div class="role">Software Engineer</div>
+    <div class="offer">Websites &amp; automation for small businesses</div>
+    <div class="stack">C#/.NET · TypeScript</div>
+    <div class="url">amiw.dev</div></div>
+  <div class="right"><span class="blob"></span><span class="sun"></span><span class="pk"></span><img src="../public/img/amiw-figure.webp" alt=""></div>
+</div></body></html>

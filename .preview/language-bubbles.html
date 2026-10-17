@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Language bubbles</title>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:hsl(40 55% 98.5%);--fg:hsl(20 35% 18%);--primary:hsl(20 30% 24%);--primary-fg:hsl(38 45% 96%);--muted:hsl(25 15% 42%);--border:hsl(36 22% 86%);--blush:hsl(339 62% 95%);--pink:hsl(339 70% 82%);--bloom:hsl(339 81% 85%);--amiw:hsl(339 55% 58%);--cream:hsl(40 35% 95%);--page:hsl(36 20% 92%);--accent:hsl(96 24% 88%)}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--page);color:var(--fg);font-family:Poppins,system-ui,sans-serif;line-height:1.5}
+  .wrap{max-width:1060px;margin:0 auto;padding:28px 16px 56px}
+  h1.doc{font-family:"Fira Mono",monospace;font-size:20px;margin:0 0 6px}
+  h2.sec{font-family:"Fira Mono",monospace;font-size:17px;margin:38px 0 4px;padding-top:14px;border-top:2px solid var(--fg)}
+  .why{font-size:13.5px;color:var(--muted);margin:0 0 12px;max-width:100ch}
+  .badge{font-family:"Fira Mono",monospace;font-size:12px;font-weight:700;background:var(--fg);color:var(--bg);border-radius:999px;padding:2px 10px}
+  .badge.rec{background:var(--amiw)}
+  .pick{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--amiw);margin-left:6px}
+
+  /* three close-ups */
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 14px 12px;box-shadow:0 14px 30px -24px hsl(20 35% 18%/.5)}
+  .card h3{font-size:14.5px;margin:0 0 8px;display:flex;align-items:center;gap:8px}
+  .card p.n{font-size:12.5px;color:var(--muted);margin:8px 0 0;line-height:1.45}
+  .stage{position:relative;aspect-ratio:368/420;width:100%;background:var(--bg);border-radius:8px;overflow:hidden}
+  .stage .blob{position:absolute;left:8%;top:14%;width:86%;aspect-ratio:1;border-radius:58% 42% 55% 45%/48% 56% 44% 52%;background:var(--accent)}
+  .stage .pk{position:absolute;right:6%;top:6%;width:9%;aspect-ratio:1;border-radius:50%;background:var(--bloom)}
+  .stage img{position:absolute;left:14%;right:0;bottom:0;width:86%;height:auto;object-fit:contain}
+
+  /* bubbles */
+  .bubble{position:absolute;display:flex;align-items:center;gap:8px;font-weight:600;font-size:15px;padding:7px 14px;border-radius:18px;background:var(--bg);border:1.5px solid var(--fg);box-shadow:3px 3px 0 var(--bloom);white-space:nowrap}
+  .bubble::after{content:"";position:absolute;bottom:-8px;width:12px;height:12px;background:inherit;border-right:1.5px solid var(--fg);border-bottom:1.5px solid var(--fg);transform:rotate(45deg)}
+  .bubble.id{background:var(--blush)}
+  .bubble.id::after{right:20px}
+  .bubble.en::after{right:20px}
+  .pos-en{left:2%;top:34%}
+  .pos-id{left:6%;top:12%}
+  /* i: pill inside */
+  .tag{font-family:"Fira Mono",monospace;font-size:10.5px;font-weight:700;letter-spacing:.06em;background:var(--fg);color:var(--bg);border-radius:999px;padding:1px 7px}
+  /* ii: sticker corner */
+  .sticker{position:absolute;top:-11px;left:-9px;font-family:"Fira Mono",monospace;font-size:10px;font-weight:700;background:var(--amiw);color:#fff;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--bg)}
+  /* iii: two lines */
+  .b3{flex-direction:column;align-items:flex-start;gap:0;padding:6px 14px 7px;line-height:1.2}
+  .b3 small{font-family:"Fira Mono",monospace;font-size:10.5px;font-weight:500;color:var(--muted)}
+
+  /* work page frames */
+  .browser{background:var(--bg);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 14px 30px -22px hsl(20 35% 18%/.5);margin-bottom:6px}
+  .bar{display:flex;align-items:center;gap:6px;padding:7px 12px;background:var(--cream);border-bottom:1px solid var(--border)}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--border)}
+  .url{margin-left:8px;font-family:"Fira Mono",monospace;font-size:11.5px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:999px;padding:1px 12px}
+  .pg{padding:36px 48px 30px;position:relative}
+  .eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block}
+  .pg h1{font-size:38px;line-height:1.15;letter-spacing:-.02em;margin:6px 0 8px;display:table;background:linear-gradient(transparent 62%,var(--bloom) 62%)}
+  .sub{font-size:18px;color:var(--muted);max-width:50ch;margin:0 0 24px}
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);background:var(--cream);border-radius:12px}
+  .fact{padding:16px 20px;border-left:1px solid var(--border)}
+  .fact:first-child{border-left:0}
+  .fact b{display:block;font-family:"Fira Mono",monospace;font-size:24px;line-height:1.1}
+  .fact:first-child b{color:var(--amiw)}
+  .fact span{font-size:13px;color:var(--muted);display:block;margin-top:3px}
+  .cta{background:var(--blush);padding:30px 48px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+  .cta h5{margin:0;font-family:"Fira Mono",monospace;font-size:18px}
+  .cta p{margin:6px 0 0;font-size:15px;max-width:40ch}
+  .btn{white-space:nowrap;display:inline-flex;border:1px solid var(--primary);color:var(--primary);border-radius:999px;padding:10px 22px;font-size:15px;font-weight:500}
+  .btns{display:flex;gap:10px;align-items:center}
+  .inline{position:relative;display:flex;gap:14px;margin-right:12px}
+  .bubble.s{position:relative;font-size:13.5px;padding:5px 12px;box-shadow:2px 2px 0 var(--bloom);background:var(--bg)}
+  .bubble.s.id{background:var(--bg)}
+  .bubble.s::after{right:16px;bottom:-7px;width:10px;height:10px}
+  .faint{opacity:.45;font-family:"Fira Mono",monospace;font-size:12px;padding:12px 48px;border-top:1px solid var(--border)}
+  .ph{position:absolute;right:48px;top:46px;display:flex;gap:16px}
+  .opt{display:flex;gap:10px;align-items:baseline;margin:22px 0 4px}
+  .opt h3{font-size:15.5px;margin:0}
+</style></head>
+<body><div class="wrap">
+<h1 class="doc">Language bubbles</h1>
+<p class="why">Keeping the "Hello!" / "Halo!" bubbles from option B, with a clear language mark and no sentence.</p>
+
+<h2 class="sec">Homepage: how to mark the language</h2>
+<div class="three">
+  <div class="card">
+    <h3><span class="badge rec">1</span>Tag inside the bubble<span class="pick">my pick</span></h3>
+    <div class="stage"><span class="blob"></span><span class="pk"></span><img src="../public/img/amiw-figure.webp" alt="">
+      <span class="bubble id pos-id">Halo! <span class="tag">ID</span></span>
+      <span class="bubble en pos-en">Hello! <span class="tag">EN</span></span></div>
+    <p class="n">A small dark pill with the language code, right after the word. Reads naturally as "Hello, English".</p>
+  </div>
+  <div class="card">
+    <h3><span class="badge">2</span>Round sticker on the corner</h3>
+    <div class="stage"><span class="blob"></span><span class="pk"></span><img src="../public/img/amiw-figure.webp" alt="">
+      <span class="bubble id pos-id"><span class="sticker">ID</span>Halo!</span>
+      <span class="bubble en pos-en"><span class="sticker">EN</span>Hello!</span></div>
+    <p class="n">A pink dot on the bubble's corner, like a sticker. Cuter, but small and easy to read as decoration.</p>
+  </div>
+  <div class="card">
+    <h3><span class="badge">3</span>Language name under the word</h3>
+    <div class="stage"><span class="blob"></span><span class="pk"></span><img src="../public/img/amiw-figure.webp" alt="">
+      <span class="bubble b3 id pos-id">Halo!<small>Bahasa Indonesia</small></span>
+      <span class="bubble b3 en pos-en">Hello!<small>English</small></span></div>
+    <p class="n">The clearest, since it spells out the language. The bubbles get larger and more text-like.</p>
+  </div>
+</div>
+
+<h2 class="sec">"How I work" page: no sentence, just the same bubbles</h2>
+<p class="why">The page gets the same small bubbles (style 1), so the language shows without any explanation. Two places to try. The top intro goes back to having no extra line.</p>
+
+<div class="opt"><span class="badge rec">A</span><h3>Next to the buttons in "Ready to talk?"</h3><span class="pick">my pick</span></div>
+<div class="browser"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">amiw.dev/work-with-me</span></div>
+<div class="pg"><span class="eyebrow">Work with me</span><h1>How I work</h1>
+  <p class="sub">Websites for small businesses, and automation for repetitive work. I also have experience building software for GDPR compliance.</p>
+  <div class="facts"><div class="fact"><b>Free</b><span>first call, no commitment</span></div><div class="fact"><b>50 / 50</b><span>pay half to start, half at handover</span></div><div class="fact"><b>2 rounds</b><span>of changes are included</span></div><div class="fact"><b>30 days</b><span>of free bug fixes after launch</span></div></div>
+</div>
+<div class="faint">The process and "Good to know" continue here…</div>
+<div class="cta"><div><h5>Ready to talk?</h5><p>The first call is free. Tell me what you want, any deadline and a rough budget. I reply within one working day.</p></div>
+  <div class="btns"><div class="inline"><span class="bubble s en">Hello! <span class="tag">EN</span></span><span class="bubble s id">Halo! <span class="tag">ID</span></span></div><span class="btn">Book a call ↗</span><span class="btn">Email me ↗</span></div></div>
+</div>
+
+<div class="opt"><span class="badge">B</span><h3>At the top right of the page, beside the heading</h3></div>
+<div class="browser"><div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">amiw.dev/work-with-me</span></div>
+<div class="pg"><span class="eyebrow">Work with me</span><h1>How I work</h1>
+  <div class="ph"><span class="bubble s en">Hello! <span class="tag">EN</span></span><span class="bubble s id">Halo! <span class="tag">ID</span></span></div>
+  <p class="sub">Websites for small businesses, and automation for repetitive work. I also have experience building software for GDPR compliance.</p>
+  <div class="facts"><div class="fact"><b>Free</b><span>first call, no commitment</span></div><div class="fact"><b>50 / 50</b><span>pay half to start, half at handover</span></div><div class="fact"><b>2 rounds</b><span>of changes are included</span></div><div class="fact"><b>30 days</b><span>of free bug fixes after launch</span></div></div>
+</div></div>
+</div></body></html>

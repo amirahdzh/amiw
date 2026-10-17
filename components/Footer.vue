@@ -8,6 +8,7 @@ const pages = [
   { to: "/blog", label: "Blog" },
   { to: "/newsletter", label: "Newsletter" },
   { to: "/art-leisure", label: "Art & Leisure" },
+  { to: "/work-with-me", label: "Work with me" },
   { to: "/links", label: "Links" },
 ];
 
