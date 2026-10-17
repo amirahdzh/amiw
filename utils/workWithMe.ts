@@ -40,7 +40,7 @@ export const facts = [
     note: "of changes are included",
     question: "Why two rounds?",
     reason:
-      "The first round catches what you only notice once you see it, and the second polishes. Two rounds keep the project moving and the price fair. Anything beyond that is quoted separately, so the price you agreed stays honest.",
+      "The first round catches what you only notice once you see it, and the second polishes. Two rounds keep the project moving and the price fair. Anything beyond that is quoted separately, so the price I quoted doesn't quietly grow.",
   },
   {
     value: "30 days",
@@ -250,7 +250,7 @@ export const faq: Faq[] = [
   {
     question: "What do you need from me?",
     answer:
-      "Replies within three working days, your content before the build starts, and the access I list in the welcome document. Projects move at the speed of the replies.",
+      "Replies within three working days, your content before the build starts, and the access I list in the welcome document. Most delays are me waiting on an answer, so quick replies keep the project on schedule.",
   },
   {
     question: "What language and hours do we work in?",

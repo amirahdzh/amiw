@@ -30,7 +30,7 @@ const links = [
     title: "Free website for you",
     href: "https://wa.me/6282114643544?text=Hi%20Amiw!%20I'd%20like%20to%20request%20help%20building%20a%20website%20for%20my%20community.%20Could%20we%20discuss%20it?",
     internal: false,
-    desc: "for selected communities supporting open education and meaningful impact",
+    desc: "for selected communities working on open education",
     icon: "lucide:globe",
     soon: true,
   },

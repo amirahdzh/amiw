@@ -9,7 +9,7 @@
       </h1>
       <p class="mt-4 max-w-[60ch] text-base leading-relaxed text-muted-foreground md:text-lg">
         You can do whatever you want here. I won't record or track anything you do.
-        Leave a mark, draw a doddle, messing around (I'd rather you didn't xD), or
+        Leave a mark, draw a doodle, mess around (I'd rather you didn't xD), or
         just relax and enjoy this shared space! ^^
       </p>
       <p v-if="syncUri" class="mt-2 max-w-[60ch] text-sm text-muted-foreground">

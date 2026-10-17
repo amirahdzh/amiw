@@ -24,7 +24,7 @@ const roles: Role[] = [
     role: "Software Engineer",
     period: "Jul 2026 – Present",
     description:
-      "I built the licensing platform for a Revit plugin used in hydraulic design: accounts, licenses and seats, with admin and customer portals. I also built its GDPR features (self-service data export and account deletion, automatic log deletion, and documentation for legal review), set up CI/CD to Linux servers with health-checked deploys, built the Prefab Hub and the marketing site, and wrote the team's development guide. We are preparing a beta with several companies in the EU.",
+      "I built the licensing platform for a Revit plugin used in hydraulic design: accounts, licenses and seats, with admin and customer portals. It has its own GDPR features: people can export their data and delete their account themselves, old logs delete automatically, and the documentation is written for a lawyer to review. I set up CI/CD to Linux servers with health-checked deploys, built the Prefab Hub and the marketing site, and wrote the development guide for the second developer. We're preparing a beta with several companies in the EU.",
     tools: [
       "C#/.NET (ASP.NET Core 8)",
       "PostgreSQL",

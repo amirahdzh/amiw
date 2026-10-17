@@ -9,7 +9,7 @@
           Notes from my corner
         </h1>
         <p class="mt-4 max-w-[46ch] text-lg leading-relaxed text-muted-foreground md:text-xl">
-          Thoughts, insights and stories from my little corner of the internet.
+          Notes on building this site, debugging at odd hours, and living with less.
         </p>
 
         <div
@@ -140,7 +140,7 @@ const posts = computed(() =>
 usePageSeo({
   title: "Blog | Amiw",
   description:
-    "Sharing thoughts, insights and stories from Amiw's corner of the internet.",
+    "Notes from Amiw on building websites, debugging, slow mornings and living with less.",
 });
 
 // Titles get a pink hover underline.
