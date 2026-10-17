@@ -112,16 +112,16 @@ export const projects: Project[] = [
           text: "A small static binary and a ~15 MB image, against ~200 MB for a JVM option. Cheap to run, and no new framework to learn.",
         },
         {
-          title: "SQLite, not Postgres",
-          text: "One file in a volume, and a backup is a file copy. Enough for one user, and one less service to secure.",
+          title: "SQLite is enough",
+          text: "One file in a volume, and a backup is a file copy. That's plenty for one user, and it's one less service to secure.",
         },
         {
-          title: "Accessibility service, not polling",
-          text: "Launch events arrive instantly, with no loop running in the background and no battery cost.",
+          title: "An accessibility service",
+          text: "Launch events arrive instantly, so nothing has to poll in the background.",
         },
         {
           title: "Phone first, sync later",
-          text: "Records are saved on the phone before anything is sent, and sync retries with backoff, so it works offline.",
+          text: "Records are saved on the phone before anything is sent. Sync retries with backoff, so it works offline.",
         },
       ],
       privacy:
@@ -132,7 +132,7 @@ export const projects: Project[] = [
     slug: "daarul-ummahaat",
     title: "Daarul Ummahaat Website",
     description:
-      "Website for a non-profit foundation, with a CMS its administrator can run without a developer: programs, events, gallery and donation details.",
+      "Website for a non-profit foundation, built so its administrator can update programs, events, the gallery and donation details without a developer.",
     tech: ["Next.js", "Payload CMS", "PostgreSQL", "Docker"],
     // No image for now. Add `still` + `alt` (a screenshot of the finished
     // site) when there is one.
@@ -163,20 +163,20 @@ export const projects: Project[] = [
       ],
       decisions: [
         {
-          title: "One app instead of a separate CMS",
-          text: "Payload embeds in Next.js, so the site and the admin are one TypeScript codebase and one deploy, and the admin screens are generated from the content model.",
+          title: "Payload inside Next.js",
+          text: "The site and the admin are one TypeScript codebase and one deploy, and the admin screens are generated from the content model.",
         },
         {
-          title: "PostgreSQL, not SQLite",
-          text: "A little more to run, but it suits the donor data the foundation may want later.",
+          title: "PostgreSQL",
+          text: "It takes a little more to run, but it suits the donor data the foundation may want later.",
         },
         {
-          title: "Self-hosted, with Cloudflare in front",
+          title: "Self-hosted behind Cloudflare",
           text: "Caddy handles TLS on the server, and Cloudflare handles DNS, caching and DDoS protection.",
         },
         {
-          title: "Built around the administrator",
-          text: "Sections with no content are hidden instead of showing empty headings, the admin guide is written for a non-technical reader, and the sitemap is built from published content only.",
+          title: "Made for the administrator",
+          text: "Sections with no content are hidden instead of showing empty headings. The admin guide is written for a non-technical reader, and the sitemap only lists published content.",
         },
       ],
     },
@@ -185,7 +185,7 @@ export const projects: Project[] = [
     slug: "miaw-discord-bot",
     title: "Miaw Discord Bot",
     description:
-      "Discord bot with slash and prefix commands, reaction roles, team-sorting and quizzes, and a workflow that turns new words into Anki flashcards with an LLM.",
+      "Discord bot with slash and prefix commands, reaction roles, team sorting and quizzes. It also uses an LLM to turn new words into Anki flashcards.",
     tech: ["TypeScript", "discord.js", "SQLite", "LLM APIs"],
     still: "/img/miaw.jpg",
     alt: "Pixel-art cat, the Miaw bot's avatar",
@@ -238,8 +238,8 @@ export const projects: Project[] = [
           text: "Commands and events load automatically from their folders, so adding one means adding a file, with nothing to wire up by hand.",
         },
         {
-          title: "A provider interface for the language model",
-          text: "Gemini and DeepSeek sit behind one interface and are chosen by a setting, so switching models doesn't touch the commands.",
+          title: "Swappable language models",
+          text: "Gemini and DeepSeek sit behind one interface and a setting picks between them, so switching models doesn't touch the commands.",
         },
         {
           title: "SQLite for storage",

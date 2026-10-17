@@ -24,7 +24,7 @@ const roles: Role[] = [
     role: "Software Engineer",
     period: "Jul 2026 – Present",
     description:
-      "Built the licensing platform for a Revit plugin used in hydraulic design: accounts, licenses and seats, with admin and customer portals. Also set up how the company's apps ship, with CI/CD to Linux servers, database migrations and health-checked deploys, and built the marketing site.",
+      "I built the licensing platform for a Revit plugin used in hydraulic design: accounts, licenses and seats, with admin and customer portals. I also set up CI/CD to Linux servers, with database migrations and health-checked deploys, and built the marketing site.",
     tools: [
       "C#/.NET (ASP.NET Core 8)",
       "PostgreSQL",
@@ -40,7 +40,7 @@ const roles: Role[] = [
     period: "Feb 2025 – Apr 2026",
     logo: "/img/logo/sanbersy.png",
     description:
-      "Built web projects for academic and nonprofit institutions, including a conference management system and a donation platform for Rumah Amal Salman, across frontend and backend.",
+      "I built web projects for academic and nonprofit institutions, including a conference management system and a donation platform for Rumah Amal Salman. I worked on both the frontend and the backend.",
     tools: ["Laravel", "Bootstrap", "Vue.js", "MySQL"],
   },
   {
@@ -49,7 +49,7 @@ const roles: Role[] = [
     period: "May 2025 – Sep 2025",
     logo: "/img/logo/mgs.webp",
     description:
-      "In-house frontend developer on key client projects, including client-specific deployments, working with stakeholders to align on technical requirements.",
+      "I was an in-house frontend developer on client projects, including client-specific deployments. I worked with stakeholders to agree on technical requirements.",
     tools: ["React.js", "Next.js", "TypeScript", "Tailwind CSS", "Vite", "Git"],
     // PLN was a client MGS staffed this role onto, so it hangs off MGS as one line.
     placement: {
@@ -69,7 +69,7 @@ const roles: Role[] = [
   <section id="experience" class="w-full py-16 md:py-20 bg-[hsl(var(--alternate-background))]">
     <div class="max-w-6xl mx-auto px-6">
       <h2 class="heading-marker text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-        Work Experience
+        Work experience
       </h2>
       <p class="mt-2 text-base text-muted-foreground">Where I've worked.</p>
 

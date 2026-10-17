@@ -17,7 +17,7 @@ const offers: Offer[] = [
     eyebrow: "Employers",
     title: "Join your team",
     description:
-      "Software engineer for teams that need solid C#/.NET and TypeScript, backed by Linux and delivery experience.",
+      "Software engineer for teams that use C#/.NET and TypeScript. I also bring Linux and delivery experience.",
     cta: "Resume",
     href: "https://docs.google.com/document/d/1JPOLI2oE2TByNBR7FCI7I6ZZaW7vDEOff67c0FaDrDA/edit?usp=drive_link",
     external: true,
@@ -32,9 +32,9 @@ const offers: Offer[] = [
   },
   {
     eyebrow: "Collaborators",
-    title: "Make something that matters",
+    title: "Work on something together",
     description:
-      "Community, non-profit and open projects with a purpose beyond the code.",
+      "Community, non-profit and open projects. Tell me what you're working on.",
     cta: "Say hello",
     href: "mailto:amirahdzh@gmail.com",
     external: false,

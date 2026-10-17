@@ -129,7 +129,7 @@ const h2Class = "mb-3 font-mono text-xl font-bold text-foreground";
 
       <div class="mt-10 grid gap-10">
         <section v-if="details.problem">
-          <h2 :class="h2Class">The problem</h2>
+          <h2 :class="h2Class">Why I built it</h2>
           <p class="max-w-[56ch] text-lg leading-relaxed text-foreground">
             {{ details.problem }}
           </p>
@@ -166,7 +166,7 @@ const h2Class = "mb-3 font-mono text-xl font-bold text-foreground";
         </section>
 
         <section v-if="details.decisions?.length">
-          <h2 :class="h2Class">Decisions worth explaining</h2>
+          <h2 :class="h2Class">Choices I made</h2>
           <ul class="grid max-w-[66ch] gap-2.5">
             <li
               v-for="item in details.decisions"
