@@ -154,15 +154,20 @@ export const useBlogStore = defineStore("blog", {
     },
 
     formatDate(dateString: string): string {
+      // UTC on purpose: "2026-08-27" is a calendar date, and formatting it in
+      // a negative-offset timezone would show the 26th.
       return new Date(dateString).toLocaleDateString("en-US", {
-        day: "2-digit",
+        day: "numeric",
         month: "short",
         year: "numeric",
+        timeZone: "UTC",
       });
     },
 
     getExcerpt(text: string): string {
-      return text.length > 140 ? text.slice(0, 140) + "..." : text;
+      if (text.length <= 140) return text;
+      // Cut at a word boundary so the ellipsis never ends up alone on a line.
+      return text.slice(0, 140).replace(/\s+\S*$/, "") + "…";
     },
 
     setCategory(category: string) {

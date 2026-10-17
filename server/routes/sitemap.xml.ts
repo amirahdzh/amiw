@@ -10,6 +10,7 @@ export default defineEventHandler((event) => {
   const paths = [
     "/",
     "/blog",
+    "/newsletter",
     "/art-leisure",
     "/links",
     ...projects.filter((p) => p.details).map((p) => `/projects/${p.slug}`),

@@ -1,155 +1,126 @@
 <template>
-  <section class="w-full flex flex-col justify-center relative">
-    <div class="absolute inset-0 flex">
-      <div class="w-1/2 bg-[hsl(var(--alternate-background))]"></div>
-      <div class="w-1/2 bg-background"></div>
-    </div>
-
-    <div
-      class="max-w-7xl mx-auto flex flex-col md:flex-row relative bg-[hsl(var(--alternate-background))]"
-    >
-      <!-- Sidebar -->
-      <div
-        class="md:w-1/3 md:sticky pt-10 top-0 z-10 self-start md:max-w-[350px] md:min-w-[350px] px-8"
-      >
-        <div class="text-left space-y-4">
-          <h2 class="text-5xl font-bold text-foreground">blog.</h2>
-          <p class="text-muted-foreground text-base leading-relaxed">
-            Sharing thoughts, insights, and stories from this little corner of
-            the internet.
-          </p>
-        </div>
-
-        <!-- Author Info -->
-        <div
-          class="relative overflow-hidden mt-6 rounded-2xl border border-r-4 border-b-4 border-primary bg-secondary p-5"
+  <div class="w-full">
+    <section class="w-full bg-background pt-12 pb-16 md:pt-16 md:pb-20">
+      <div class="mx-auto max-w-6xl px-6">
+        <p class="eyebrow">Blog</p>
+        <h1
+          class="heading-marker mt-2 text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl"
         >
-          <div class="absolute top-0 left-0 right-0 h-1.5 bg-bloom"></div>
-          <div class="mt-1">
-            <p class="text-lg font-bold text-primary">Amiw Dzh</p>
-            <p class="text-sm text-muted-foreground">
-              Software Engineer & Blogger
-            </p>
-          </div>
-        </div>
+          Notes from my corner
+        </h1>
+        <p class="mt-4 max-w-[46ch] text-lg leading-relaxed text-muted-foreground md:text-xl">
+          Thoughts, insights and stories from my little corner of the internet.
+        </p>
 
-        <!-- Category Selection -->
-        <div class="flex flex-wrap mb-8 mt-8">
-          <div class="md:hidden w-full">
-            <div class="mb-2">Read My Articles:</div>
-            <select
-              v-model="selectedCategory"
-              class="w-full px-6 py-3 text-base rounded-md bg-accent"
-            >
-              <option
-                v-for="category in allCategories"
-                :key="category"
-                :value="category"
-              >
-                {{ category }}
-              </option>
-            </select>
-          </div>
-
-          <div class="hidden md:flex flex-col gap-2">
-            Read My Articles:
-            <div
-              v-for="category in allCategories"
-              :key="category"
-              :class="[
-                'px-3 text-base cursor-pointer',
-                selectedCategory === category
-                  ? 'text-foreground hover:text-[hsl(var(--pink))] font-semibold'
-                  : 'text-muted-foreground hover:text-[hsl(var(--pink))]',
-              ]"
-              @click="blogStore.setCategory(category)"
-              v-motion-fade
-            >
-              {{ category }}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Main Content -->
-      <div
-        class="flex-1 py-8 md:w-2/3 bg-background md:pt-10 md:pb-24 border-t-4 px-8 md:border-t-0 md:border-l-2 border-primary"
-      >
-        <!-- Display selected category -->
-        <div v-if="selectedCategory" class="text-3xl font-bold mb-6">
-          {{ selectedCategory }}
-        </div>
-
-        <!-- Posts -->
-        <ul class="flex flex-col gap-6">
-          <li
-            v-for="post in filteredPosts"
-            :key="post.id"
-            v-motion-pop-visible
-            class="relative overflow-hidden bg-secondary rounded-2xl p-6 border border-r-4 border-b-4 border-primary transition hover:scale-[1.01] duration-300"
+        <div class="mt-7 flex flex-wrap gap-2" role="group" aria-label="Filter posts">
+          <button
+            v-for="category in allCategories"
+            :key="category"
+            type="button"
+            :aria-pressed="selectedCategory === category"
+            class="rounded-full border px-4 py-1.5 text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none"
+            :class="
+              selectedCategory === category
+                ? 'border-primary bg-primary text-primary-foreground'
+                : 'border-border text-muted-foreground hover:border-primary hover:text-foreground'
+            "
+            @click="blogStore.setCategory(category)"
           >
-            <div
-              class="absolute top-0 left-0 right-0 h-1.5"
-              :class="post.accentBg"
-            ></div>
-            <div
-              class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mt-1"
+            {{ category }}
+          </button>
+        </div>
+
+        <ol v-if="posts.length" class="mt-8 border-b border-border">
+          <li
+            v-for="post in posts"
+            :key="post.id"
+            class="grid gap-3 border-t border-border py-6 md:grid-cols-[9rem_minmax(0,1fr)_8.5rem] md:items-start md:gap-7"
+          >
+            <time
+              class="font-mono text-[13.5px] font-bold text-foreground md:pt-1"
+              :datetime="post.pubDate"
             >
-              <div class="flex-1">
-                <div class="flex items-center gap-2 mb-2">
-                  <span
-                    class="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full text-secondary"
-                    :class="post.accentBg"
-                  >
-                    {{ post.badge }}
-                  </span>
-                  <span class="text-xs text-muted-foreground">
-                    {{ blogStore.formatDate(post.pubDate) }}
-                  </span>
-                </div>
+              {{ blogStore.formatDate(post.pubDate) }}
+            </time>
+
+            <div class="min-w-0">
+              <h2 class="font-mono text-lg font-bold leading-snug text-foreground">
                 <a
                   v-if="post.link"
                   :href="post.link"
                   target="_blank"
-                  class="text-2xl font-extrabold text-primary hover:text-primary/80"
+                  rel="noopener noreferrer"
+                  :class="titleLinkClass"
                 >
                   {{ post.title }}
                 </a>
-                <span v-else class="text-2xl font-extrabold text-primary">
-                  {{ post.title }}
-                </span>
-                <p class="mt-3 text-muted-foreground text-base leading-relaxed">
-                  {{ blogStore.getExcerpt(post.description) }}
-                </p>
-              </div>
-              <!-- Thumbnail -->
-              <div
-                v-if="post.thumbnail"
-                class="w-full max-w-lg lg:max-w-[256px] lg:flex-shrink-0"
+                <template v-else>{{ post.title }}</template>
+              </h2>
+              <p class="mt-2 max-w-[58ch] text-[15px] leading-relaxed text-foreground">
+                {{ blogStore.getExcerpt(post.description) }}
+              </p>
+              <p
+                class="mt-2.5 flex flex-wrap gap-x-2 gap-y-0.5 font-mono text-[12.5px] text-muted-foreground"
               >
-                <img
-                  :src="post.thumbnail"
-                  alt="Thumbnail"
-                  class="w-full h-auto aspect-[5/3] object-cover rounded-lg"
-                  v-motion-fade
-                />
-              </div>
+                <template v-for="(tag, i) in post.categories" :key="tag">
+                  <span v-if="i > 0" aria-hidden="true" class="text-pink">·</span>
+                  <span>{{ tag }}</span>
+                </template>
+              </p>
             </div>
+
+            <img
+              v-if="post.thumbnail"
+              :src="post.thumbnail"
+              alt=""
+              loading="lazy"
+              class="aspect-[5/3] w-full max-w-[12rem] rounded-[10px] border border-border object-cover md:max-w-none"
+            />
           </li>
-        </ul>
+        </ol>
+        <p v-else class="mt-8 border-y border-border py-8 text-muted-foreground">
+          Nothing here yet.
+        </p>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="w-full bg-[hsl(var(--blush-band))] py-12 md:py-14">
+      <div
+        class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-10 gap-y-5 px-6"
+      >
+        <div>
+          <h2 class="font-mono text-xl font-bold text-foreground">Get new posts by email</h2>
+          <p class="mt-2 max-w-[46ch] text-base leading-relaxed text-foreground">
+            When I publish something new, you can have it in your inbox.
+          </p>
+        </div>
+        <NuxtLink
+          to="/newsletter"
+          class="btn-outline px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))]"
+        >
+          Newsletter
+          <Icon name="lucide:arrow-right" class="h-4 w-4" />
+        </NuxtLink>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { storeToRefs } from "pinia";
-import { onMounted } from "vue";
 
-// Mengambil blogStore
 const blogStore = useBlogStore();
 const { selectedCategory, allCategories, filteredPosts } =
   storeToRefs(blogStore);
+
+// Loaded during setup, not in onMounted, so the posts are in the HTML the
+// server sends (that is what search engines read).
+if (!blogStore.posts.length) blogStore.loadPosts();
+
+// Newest first, whatever order the store keeps them in.
+const posts = computed(() =>
+  [...filteredPosts.value].sort((a, b) => b.pubDate.localeCompare(a.pubDate)),
+);
 
 // Outside onMounted on purpose: the title and description have to be in the
 // HTML the server sends, not added later in the browser.
@@ -160,12 +131,14 @@ usePageSeo({
 });
 
 onMounted(() => {
-  blogStore.loadPosts();
-
-  // Mengambil kategori yang tersimpan di localStorage
+  // Restore the category the reader chose last time.
   const storedCategory = localStorage.getItem("selectedCategory");
   if (storedCategory) {
     blogStore.setCategory(storedCategory);
   }
 });
+
+// Only titles that link somewhere get a hover underline.
+const titleLinkClass =
+  "rounded hover:underline hover:decoration-pink hover:decoration-2 hover:underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 </script>

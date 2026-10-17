@@ -35,6 +35,59 @@ const closeGameChoiceModal = () => {
   showGameChoiceModal.value = false;
 };
 
+// The bot, sustainable living, homestead and food waste tracker are not open
+// yet; they show a status instead of a button.
+const items = [
+  {
+    tag: "Paused",
+    icon: "lucide:brain",
+    title: "Talk with the Bot",
+    description: "Chat with Amiw's thoughtful bot, always ready to listen.",
+    status: "In training…",
+  },
+  {
+    tag: "Play",
+    icon: "lucide:gamepad-2",
+    title: "My Gaming Log",
+    description:
+      "Track my progress in Mobile Legends & Valorant, from strategies to milestones.",
+    cta: "Open log",
+    action: openGameChoiceModal,
+  },
+  {
+    tag: "Eco",
+    icon: "lucide:sprout",
+    title: "Sustainable Living",
+    description:
+      "Learn to reduce waste, live minimally, and love the Earth in small everyday choices.",
+    status: "Under development",
+  },
+  {
+    tag: "Garden",
+    icon: "lucide:home",
+    title: "Homesteading Projects",
+    description:
+      "Future space for garden logs, DIY tools, and seasonal harvest notes from a quiet life.",
+    status: "Coming soon…",
+  },
+  {
+    tag: "Kitchen",
+    icon: "lucide:utensils",
+    title: "Food Waste Tracker",
+    description:
+      "A simple tool to track what's in your pantry, save food, and plan meals more mindfully.",
+    status: "Still in the kitchen…",
+  },
+] as {
+  tag: string;
+  icon: string;
+  title: string;
+  description: string;
+  status?: string;
+  cta?: string;
+  action?: () => void;
+}[];
+
 const handleGameSelection = (game: string) => {
   selectedGame.value = game;
   closeGameChoiceModal();
@@ -43,165 +96,45 @@ const handleGameSelection = (game: string) => {
 </script>
 
 <template>
-  <section id="playground" class="py-20 bg-[hsl(var(--alternate-background))]">
-    <div class="max-w-4xl mx-auto px-6">
-      <!-- <h2 class="text-3xl font-bold mb-6 text-foreground">🎠 Playground</h2> -->
+  <section id="playground" class="w-full bg-[hsl(var(--alternate-background))] py-16 md:py-20">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="heading-marker text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+        Playground
+      </h2>
+      <p class="mt-2 text-base text-muted-foreground">Small things I'm making for fun.</p>
 
-      <!-- Playground Cards -->
-      <div class="grid md:grid-cols-2 gap-6">
-        <!--
-          ChatBox Playground — disabled for now, not deleted. The bot needs
-          more training before it's worth putting back in front of people;
-          re-enable by restoring `@click="showChatModal = true"` and the
-          cursor-pointer/hover styling below (see the still-live cards for
-          reference). The modal markup and showChatModal state further down
-          are left as-is so this is a one-line flip when it's ready again.
-        -->
-        <div
-          v-motion-fade-visible
-          class="bg-secondary rounded-2xl p-8 cursor-not-allowed transition hover:opacity-90 duration-300 relative overflow-hidden border border-r-4 border-b-4 border-primary"
+      <ul class="mt-9 border-b border-border">
+        <li
+          v-for="item in items"
+          :key="item.title"
+          class="grid gap-3 border-t border-border py-6 md:grid-cols-[15.5rem_minmax(0,1fr)_11rem] md:items-center md:gap-8"
         >
-          <div class="absolute top-0 left-0 right-0 h-2 bg-bloom"></div>
-
-          <div class="flex items-center justify-between gap-2 mb-3 mt-2">
-            <h3 class="text-2xl font-extrabold text-primary inline-flex items-center gap-2">
-              <Icon name="lucide:brain" class="w-6 h-6" />
-              Talk with the Bot
+          <div>
+            <span class="eyebrow mb-1 block">{{ item.tag }}</span>
+            <h3 class="flex items-center gap-2 font-mono text-xl font-bold leading-tight text-foreground">
+              <Icon :name="item.icon" class="h-5 w-5 shrink-0 text-amiw" />
+              {{ item.title }}
             </h3>
-            <span
-              class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-bloom text-primary"
-            >
-              Paused
-            </span>
           </div>
-          <p class="text-muted-foreground text-base leading-relaxed inline-flex items-center gap-1.5 flex-wrap">
-            Chat with Amiw’s thoughtful bot, always ready to listen
-            <Icon name="lucide:message-circle" class="w-4 h-4 shrink-0" />
+
+          <p class="max-w-[44ch] text-base leading-relaxed text-foreground">
+            {{ item.description }}
           </p>
-          <div class="mt-6 flex items-center justify-between">
-            <span class="text-sm italic text-muted-foreground"
-              >In training...</span
-            >
-            <Icon name="lucide:brain" class="w-5 h-5 text-bloom" />
-          </div>
-        </div>
 
-        <!-- Gaming Log Card -->
-        <div
-          v-motion-fade-visible
-          class="bg-secondary rounded-2xl p-8 cursor-pointer transition hover:scale-[1.02] duration-300 group relative overflow-hidden border border-r-4 border-b-4 border-primary"
-          @click="openGameChoiceModal"
-        >
-          <div class="absolute top-0 left-0 right-0 h-2 bg-terracotta"></div>
-
-          <div class="flex items-center justify-between gap-2 mb-3 mt-2">
-            <h3 class="text-2xl font-extrabold text-primary inline-flex items-center gap-2">
-              <Icon name="lucide:gamepad-2" class="w-6 h-6" />
-              My Gaming Log
-            </h3>
-            <span
-              class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-terracotta text-secondary"
-            >
-              Play
-            </span>
-          </div>
-          <p class="text-muted-foreground text-base leading-relaxed">
-            Track my progress in Mobile Legends & Valorant, from strategies to
-            milestones!
+          <button
+            v-if="item.action"
+            type="button"
+            class="btn-outline w-44 justify-self-start px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--alternate-background))] md:justify-self-end"
+            @click="item.action"
+          >
+            {{ item.cta }}
+            <Icon name="lucide:arrow-right" class="h-4 w-4" />
+          </button>
+          <p v-else class="font-mono text-[13px] text-muted-foreground md:text-right">
+            {{ item.status }}
           </p>
-        </div>
-
-        <!-- Sustainable Living -->
-        <div
-          v-motion-fade-visible
-          class="bg-secondary rounded-2xl p-8 cursor-not-allowed transition hover:opacity-90 duration-300 group relative overflow-hidden border border-r-4 border-b-4 border-primary"
-        >
-          <div class="absolute top-0 left-0 right-0 h-2 bg-honey"></div>
-
-          <div class="flex items-center justify-between gap-2 mb-3 mt-2">
-            <h3 class="text-2xl font-extrabold text-primary inline-flex items-center gap-2">
-              <Icon name="lucide:sprout" class="w-6 h-6" />
-              Sustainable Living
-            </h3>
-            <span
-              class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-honey text-primary"
-            >
-              Eco
-            </span>
-          </div>
-          <p class="text-muted-foreground text-base leading-relaxed">
-            Learn to reduce waste, live minimally, and love the Earth in small
-            everyday choices.
-          </p>
-          <div class="mt-6 flex items-center justify-between">
-            <span class="text-sm italic text-muted-foreground"
-              >Under Development</span
-            >
-            <Icon name="lucide:wheat" class="w-5 h-5 text-honey" />
-          </div>
-        </div>
-
-        <!-- Homesteading Projects -->
-        <div
-          v-motion-fade-visible
-          class="bg-secondary rounded-2xl p-8 cursor-not-allowed transition hover:opacity-90 duration-300 group relative overflow-hidden border border-r-4 border-b-4 border-primary"
-        >
-          <!-- Pink "bloom" accent strip -->
-          <div class="absolute top-0 left-0 right-0 h-2 bg-bloom"></div>
-
-          <div class="flex items-center justify-between gap-2 mb-3 mt-2">
-            <h3 class="text-2xl font-extrabold text-primary inline-flex items-center gap-2">
-              <Icon name="lucide:home" class="w-6 h-6" />
-              Homesteading Projects
-            </h3>
-            <span
-              class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-sage text-secondary"
-            >
-              Garden
-            </span>
-          </div>
-          <p class="text-muted-foreground text-base leading-relaxed">
-            Future space for garden logs, DIY tools, and seasonal harvest notes
-            from a quiet life.
-          </p>
-          <div class="mt-6 flex items-center justify-between">
-            <span class="text-sm italic text-muted-foreground"
-              >Coming Soon...</span
-            >
-            <Icon name="lucide:leaf" class="w-5 h-5 text-terracotta" />
-          </div>
-        </div>
-
-        <!-- Pantry & Food Waste Tracker -->
-        <div
-          v-motion-fade-visible
-          class="bg-secondary rounded-2xl p-8 cursor-not-allowed transition hover:opacity-90 duration-300 group relative overflow-hidden border border-r-4 border-b-4 border-primary"
-        >
-          <div class="absolute top-0 left-0 right-0 h-2 bg-terracotta"></div>
-
-          <div class="flex items-center justify-between gap-2 mb-3 mt-2">
-            <h3 class="text-2xl font-extrabold text-primary inline-flex items-center gap-2">
-              <Icon name="lucide:utensils" class="w-6 h-6" />
-              Food Waste Tracker
-            </h3>
-            <span
-              class="text-xs font-bold uppercase tracking-wide px-3 py-1 rounded-full shrink-0 bg-terracotta text-secondary"
-            >
-              Kitchen
-            </span>
-          </div>
-          <p class="text-muted-foreground text-base leading-relaxed">
-            A simple tool to track what's in your pantry, save food, and plan
-            meals more mindfully.
-          </p>
-          <div class="mt-6 flex items-center justify-between">
-            <span class="text-sm italic text-muted-foreground"
-              >Still in the kitchen...</span
-            >
-            <Icon name="lucide:sandwich" class="w-5 h-5 text-honey" />
-          </div>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
 
     <!-- Game Selection Modal -->

@@ -1,276 +1,204 @@
 <template>
-  <section class="w-full min-h-screen pt-10 pb-16 bg-background">
-    <div class="max-w-5xl mx-auto px-4 md:px-6">
-      <div class="mb-6">
-        <h1 class="text-4xl font-bold text-primary mb-2">Art & Leisure</h1>
-        <p class="text-muted-foreground max-w-xl text-sm italic">
-          You can do whatever you want here. I won't record or track anything
-          you do. Leave a mark, draw a doddle, messing around (I'd rather you
-          didn't xD), or just relax and enjoy this shared space! ^^
-        </p>
-        <p v-if="syncUri" class="text-muted-foreground max-w-xl text-xs mt-2">
-          Pro tip: open the Rooms panel to start a brand new canvas, or
-          rename one to make it yours.
-        </p>
-      </div>
+  <section class="w-full bg-background pt-12 pb-16 md:pt-16 md:pb-20">
+    <div class="mx-auto max-w-6xl px-6">
+      <p class="eyebrow">A shared canvas</p>
+      <h1
+        class="heading-marker mt-2 text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl"
+      >
+        Art &amp; Leisure
+      </h1>
+      <p class="mt-4 max-w-[60ch] text-base leading-relaxed text-muted-foreground md:text-lg">
+        You can do whatever you want here. I won't record or track anything you do.
+        Leave a mark, draw a doddle, messing around (I'd rather you didn't xD), or
+        just relax and enjoy this shared space! ^^
+      </p>
+      <p v-if="syncUri" class="mt-2 max-w-[60ch] text-sm text-muted-foreground">
+        Pro tip: open the Rooms row to start a brand new canvas, or rename one to make
+        it yours.
+      </p>
 
-      <div class="flex flex-col md:flex-row gap-4">
-        <!-- Room directory — only meaningful against the self-hosted sync
-             worker, so it's simply absent in demo mode (no syncUri). -->
-        <aside
-          v-if="syncUri"
-          class="w-full shrink-0 flex flex-col rounded-2xl border border-r-4 border-b-4 border-primary bg-secondary overflow-hidden transition-[height] duration-200 md:w-60 md:h-[70vh] md:min-h-[420px]"
-          :class="isDrawerOpen ? 'h-56' : ''"
-        >
-          <!--
-            The whole bar is the toggle now, not just the chevron — a much
-            easier target than a lone 28px icon, especially on mobile.
-            Collapsing only ever makes sense on mobile, where the drawer
-            competes with the canvas for vertical space by stacking above
-            it — on large screens (md:flex-row) it sits beside the canvas
-            with room to spare, so toggleDrawer() no-ops there (see its own
-            comment) rather than silently swapping the title/+ button out
-            from under a stray desktop click on this now much bigger area.
-          -->
-          <div
-            role="button"
-            tabindex="0"
-            @click="toggleDrawer"
-            @keydown.enter="toggleDrawer"
-            @keydown.space.prevent="toggleDrawer"
-            :aria-expanded="isDrawerOpen"
-            aria-label="Toggle rooms panel"
-            class="flex items-center justify-between gap-2 px-4 py-3 border-b border-border cursor-pointer md:cursor-default"
-          >
-            <h2
-              class="flex-1 min-w-0 truncate text-xs font-bold text-primary uppercase tracking-wide"
+      <!-- Rooms only exist with the self-hosted sync worker, so this row is
+           simply absent in demo mode (no syncUri). -->
+      <div v-if="syncUri" class="mt-7">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="eyebrow mr-1">Rooms</span>
+
+          <span v-if="roomsLoading" class="text-sm text-muted-foreground">Loading rooms…</span>
+
+          <template v-for="room in rooms" :key="room.id">
+            <form
+              v-if="renamingId === room.id"
+              class="inline-flex"
+              @submit.prevent="submitRename(room.id)"
             >
-              <template v-if="isDrawerOpen">Rooms</template>
-              <template v-else>Rooms - {{ activeRoomName }}</template>
-            </h2>
-            <div class="flex items-center gap-1 shrink-0">
-              <button
-                v-if="isDrawerOpen"
-                type="button"
-                @click.stop="startCreating"
-                class="p-1.5 rounded-md text-primary hover:bg-accent transition-colors"
-                aria-label="New room"
-              >
-                <Icon name="lucide:plus" class="w-4 h-4" />
-              </button>
-              <!-- Decorative now — the whole bar above carries the click/keyboard handling. -->
-              <span class="md:hidden p-1.5 rounded-md text-primary" aria-hidden="true">
-                <Icon
-                  :name="isDrawerOpen ? 'lucide:chevron-up' : 'lucide:chevron-down'"
-                  class="w-4 h-4"
-                />
-              </span>
-            </div>
-          </div>
-
-          <div v-show="isDrawerOpen" class="relative flex-1 min-h-0">
-            <div
-              ref="roomListEl"
-              class="h-full overflow-y-auto p-2 space-y-1"
-              @scroll="checkRoomListOverflow"
-            >
-            <p v-if="roomsLoading" class="text-xs text-muted-foreground px-2 py-3">
-              Loading rooms…
-            </p>
-
-            <div v-for="room in rooms" :key="room.id" class="group relative">
-              <form
-                v-if="renamingId === room.id"
-                @submit.prevent="submitRename(room.id)"
-                class="px-1"
-              >
-                <input
-                  ref="renameInputEl"
-                  v-model="renameValue"
-                  maxlength="60"
-                  class="w-full text-sm px-2 py-1.5 rounded-lg border border-primary bg-background text-foreground focus:outline-none"
-                  @keydown.esc="cancelRename"
-                  @blur="submitRename(room.id)"
-                />
-              </form>
-
-              <div
-                v-else-if="deletingId === room.id"
-                class="flex items-center gap-1 pl-2 pr-1 py-1.5 rounded-lg bg-destructive/10"
-              >
-                <span class="flex-1 text-xs text-destructive truncate">
-                  Delete "{{ room.name }}"?
-                </span>
-                <button
-                  type="button"
-                  @click="confirmDelete(room.id)"
-                  class="p-1 rounded-md text-destructive hover:bg-destructive/20 transition-colors"
-                  aria-label="Confirm delete"
-                >
-                  <Icon name="lucide:check" class="w-3.5 h-3.5" />
-                </button>
-                <button
-                  type="button"
-                  @click="deletingId = null"
-                  class="p-1 rounded-md text-muted-foreground hover:bg-background transition-colors"
-                  aria-label="Cancel delete"
-                >
-                  <Icon name="lucide:x" class="w-3.5 h-3.5" />
-                </button>
-              </div>
-
-              <template v-else>
-                <button
-                  type="button"
-                  @click="selectRoom(room.id)"
-                  class="w-full flex items-center gap-2 pl-2 py-2 rounded-lg text-sm text-left transition-colors"
-                  :class="[
-                    room.id === DEFAULT_ROOM_ID ? 'pr-7' : 'pr-12',
-                    room.id === activeRoomId
-                      ? 'bg-primary text-secondary font-semibold'
-                      : 'hover:bg-accent text-foreground',
-                  ]"
-                >
-                  <Icon name="lucide:palette" class="w-4 h-4 shrink-0 opacity-70" />
-                  <span class="flex-1 truncate">{{ room.name }}</span>
-                </button>
-                <div
-                  class="absolute right-1.5 top-1/2 -translate-y-1/2 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity"
-                >
-                  <button
-                    type="button"
-                    @click.stop="startRename(room)"
-                    class="p-1 rounded-md transition-colors"
-                    :class="
-                      room.id === activeRoomId
-                        ? 'text-secondary hover:bg-primary/70'
-                        : 'text-muted-foreground hover:bg-background'
-                    "
-                    aria-label="Rename room"
-                  >
-                    <Icon name="lucide:pencil" class="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    v-if="room.id !== DEFAULT_ROOM_ID"
-                    type="button"
-                    @click.stop="deletingId = room.id"
-                    class="p-1 rounded-md transition-colors"
-                    :class="
-                      room.id === activeRoomId
-                        ? 'text-secondary hover:bg-destructive/70'
-                        : 'text-muted-foreground hover:bg-destructive/10 hover:text-destructive'
-                    "
-                    aria-label="Delete room"
-                  >
-                    <Icon name="lucide:trash-2" class="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </template>
-            </div>
-
-            <form v-if="isCreating" @submit.prevent="submitCreate" class="px-1 pt-1">
               <input
-                ref="createInputEl"
-                v-model="newRoomName"
+                ref="renameInputEl"
+                v-model="renameValue"
                 maxlength="60"
-                placeholder="Room name"
-                class="w-full text-sm px-2 py-1.5 rounded-lg border border-primary bg-background text-foreground focus:outline-none"
-                @keydown.esc="cancelCreate"
-                @blur="submitCreate"
+                aria-label="Room name"
+                :class="roomInputClass"
+                @keydown.esc="cancelRename"
+                @blur="submitRename(room.id)"
               />
             </form>
-            </div>
 
-            <!--
-              The list only fits ~3 rooms before it scrolls, with nothing
-              else on screen suggesting that — this fade + bouncing chevron
-              is the only cue there's more below. Hidden once you've
-              actually scrolled to the bottom (see checkRoomListOverflow),
-              so it never lies about there being more to see.
-            -->
-            <div
-              v-if="hasMoreRooms"
-              class="pointer-events-none absolute bottom-0 inset-x-0 h-7 flex items-end justify-center pb-0.5 bg-gradient-to-t from-secondary to-transparent rounded-b-2xl"
+            <span
+              v-else-if="deletingId === room.id"
+              class="inline-flex items-center gap-1 rounded-full border border-destructive/40 bg-destructive/10 py-1 pl-4 pr-1.5 text-[13px] text-destructive"
             >
-              <Icon name="lucide:chevron-down" class="w-3.5 h-3.5 text-muted-foreground animate-bounce" />
-            </div>
-          </div>
+              <span class="max-w-[14rem] truncate">Delete "{{ room.name }}"?</span>
+              <button
+                type="button"
+                class="rounded-full p-1.5 transition-colors hover:bg-destructive/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label="Confirm delete"
+                @click="confirmDelete(room.id)"
+              >
+                <Icon name="lucide:check" class="h-3.5 w-3.5" />
+              </button>
+              <button
+                type="button"
+                class="rounded-full p-1.5 text-muted-foreground transition-colors hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                aria-label="Cancel delete"
+                @click="deletingId = null"
+              >
+                <Icon name="lucide:x" class="h-3.5 w-3.5" />
+              </button>
+            </span>
 
-          <p v-if="isDrawerOpen && roomError" class="text-xs text-destructive px-3 pb-3">
-            {{ roomError }}
-          </p>
-        </aside>
+            <span
+              v-else
+              class="inline-flex items-center rounded-full border transition-colors"
+              :class="
+                room.id === activeRoomId
+                  ? 'border-primary bg-primary text-primary-foreground'
+                  : 'border-border text-muted-foreground hover:border-primary hover:text-foreground'
+              "
+            >
+              <button
+                type="button"
+                class="max-w-[14rem] truncate rounded-full px-4 py-1.5 text-[13px] font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                :aria-current="room.id === activeRoomId ? 'true' : undefined"
+                @click="selectRoom(room.id)"
+              >
+                {{ room.name }}
+              </button>
+              <template v-if="room.id === activeRoomId">
+                <button
+                  type="button"
+                  class="rounded-full p-1.5 transition-colors hover:bg-primary-foreground/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  :class="room.id === DEFAULT_ROOM_ID ? 'mr-1' : ''"
+                  aria-label="Rename room"
+                  @click="startRename(room)"
+                >
+                  <Icon name="lucide:pencil" class="h-3.5 w-3.5" />
+                </button>
+                <button
+                  v-if="room.id !== DEFAULT_ROOM_ID"
+                  type="button"
+                  class="mr-1 rounded-full p-1.5 transition-colors hover:bg-primary-foreground/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  aria-label="Delete room"
+                  @click="deletingId = room.id"
+                >
+                  <Icon name="lucide:trash-2" class="h-3.5 w-3.5" />
+                </button>
+              </template>
+            </span>
+          </template>
 
-        <div
-          class="relative md:flex-1 h-[70vh] min-h-[420px] rounded-2xl overflow-hidden border border-r-4 border-b-4 border-primary"
-        >
-          <ClientOnly>
-            <CanvasTldrawBoard
-              :key="displayRoomId"
-              :room-id="displayRoomId"
-              :sync-uri="syncUri"
-              :license-key="licenseKey"
-              :fullscreen="isFullscreen"
-              @ready="boardReady = true"
+          <form v-if="isCreating" class="inline-flex" @submit.prevent="submitCreate">
+            <input
+              ref="createInputEl"
+              v-model="newRoomName"
+              maxlength="60"
+              placeholder="Room name"
+              aria-label="New room name"
+              :class="roomInputClass"
+              @keydown.esc="cancelCreate"
+              @blur="submitCreate"
             />
-          </ClientOnly>
-
-          <!--
-            Not inside <ClientOnly> — this is plain SSR'd markup, so it's
-            already on screen before any JS runs. <ClientOnly>'s own
-            mount/fallback swap only covers the pre-hydration gap; it doesn't
-            cover the time spent downloading CanvasTldrawBoard's chunk
-            (tldraw+React, ~550KB, loaded lazily as a .client.vue), which is
-            exactly the gap that showed up as an empty box with nothing in it
-            on a cold load. This single overlay covers both gaps and only
-            goes away once the board actually confirms it rendered — and
-            reappears whenever :key changes the room, since that remounts
-            the whole board.
-          -->
-          <div
-            v-if="!boardReady"
-            class="absolute inset-0 flex items-center justify-center text-muted-foreground bg-secondary"
-          >
-            Loading canvas…
-          </div>
-
-          <!--
-            Bottom-right, snug against tldraw's own "Get a license for
-            production" watermark that already lives in that corner — sits
-            just above it with the same inset instead of floating with a
-            big dead gap beneath. Positioned absolute (anchored to this
-            box) when not fullscreen, but fixed (anchored to the viewport)
-            once fullscreen — the board itself switches to position:fixed
-            at that point (see TldrawBoard.client.vue's hostStyle), so a
-            button that stayed absolute here would scroll out of view along
-            with this now-empty box while the fullscreen canvas stays put.
-            Only needs to clear the canvas itself, not the whole page — the
-            canvas host now always sits in its own real stacking context
-            (z-index: 0 windowed, z-index: 60 fullscreen, see
-            TldrawBoard.client.vue's hostStyle), which properly contains
-            tldraw's own internal panels no matter how high they're layered
-            internally. So this only needs one step above whichever of
-            those two the canvas is currently using — going much higher
-            (the old z-[200]) meant this button also out-ranked page-level
-            modals (z-50) that are supposed to cover the whole page,
-            poking through them instead of being covered like everything
-            else. Fixed w-10 h-10 + flex centering (rather than sizing from
-            padding) guarantees a true circle regardless of the icon's own
-            rendered box.
-          -->
+          </form>
           <button
+            v-else
             type="button"
-            @click="isFullscreen = !isFullscreen"
-            class="right-3 bottom-14 w-10 h-10 flex items-center justify-center rounded-full bg-secondary border border-primary text-primary shadow hover:bg-accent transition-colors"
-            :class="isFullscreen ? 'fixed z-[61]' : 'absolute z-[1]'"
-            :aria-label="isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'"
+            class="inline-flex items-center gap-1 rounded-full border border-dashed border-border px-4 py-1.5 text-[13px] font-medium text-muted-foreground transition-colors hover:border-primary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none"
+            @click="startCreating"
           >
-            <Icon
-              :name="isFullscreen ? 'lucide:minimize-2' : 'lucide:maximize-2'"
-              class="w-4 h-4"
-            />
+            <Icon name="lucide:plus" class="h-3.5 w-3.5" />
+            New room
           </button>
         </div>
+        <p v-if="roomError" class="mt-2 text-xs text-destructive">{{ roomError }}</p>
+      </div>
+
+      <div
+        class="shadow-soft relative mt-6 h-[70vh] min-h-[420px] overflow-hidden rounded-[14px] border border-border"
+      >
+        <ClientOnly>
+          <CanvasTldrawBoard
+            :key="displayRoomId"
+            :room-id="displayRoomId"
+            :sync-uri="syncUri"
+            :license-key="licenseKey"
+            :fullscreen="isFullscreen"
+            @ready="boardReady = true"
+          />
+        </ClientOnly>
+
+        <!--
+          Not inside <ClientOnly> — this is plain SSR'd markup, so it's
+          already on screen before any JS runs. <ClientOnly>'s own
+          mount/fallback swap only covers the pre-hydration gap; it doesn't
+          cover the time spent downloading CanvasTldrawBoard's chunk
+          (tldraw+React, ~550KB, loaded lazily as a .client.vue), which is
+          exactly the gap that showed up as an empty box with nothing in it
+          on a cold load. This single overlay covers both gaps and only
+          goes away once the board actually confirms it rendered — and
+          reappears whenever :key changes the room, since that remounts
+          the whole board.
+        -->
+        <div
+          v-if="!boardReady"
+          class="absolute inset-0 flex items-center justify-center bg-secondary text-muted-foreground"
+        >
+          Loading canvas…
+        </div>
+
+        <!--
+          Bottom-right, snug against tldraw's own "Get a license for
+          production" watermark that already lives in that corner — sits
+          just above it with the same inset instead of floating with a
+          big dead gap beneath. Positioned absolute (anchored to this
+          box) when not fullscreen, but fixed (anchored to the viewport)
+          once fullscreen — the board itself switches to position:fixed
+          at that point (see TldrawBoard.client.vue's hostStyle), so a
+          button that stayed absolute here would scroll out of view along
+          with this now-empty box while the fullscreen canvas stays put.
+          Only needs to clear the canvas itself, not the whole page — the
+          canvas host now always sits in its own real stacking context
+          (z-index: 0 windowed, z-index: 60 fullscreen, see
+          TldrawBoard.client.vue's hostStyle), which properly contains
+          tldraw's own internal panels no matter how high they're layered
+          internally. So this only needs one step above whichever of
+          those two the canvas is currently using — going much higher
+          (the old z-[200]) meant this button also out-ranked page-level
+          modals (z-50) that are supposed to cover the whole page,
+          poking through them instead of being covered like everything
+          else. Fixed w-10 h-10 + flex centering (rather than sizing from
+          padding) guarantees a true circle regardless of the icon's own
+          rendered box.
+        -->
+        <button
+          type="button"
+          @click="isFullscreen = !isFullscreen"
+          class="right-3 bottom-14 flex h-10 w-10 items-center justify-center rounded-full border border-primary bg-secondary text-primary shadow transition-colors hover:bg-accent"
+          :class="isFullscreen ? 'fixed z-[61]' : 'absolute z-[1]'"
+          :aria-label="isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'"
+        >
+          <Icon
+            :name="isFullscreen ? 'lucide:minimize-2' : 'lucide:maximize-2'"
+            class="h-4 w-4"
+          />
+        </button>
       </div>
     </div>
   </section>
@@ -335,25 +263,12 @@ const activeRoomId = ref<string>((route.query.room as string) || DEFAULT_ROOM_ID
 // same as before the drawer existed.
 const displayRoomId = computed(() => (syncUri ? activeRoomId.value : DEFAULT_ROOM_ID));
 
+const roomInputClass =
+  "w-44 rounded-full border border-primary bg-background px-4 py-1.5 text-[13px] text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+
 const rooms = ref<RoomEntry[]>([]);
 const roomsLoading = ref(true);
 const roomError = ref("");
-const isDrawerOpen = ref(true);
-// Shown in the collapsed header on mobile so you still know which room
-// you're on without expanding the panel back open.
-const activeRoomName = computed(
-  () => rooms.value.find((r) => r.id === activeRoomId.value)?.name ?? "",
-);
-
-function toggleDrawer() {
-  // Collapsing only exists on mobile — the header's md:hidden chevron and
-  // the aside's unconditional md: sizing above both assume this. Now that
-  // the whole bar (not just that 28px icon) triggers it, a stray click on
-  // desktop is much more likely, so guard here too rather than let it
-  // silently swap the title/+ button state with nothing visibly collapsing.
-  if (window.matchMedia("(min-width: 768px)").matches) return;
-  isDrawerOpen.value = !isDrawerOpen.value;
-}
 
 const isCreating = ref(false);
 const newRoomName = ref("");
@@ -361,28 +276,10 @@ const createInputEl = useTemplateRef<HTMLInputElement>("createInputEl");
 
 const renamingId = ref<string | null>(null);
 const renameValue = ref("");
-const renameInputEl = useTemplateRef<HTMLInputElement>("renameInputEl");
+// Sits inside a v-for, so Vue hands back an array of elements.
+const renameInputEl = useTemplateRef<HTMLInputElement[]>("renameInputEl");
 
 const deletingId = ref<string | null>(null);
-
-const roomListEl = useTemplateRef<HTMLDivElement>("roomListEl");
-const hasMoreRooms = ref(false);
-
-function checkRoomListOverflow() {
-  const el = roomListEl.value;
-  hasMoreRooms.value = !!el && el.scrollHeight - el.scrollTop - el.clientHeight > 1;
-}
-
-// The drawer's height is CSS-transitioned (duration-200) when it opens, so
-// the scrollable area isn't at its final size the instant isDrawerOpen
-// flips — recheck once after that settles, not just on the next tick.
-watch(isDrawerOpen, () => {
-  nextTick(checkRoomListOverflow);
-  setTimeout(checkRoomListOverflow, 220);
-});
-
-onMounted(() => window.addEventListener("resize", checkRoomListOverflow));
-onBeforeUnmount(() => window.removeEventListener("resize", checkRoomListOverflow));
 
 function selectRoom(id: string) {
   if (id === activeRoomId.value) return;
@@ -412,7 +309,6 @@ async function submitCreate() {
     const room = await apiCreateRoom(syncUri, name);
     rooms.value.push(room);
     selectRoom(room.id);
-    nextTick(checkRoomListOverflow);
   } catch (err: any) {
     roomError.value = err?.message || "Couldn't create room";
   }
@@ -422,7 +318,7 @@ function startRename(room: RoomEntry) {
   renamingId.value = room.id;
   renameValue.value = room.name;
   roomError.value = "";
-  nextTick(() => renameInputEl.value?.focus());
+  nextTick(() => renameInputEl.value?.[0]?.focus());
 }
 
 function cancelRename() {
@@ -457,7 +353,6 @@ async function confirmDelete(id: string) {
     if (activeRoomId.value === id) {
       selectRoom(rooms.value[0]?.id ?? DEFAULT_ROOM_ID);
     }
-    nextTick(checkRoomListOverflow);
   } catch (err: any) {
     roomError.value = err?.message || "Couldn't delete room";
   }
@@ -478,7 +373,6 @@ onMounted(async () => {
     roomError.value = "Couldn't load rooms";
   } finally {
     roomsLoading.value = false;
-    nextTick(checkRoomListOverflow);
   }
 });
 

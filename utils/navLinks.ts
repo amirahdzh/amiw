@@ -29,10 +29,9 @@ export const socials = [
   },
 ];
 
-// The blog uses a wider layout (max-w-7xl with 2rem sides), so the bars follow
-// it there; everywhere else they match the homepage (max-w-6xl, 1.5rem sides).
-export const navWidthClass = (path: string) =>
-  path.startsWith("/blog") ? "max-w-7xl px-8" : "max-w-6xl px-6";
+// Every page, the blog included, uses the homepage's width (max-w-6xl with
+// 1.5rem sides), so the bars always match the content under them.
+export const navWidthClass = (_path: string) => "max-w-6xl px-6";
 
 export const navFocusClass =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
