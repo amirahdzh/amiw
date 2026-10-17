@@ -51,7 +51,7 @@ const proLinks = [
             <b
               class="font-semibold bg-[linear-gradient(transparent_58%,hsl(var(--bloom))_58%)]"
               >TypeScript</b
-            >. Happy with WordPress if that's what gets the job done.
+            >, but happy with WordPress if that's what gets the job done.
           </p>
 
           <div class="mt-9 flex flex-wrap items-center gap-4">

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useBlogStore } from "@/stores/blog";
-
 interface Offer {
   eyebrow: string;
   title: string;
@@ -50,29 +48,13 @@ const passions = [
   "sustainability",
 ];
 
-// "Latest on the blog" teaser: always the newest post in the blog store, so it
-// updates itself when posts change. Posts without their own page (link: null)
-// send the reader to the blog index instead.
-const blogStore = useBlogStore();
-if (!blogStore.posts.length) blogStore.loadPosts();
-
-const latestPost = computed(
-  () =>
-    [...blogStore.posts].sort((a, b) => b.pubDate.localeCompare(a.pubDate))[0] ??
-    null,
-);
-
-// UTC on purpose: "2026-08-27" is a calendar date, and formatting it in a
-// negative-offset timezone would show the 26th.
+// "Latest on the blog" teaser: always the newest post in content/blog, so it
+// updates itself when posts change.
+const { data: posts } = await useBlogPosts();
+const latestPost = computed(() => posts.value[0] ?? null);
+const latestLink = computed(() => latestPost.value?._path ?? "/blog");
 const latestDate = computed(() =>
-  latestPost.value
-    ? new Date(latestPost.value.pubDate).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        timeZone: "UTC",
-      })
-    : "",
+  latestPost.value ? formatPostDate(latestPost.value.date) : "",
 );
 </script>
 
@@ -141,8 +123,7 @@ const latestDate = computed(() =>
             Latest on the blog
           </span>
           <NuxtLink
-            :to="latestPost.link ?? '/blog'"
-            :external="!!latestPost.link"
+            :to="latestLink"
             class="group inline-flex items-baseline gap-1.5 rounded text-[15px] font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(var(--blush-band))] motion-reduce:transition-none"
           >
             <span
@@ -155,7 +136,7 @@ const latestDate = computed(() =>
               >→</span
             >
           </NuxtLink>
-          <time class="text-[13px] text-muted-foreground" :datetime="latestPost.pubDate">
+          <time class="text-[13px] text-muted-foreground" :datetime="latestPost.date">
             {{ latestDate }}
           </time>
         </div>

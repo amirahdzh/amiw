@@ -25,6 +25,7 @@ export default defineNuxtConfig({
           href: "https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap",
         },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'alternate', type: 'application/rss+xml', title: 'Amiw blog', href: '/rss.xml' },
       ],
     },
     
@@ -73,7 +74,7 @@ export default defineNuxtConfig({
     openRouterApiKey: process.env.OPENROUTER_API_KEY
   },
   // The sitemap is a server route. Prerender it so it also exists on a static build.
-  nitro: { prerender: { routes: ["/sitemap.xml"] } },
+  nitro: { prerender: { routes: ["/sitemap.xml", "/rss.xml"] } },
   routeRules: {
     // Memoir moved to "/" — send old bookmarks/links to the new home
     '/memoir': { redirect: '/' },

@@ -12,66 +12,73 @@
           Thoughts, insights and stories from my little corner of the internet.
         </p>
 
-        <div class="mt-7 flex flex-wrap gap-2" role="group" aria-label="Filter posts">
+        <div
+          v-if="filterTags.length > 1"
+          class="mt-7 flex flex-wrap gap-2"
+          role="group"
+          aria-label="Filter posts"
+        >
           <button
-            v-for="category in allCategories"
-            :key="category"
+            v-for="tag in ['All', ...filterTags]"
+            :key="tag"
             type="button"
-            :aria-pressed="selectedCategory === category"
+            :aria-pressed="selected === tag"
             class="rounded-full border px-4 py-1.5 text-[13px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none"
             :class="
-              selectedCategory === category
+              selected === tag
                 ? 'border-primary bg-primary text-primary-foreground'
                 : 'border-border text-muted-foreground hover:border-primary hover:text-foreground'
             "
-            @click="blogStore.setCategory(category)"
+            @click="selected = tag"
           >
-            {{ category }}
+            {{ tag }}
           </button>
         </div>
 
         <ol v-if="posts.length" class="mt-8 border-b border-border">
           <li
             v-for="post in posts"
-            :key="post.id"
-            class="grid gap-3 border-t border-border py-6 md:grid-cols-[9rem_minmax(0,1fr)_8.5rem] md:items-start md:gap-7"
+            :key="post._path"
+            class="grid gap-3 border-t border-border py-6 md:gap-7"
+            :class="
+              post.image
+                ? 'md:grid-cols-[9rem_minmax(0,1fr)_8.5rem]'
+                : 'md:grid-cols-[9rem_minmax(0,1fr)]'
+            "
           >
             <time
               class="font-mono text-[13.5px] font-bold text-foreground md:pt-1"
-              :datetime="post.pubDate"
+              :datetime="post.date"
             >
-              {{ blogStore.formatDate(post.pubDate) }}
+              {{ formatPostDate(post.date) }}
             </time>
 
             <div class="min-w-0">
               <h2 class="font-mono text-lg font-bold leading-snug text-foreground">
-                <a
-                  v-if="post.link"
-                  :href="post.link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  :class="titleLinkClass"
-                >
+                <NuxtLink :to="post._path" :class="titleLinkClass">
                   {{ post.title }}
-                </a>
-                <template v-else>{{ post.title }}</template>
+                </NuxtLink>
               </h2>
               <p class="mt-2 max-w-[58ch] text-[15px] leading-relaxed text-foreground">
-                {{ blogStore.getExcerpt(post.description) }}
+                {{ post.description }}
               </p>
               <p
                 class="mt-2.5 flex flex-wrap gap-x-2 gap-y-0.5 font-mono text-[12.5px] text-muted-foreground"
               >
-                <template v-for="(tag, i) in post.categories" :key="tag">
+                <template v-for="(tag, i) in post.tags ?? []" :key="tag">
                   <span v-if="i > 0" aria-hidden="true" class="text-pink">·</span>
                   <span>{{ tag }}</span>
+                </template>
+                <template v-if="post.draft">
+                  <span v-if="post.tags?.length" aria-hidden="true" class="text-pink">·</span>
+                  <span class="text-amiw">coming soon</span>
                 </template>
               </p>
             </div>
 
             <img
-              v-if="post.thumbnail"
-              :src="post.thumbnail"
+              v-if="post.image"
+              :src="post.image"
               alt=""
               loading="lazy"
               class="aspect-[5/3] w-full max-w-[12rem] rounded-[10px] border border-border object-cover md:max-w-none"
@@ -107,38 +114,36 @@
 </template>
 
 <script lang="ts" setup>
-import { storeToRefs } from "pinia";
+const { data: allPosts } = await useBlogPosts();
 
-const blogStore = useBlogStore();
-const { selectedCategory, allCategories, filteredPosts } =
-  storeToRefs(blogStore);
+// A tag is only worth filtering by when it splits the posts: one on every
+// post, or on just one post, would not narrow anything down.
+const filterTags = computed(() => {
+  const total = allPosts.value.length;
+  const counts = new Map<string, number>();
+  for (const post of allPosts.value) {
+    for (const tag of new Set(post.tags ?? [])) {
+      counts.set(tag, (counts.get(tag) ?? 0) + 1);
+    }
+  }
+  return [...counts].filter(([, n]) => n > 1 && n < total).map(([tag]) => tag);
+});
 
-// Loaded during setup, not in onMounted, so the posts are in the HTML the
-// server sends (that is what search engines read).
-if (!blogStore.posts.length) blogStore.loadPosts();
+const selected = ref("All");
 
-// Newest first, whatever order the store keeps them in.
 const posts = computed(() =>
-  [...filteredPosts.value].sort((a, b) => b.pubDate.localeCompare(a.pubDate)),
+  selected.value === "All"
+    ? allPosts.value
+    : allPosts.value.filter((p) => p.tags?.includes(selected.value)),
 );
 
-// Outside onMounted on purpose: the title and description have to be in the
-// HTML the server sends, not added later in the browser.
 usePageSeo({
   title: "Blog | Amiw",
   description:
     "Sharing thoughts, insights and stories from Amiw's corner of the internet.",
 });
 
-onMounted(() => {
-  // Restore the category the reader chose last time.
-  const storedCategory = localStorage.getItem("selectedCategory");
-  if (storedCategory) {
-    blogStore.setCategory(storedCategory);
-  }
-});
-
-// Only titles that link somewhere get a hover underline.
+// Titles get a pink hover underline.
 const titleLinkClass =
   "rounded hover:underline hover:decoration-pink hover:decoration-2 hover:underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 </script>
