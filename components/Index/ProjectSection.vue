@@ -10,8 +10,8 @@ import { projects } from "~/utils/projects";
       </h2>
       <p class="mt-2 text-base text-muted-foreground">Things I've built.</p>
 
-      <ul class="mt-9 border-b border-border">
-        <li v-for="project in projects" :key="project.title" class="border-t border-border">
+      <ul class="mt-9 border-b border-border" data-reveal-group>
+        <li v-for="project in projects" :key="project.title" data-reveal class="border-t border-border">
           <IndexProjectRow :project="project" />
         </li>
       </ul>

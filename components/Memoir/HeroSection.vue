@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { WHATSAPP_URL, RESUME_URL, RESUME_UPDATED, formatMonth } from "~/utils/site";
+import { RESUME_URL, RESUME_UPDATED, formatMonth } from "~/utils/site";
 import { languageCodes, city, timezone } from "~/utils/workWithMe";
 
 // The diary side of this hero is archived in archive/diary/ (see its README).
@@ -66,14 +66,16 @@ const proLinks = [
           </p>
 
           <div class="mt-9 flex flex-wrap items-center gap-4">
-            <a
-              :href="WHATSAPP_URL"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn-solid px-7 py-3.5 text-base focus-visible:ring-offset-background"
-            >
-              Contact me
-            </a>
+            <!-- Opens the "Book a call" box (components/BookCallDialog.vue). -->
+            <BookCallDialog>
+              <button
+                type="button"
+                class="btn-solid px-7 py-3.5 text-base focus-visible:ring-offset-background"
+              >
+                Book a free call
+                <Icon name="lucide:arrow-right" class="h-4 w-4" />
+              </button>
+            </BookCallDialog>
             <!-- The date sits outside the link so it isn't underlined. -->
             <span class="inline-flex items-center gap-1.5">
               <a
@@ -135,7 +137,7 @@ const proLinks = [
           <span aria-hidden="true" class="mr-2 text-amiw">→</span>
           <!-- Only the label is underlined, so the line is one straight line. -->
           <span
-            class="underline-offset-4 decoration-bloom decoration-2 group-hover:underline group-focus-visible:underline"
+            class="link-grow"
             >{{ link.label }}</span
           >
         </a>

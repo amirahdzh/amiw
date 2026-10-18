@@ -89,8 +89,8 @@ const focusClass =
       </div>
 
       <!-- Links -->
-      <ul class="mt-8 flex flex-col gap-3.5">
-        <li v-for="link in links" :key="link.title">
+      <ul class="mt-8 flex flex-col gap-3.5" data-reveal-group>
+        <li v-for="link in links" :key="link.title" data-reveal>
           <component
             :is="linkTag(link)"
             v-bind="linkAttrs(link)"

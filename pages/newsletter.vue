@@ -1,14 +1,11 @@
 <script setup lang="ts">
-import { CONTACT_EMAIL } from "~/utils/site";
+import { CONTACT_EMAIL, topics } from "~/utils/site";
 
 usePageSeo({
   title: "Newsletter | Amiw",
   description:
     "Get new posts from Amiw by email: writing, productivity, frugal living, minimalism and sustainability.",
 });
-
-// Same list as "Passionate in" on the homepage.
-const topics = ["writing", "productivity", "frugal", "minimalism", "sustainability"];
 
 const linkClass =
   "group rounded font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background motion-reduce:transition-none";

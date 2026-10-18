@@ -67,10 +67,12 @@ const focusClass =
         <div class="mt-10">
           <ul
             class="grid grid-cols-2 overflow-hidden rounded-xl bg-[hsl(var(--alternate-background))] md:grid-cols-4"
+            data-reveal-group
           >
             <li
               v-for="(fact, i) in facts"
               :key="fact.value"
+              data-reveal
               class="flex flex-col items-start border-border px-5 pb-4 pt-5 transition-colors motion-reduce:transition-none md:px-6 [&:nth-child(even)]:border-l [&:nth-child(n+3)]:border-t md:[&:nth-child(n+3)]:border-t-0 md:[&:nth-child(n+2)]:border-l"
               :class="openFact === i ? 'bg-muted/60' : ''"
             >
@@ -134,10 +136,11 @@ const focusClass =
         <div class="mt-12 grid gap-12 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] md:gap-16">
           <div>
             <h2 class="font-mono text-lg font-bold text-foreground">The process</h2>
-            <ol class="mt-5">
+            <ol class="mt-5" data-reveal-group>
               <li
                 v-for="(step, i) in steps"
                 :key="step.title"
+                data-reveal
                 class="relative pb-6 pl-[3.25rem] last:pb-0 after:absolute after:bottom-0 after:left-[16px] after:top-9 after:w-[2px] after:bg-pink last:after:hidden"
               >
                 <span
@@ -196,10 +199,11 @@ const focusClass =
 
           <div>
             <h2 class="font-mono text-lg font-bold text-foreground">Good to know</h2>
-            <div class="mt-3 border-b border-border">
+            <div class="mt-3 border-b border-border" data-reveal-group>
               <details
                 v-for="(item, i) in faq"
                 :key="item.question"
+                data-reveal
                 :open="i === 0"
                 class="group border-t border-border"
               >
@@ -241,8 +245,8 @@ const focusClass =
     <section class="w-full bg-[hsl(var(--alternate-background))] py-12 md:py-14">
       <div class="mx-auto max-w-6xl px-6">
         <h2 class="font-mono text-lg font-bold text-foreground">Recent work</h2>
-        <ul class="mt-4 grid gap-4 md:grid-cols-3">
-          <li v-for="project in recentWork" :key="project.slug" class="flex">
+        <ul class="mt-4 grid gap-4 md:grid-cols-3" data-reveal-group>
+          <li v-for="project in recentWork" :key="project.slug" data-reveal class="flex">
             <component
               :is="project.details ? NuxtLinkComponent : 'div'"
               v-bind="project.details ? { to: `/projects/${project.slug}` } : {}"
@@ -252,7 +256,7 @@ const focusClass =
                 class="font-mono text-[15px] font-bold text-foreground"
                 :class="
                   project.details
-                    ? 'underline-offset-4 decoration-pink decoration-2 group-hover:underline'
+                    ? 'link-grow'
                     : ''
                 "
                 >{{ project.title }}</span

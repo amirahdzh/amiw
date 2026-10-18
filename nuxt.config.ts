@@ -18,6 +18,12 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: "en" },
+      // Tells the CSS that arrival motion (plugins/reveal.client.ts) is going to
+      // run, so items can start hidden without a flash. If the script never
+      // runs, nothing is hidden. See "reveal-on" in assets/css/tailwind.css.
+      script: [
+        { innerHTML: "document.documentElement.classList.add('reveal-on')", tagPosition: "head" },
+      ],
       title: "Amiw | Software Engineer (C#/.NET, TypeScript)",
       link: [
         {

@@ -37,6 +37,14 @@ export function formatMonth(date: string): string {
   });
 }
 
+// What Amiw cares about. Shown as "I care about" in the Collaborators section
+// of the homepage and as the topic line on /newsletter, so they always agree.
+export const topics = ["writing", "productivity", "frugal living", "minimalism", "sustainability"];
+
+// One sentence on what Amiw values, shown in the Collaborators section. Left
+// empty on purpose: the section shows it only once there is something here.
+export const COLLAB_VALUE = "";
+
 export interface Place {
   label: string;
   href: string;

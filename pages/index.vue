@@ -3,6 +3,7 @@
   <IndexProfesionalSection />
   <IndexProjectSection />
   <IndexTrackSection />
+  <IndexCollaborateSection />
 </template>
 
 <script setup lang="ts">

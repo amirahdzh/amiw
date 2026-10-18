@@ -35,10 +35,11 @@
           </button>
         </div>
 
-        <ol v-if="posts.length" class="mt-8 border-b border-border">
+        <ol v-if="posts.length" class="mt-8 border-b border-border" data-reveal-group>
           <li
             v-for="post in posts"
             :key="post._path"
+            data-reveal
             class="grid gap-3 border-t border-border py-6 md:gap-7"
             :class="
               post.image
@@ -145,5 +146,5 @@ usePageSeo({
 
 // Titles get a pink hover underline.
 const titleLinkClass =
-  "rounded hover:underline hover:decoration-pink hover:decoration-2 hover:underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "link-grow rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 </script>

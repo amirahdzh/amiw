@@ -76,7 +76,13 @@
 
     --chart-5: 20 30% 24%;
 
-    --radius: 0.75rem
+    --radius: 0.75rem;
+
+    /* Motion: one easing for everything, and three speeds */
+    --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+    --dur-fast: 150ms;
+    --dur-base: 350ms;
+    --dur-slow: 700ms
   }
 }
 
@@ -85,20 +91,63 @@ html {
 }
 
 @layer components {
-  /* Soft pink marker under a section heading (display:table keeps it as wide as the text) */
+  /* Soft pink marker under a section heading (display:table keeps it as wide as the text).
+     It draws itself when the heading scrolls into view: see "Arrival" below. */
   .heading-marker {
     display: table;
-    background: linear-gradient(transparent 62%, hsl(var(--bloom)) 62%);
+    background: linear-gradient(transparent 62%, hsl(var(--bloom)) 62%) no-repeat 0 100% / 100% 100%;
   }
 
   /* Pill buttons. Size (padding, text size, width) and the focus-ring offset
      colour are set where they are used, because they depend on the
-     background the button sits on. */
+     background the button sits on.
+     Outline: the fill spreads in from the left on hover. Both: a small press,
+     and the arrow icon nudges forward. */
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-1.5 rounded-full border border-primary font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-reduce:transition-none;
+    @apply relative isolate inline-flex items-center justify-center gap-1.5 overflow-hidden rounded-full border border-primary font-medium text-primary transition-[color,transform] duration-300 hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.975] motion-reduce:transition-none;
+  }
+  .btn-outline::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: hsl(var(--primary));
+    transform: translateX(-101%);
+    transition: transform 450ms var(--ease-out);
+  }
+  .btn-outline:hover::before,
+  .btn-outline:focus-visible::before {
+    transform: translateX(0);
   }
   .btn-solid {
-    @apply inline-flex items-center justify-center gap-1.5 rounded-full bg-primary font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 motion-reduce:transition-none;
+    @apply inline-flex items-center justify-center gap-1.5 rounded-full bg-primary font-medium text-primary-foreground transition-[background-color,transform] duration-300 hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.975] motion-reduce:transition-none;
+  }
+  .btn-outline > :is(svg, .iconify),
+  .btn-solid > :is(svg, .iconify) {
+    transition: transform 300ms var(--ease-out);
+  }
+  .btn-outline:hover > :is(svg, .iconify),
+  .btn-solid:hover > :is(svg, .iconify) {
+    transform: translateX(3px);
+  }
+
+  /* A link whose pink underline grows from the left on hover (or when its
+     parent ".group" is hovered). */
+  .link-grow {
+    background-image: linear-gradient(hsl(var(--pink)), hsl(var(--pink)));
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 2px;
+    padding-bottom: 2px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    transition: background-size 400ms var(--ease-out);
+  }
+  .link-grow:hover,
+  .link-grow:focus-visible,
+  .group:hover .link-grow,
+  .group:focus-visible .link-grow {
+    background-size: 100% 2px;
   }
 
   /* Small uppercase label that sits above a title or beside a list */
@@ -112,5 +161,66 @@ html {
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Arrival: things appear as you scroll to them (plugins/reveal.client.ts).
+   Outside the layers on purpose, so the build never removes these rules.
 
-  
+   They only apply when <html> has "reveal-on" (added by a tiny script in
+   nuxt.config.ts before the first paint). Without JavaScript nothing is hidden,
+   and if the script that adds "is-in" never starts, a fallback shows everything
+   after 3 seconds.
+   --------------------------------------------------------------------------- */
+html.reveal-on .heading-marker:not(.is-in) {
+  background-size: 0% 100%;
+}
+html.reveal-on .heading-marker.is-in {
+  animation: reveal-marker 800ms var(--ease-out) 150ms backwards;
+}
+html.reveal-on [data-reveal]:not(.is-in) {
+  opacity: 0;
+  transform: translateY(14px);
+}
+/* Safety net: "reveal-ready" is added by the script once it is running. If it
+   never is (the page failed to start), everything appears after 3 seconds. */
+html.reveal-on:not(.reveal-ready) .heading-marker:not(.is-in) {
+  animation: reveal-marker-fallback 0s 3s forwards;
+}
+html.reveal-on:not(.reveal-ready) [data-reveal]:not(.is-in) {
+  animation: reveal-fallback 0s 3s forwards;
+}
+html.reveal-on [data-reveal].is-in {
+  animation: reveal-up 650ms var(--ease-out) var(--d, 0ms) backwards;
+}
+@keyframes reveal-marker {
+  from { background-size: 0% 100%; }
+}
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(14px); }
+}
+@keyframes reveal-fallback {
+  to { opacity: 1; transform: none; }
+}
+@keyframes reveal-marker-fallback {
+  to { background-size: 100% 100%; }
+}
+
+/* Anyone who asks their device for less movement gets everything at once. */
+@media (prefers-reduced-motion: reduce) {
+  html.reveal-on .heading-marker:not(.is-in),
+  html.reveal-on .heading-marker.is-in {
+    background-size: 100% 100%;
+    animation: none;
+  }
+  html.reveal-on [data-reveal]:not(.is-in),
+  html.reveal-on [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .btn-outline::before,
+  .btn-outline > :is(svg, .iconify),
+  .btn-solid > :is(svg, .iconify),
+  .link-grow {
+    transition: none;
+  }
+}
