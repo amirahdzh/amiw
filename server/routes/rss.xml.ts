@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
     `<rss version="2.0">\n  <channel>\n` +
     `    <title>${esc(SITE.name)} blog</title>\n` +
     `    <link>${base}/blog</link>\n` +
-    `    <description>${esc("Thoughts, insights and stories from Amiw's corner of the internet.")}</description>\n` +
+    `    <description>${esc("Notes from Amiw on technology and everyday life.")}</description>\n` +
     (items ? items + "\n" : "") +
     `  </channel>\n</rss>\n`
   );

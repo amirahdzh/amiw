@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted, ref } from "vue";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 interface Placement {
   company: string;
   logo: string;
@@ -16,7 +19,22 @@ interface Role {
   placement?: Placement;
 }
 
-// Latest first. Everything is visible on the page — no click-to-open dialog.
+// The companies stack vertically on wide screens and become a row of tabs on a
+// phone. The arrow keys follow: up/down in the stack, left/right in the row.
+const orientation = ref<"horizontal" | "vertical">("horizontal");
+let query: MediaQueryList | undefined;
+const sync = () => {
+  orientation.value = query?.matches ? "vertical" : "horizontal";
+};
+onMounted(() => {
+  query = window.matchMedia("(min-width: 768px)");
+  sync();
+  query.addEventListener("change", sync);
+});
+onUnmounted(() => query?.removeEventListener("change", sync));
+
+// Latest first. One company is shown at a time: pick it in the tabs. All of the
+// text is still in the page (hidden, not removed), so search engines can read it.
 const roles: Role[] = [
   {
     // No logo file yet, so the row falls back to a monogram circle.
@@ -75,42 +93,56 @@ const roles: Role[] = [
       </h2>
       <p class="mt-2 text-base text-muted-foreground">Where I've worked.</p>
 
-      <ol class="mt-9 border-b border-border">
-        <li
+      <Tabs
+        :default-value="roles[0].company"
+        :orientation="orientation"
+        class="mt-9 md:grid md:grid-cols-[13rem_minmax(0,1fr)] md:gap-12"
+      >
+        <TabsList
+          class="h-auto w-full justify-start gap-1 overflow-x-auto rounded-none border-b border-border bg-transparent p-0 text-muted-foreground sm:gap-3 md:w-auto md:flex-col md:items-stretch md:gap-0 md:self-start md:overflow-visible md:border-b-0 md:border-l"
+        >
+          <TabsTrigger
+            v-for="role in roles"
+            :key="role.company"
+            :value="role.company"
+            class="-mb-px justify-start rounded-none border-b-[3px] border-transparent bg-transparent px-2.5 py-3 font-mono text-[15px] font-bold shadow-none transition-colors first:pl-0 hover:text-foreground data-[state=active]:border-pink data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none motion-reduce:transition-none sm:px-3 md:mb-0 md:-ml-px md:border-b-0 md:border-l-[3px] md:px-4 md:py-3.5 md:first:pl-4"
+          >
+            <span class="flex items-center gap-2.5">
+              <span
+                v-if="role.logo"
+                class="hidden h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-secondary sm:flex"
+              >
+                <img :src="role.logo" alt="" class="h-full w-full object-contain p-1.5" />
+              </span>
+              <span
+                v-else
+                aria-hidden="true"
+                class="hidden h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border bg-secondary text-sm font-bold text-foreground sm:flex"
+              >
+                {{ role.company.charAt(0) }}
+              </span>
+              {{ role.company }}
+            </span>
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent
           v-for="role in roles"
           :key="role.company"
-          class="grid gap-3 border-t border-border py-6 md:grid-cols-[10.5rem_16rem_minmax(0,1fr)] md:items-start md:gap-7"
+          :value="role.company"
+          force-mount
+          class="mt-7 min-w-0 data-[state=inactive]:hidden md:mt-0"
         >
-          <div class="md:pt-1.5">
-            <p class="font-mono text-[13.5px] font-bold text-foreground">
-              {{ role.period }}
-            </p>
+          <!-- Role on the left, dates at the far right. -->
+          <div class="md:pt-[17px]">
+            <h3 class="font-mono text-xl font-bold leading-tight text-foreground">
+              {{ role.role }}
+            </h3>
+            <p class="mt-1 font-mono text-[13px] text-muted-foreground">{{ role.period }}</p>
           </div>
 
-          <div class="flex items-center gap-3">
-            <span
-              v-if="role.logo"
-              class="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border border-border bg-secondary"
-            >
-              <img :src="role.logo" alt="" class="h-full w-full object-contain p-2" />
-            </span>
-            <span
-              v-else
-              aria-hidden="true"
-              class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-secondary font-mono text-lg font-bold text-foreground"
-            >
-              {{ role.company.charAt(0) }}
-            </span>
-            <div class="min-w-0">
-              <h3 class="font-mono text-lg font-bold leading-tight text-foreground">
-                {{ role.company }}
-              </h3>
-              <p class="mt-px text-sm text-muted-foreground">{{ role.role }}</p>
-            </div>
-          </div>
-
-          <div class="grid gap-2">
-            <p class="max-w-[58ch] text-base leading-relaxed text-foreground">
+          <div class="mt-4 grid gap-2">
+            <p class="max-w-[70ch] text-base leading-relaxed text-foreground">
               {{ role.description }}
             </p>
             <p
@@ -139,8 +171,8 @@ const roles: Role[] = [
               </span>
             </p>
           </div>
-        </li>
-      </ol>
+        </TabsContent>
+      </Tabs>
     </div>
   </section>
 </template>

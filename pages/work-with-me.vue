@@ -49,6 +49,19 @@ const focusClass =
           building software for GDPR compliance.
         </p>
 
+        <!-- The first thing to do on this page, in plain sight. -->
+        <div class="mt-7">
+          <BookCallDialog>
+            <button
+              type="button"
+              class="btn-solid px-7 py-3.5 text-base focus-visible:ring-offset-background"
+            >
+              Book a free call
+              <Icon name="lucide:arrow-right" class="h-4 w-4" />
+            </button>
+          </BookCallDialog>
+        </div>
+
         <!-- The things that reassure a client most, big and first. "Why?" opens
              the reason in a card under the band, pointing at its fact. -->
         <div class="mt-10">
