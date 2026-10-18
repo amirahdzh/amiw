@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { resolveComponent } from "vue";
-import { CONTACT_EMAIL, WHATSAPP_URL, formatMonth } from "~/utils/site";
+import { CONTACT_EMAIL, formatMonth } from "~/utils/site";
 import { projects } from "~/utils/projects";
 import { facts, steps, faq, languageCodes, timezone, termsUpdated } from "~/utils/workWithMe";
 
@@ -278,15 +278,15 @@ const focusClass =
           </p>
         </div>
         <div class="flex flex-wrap gap-3">
-          <a
-            :href="WHATSAPP_URL"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-outline px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))]"
-          >
-            Book a call
-            <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
-          </a>
+          <BookCallDialog>
+            <button
+              type="button"
+              class="btn-outline px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))]"
+            >
+              Book a call
+              <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
+            </button>
+          </BookCallDialog>
           <a
             :href="`mailto:${CONTACT_EMAIL}`"
             class="btn-outline px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))]"

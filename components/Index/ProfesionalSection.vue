@@ -13,6 +13,8 @@ interface Offer {
   cta: string;
   href: string;
   external: boolean;
+  // The main button opens the "Book a call" box instead of leaving the site
+  dialog?: boolean;
   // A second, plain button before the main one (a page on this site)
   secondary?: { label: string; to: string };
   // "YYYY-MM-DD": shown under the button as "updated Oct 2026"
@@ -40,6 +42,7 @@ const offers: Offer[] = [
     cta: "Book a call",
     href: WHATSAPP_URL,
     external: true,
+    dialog: true,
     secondary: { label: "How I work", to: "/work-with-me" },
   },
   {
@@ -106,22 +109,38 @@ const latestDate = computed(() =>
               {{ offer.description }}
             </p>
 
-            <div class="flex flex-wrap items-start gap-3 justify-self-start md:justify-self-end">
+            <!-- Two buttons: side by side on phones and wide screens, stacked in
+                 the button column in between, so the text keeps its width. -->
+            <div
+              class="flex flex-wrap items-start gap-3 justify-self-start md:justify-self-end"
+              :class="offer.secondary ? 'md:w-44 md:flex-col md:items-stretch lg:w-auto lg:flex-row lg:items-start' : ''"
+            >
               <NuxtLink
                 v-if="offer.secondary"
                 :to="offer.secondary.to"
-                class="btn-outline px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))]"
+                class="btn-outline px-5 py-2.5 text-[15px] focus-visible:ring-offset-[hsl(var(--blush-band))] md:w-full lg:w-auto"
               >
                 {{ offer.secondary.label }}
                 <Icon name="lucide:arrow-right" class="h-4 w-4" />
               </NuxtLink>
-              <div class="grid w-44 justify-items-center gap-1.5">
+              <div class="grid justify-items-center gap-1.5" :class="offer.secondary ? 'md:w-full lg:w-auto' : 'w-44'">
+                <BookCallDialog v-if="offer.dialog">
+                  <button
+                    type="button"
+                    class="w-full focus-visible:ring-offset-[hsl(var(--blush-band))]"
+                    :class="offer.secondary ? 'btn-solid px-5 py-2.5 text-[15px]' : 'btn-outline px-6 py-3 text-base'"
+                  >
+                    {{ offer.cta }}
+                    <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
+                  </button>
+                </BookCallDialog>
                 <a
+                  v-else
                   :href="offer.href"
                   :target="offer.external ? '_blank' : undefined"
                   :rel="offer.external ? 'noopener noreferrer' : undefined"
-                  class="w-full px-6 py-3 text-base focus-visible:ring-offset-[hsl(var(--blush-band))]"
-                  :class="offer.secondary ? 'btn-solid' : 'btn-outline'"
+                  class="w-full focus-visible:ring-offset-[hsl(var(--blush-band))]"
+                  :class="offer.secondary ? 'btn-solid px-5 py-2.5 text-[15px]' : 'btn-outline px-6 py-3 text-base'"
                 >
                   {{ offer.cta }}
                   <Icon name="lucide:arrow-up-right" class="h-4 w-4" />
