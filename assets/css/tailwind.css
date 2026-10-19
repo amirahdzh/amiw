@@ -167,28 +167,28 @@ html {
 
    They only apply when <html> has "reveal-on" (added by a tiny script in
    nuxt.config.ts before the first paint). Without JavaScript nothing is hidden,
-   and if the script that adds "is-in" never starts, a fallback shows everything
+   and if the script that adds "data-in" never starts, a fallback shows everything
    after 3 seconds.
    --------------------------------------------------------------------------- */
-html.reveal-on .heading-marker:not(.is-in) {
+html.reveal-on .heading-marker:not([data-in]) {
   background-size: 0% 100%;
 }
-html.reveal-on .heading-marker.is-in {
+html.reveal-on .heading-marker[data-in] {
   animation: reveal-marker 800ms var(--ease-out) 150ms backwards;
 }
-html.reveal-on [data-reveal]:not(.is-in) {
+html.reveal-on [data-reveal]:not([data-in]) {
   opacity: 0;
   transform: translateY(14px);
 }
 /* Safety net: "reveal-ready" is added by the script once it is running. If it
    never is (the page failed to start), everything appears after 3 seconds. */
-html.reveal-on:not(.reveal-ready) .heading-marker:not(.is-in) {
+html.reveal-on:not(.reveal-ready) .heading-marker:not([data-in]) {
   animation: reveal-marker-fallback 0s 3s forwards;
 }
-html.reveal-on:not(.reveal-ready) [data-reveal]:not(.is-in) {
+html.reveal-on:not(.reveal-ready) [data-reveal]:not([data-in]) {
   animation: reveal-fallback 0s 3s forwards;
 }
-html.reveal-on [data-reveal].is-in {
+html.reveal-on [data-reveal][data-in] {
   animation: reveal-up 650ms var(--ease-out) var(--d, 0ms) backwards;
 }
 @keyframes reveal-marker {
@@ -206,13 +206,13 @@ html.reveal-on [data-reveal].is-in {
 
 /* Anyone who asks their device for less movement gets everything at once. */
 @media (prefers-reduced-motion: reduce) {
-  html.reveal-on .heading-marker:not(.is-in),
-  html.reveal-on .heading-marker.is-in {
+  html.reveal-on .heading-marker:not([data-in]),
+  html.reveal-on .heading-marker[data-in] {
     background-size: 100% 100%;
     animation: none;
   }
-  html.reveal-on [data-reveal]:not(.is-in),
-  html.reveal-on [data-reveal].is-in {
+  html.reveal-on [data-reveal]:not([data-in]),
+  html.reveal-on [data-reveal][data-in] {
     opacity: 1;
     transform: none;
     animation: none;

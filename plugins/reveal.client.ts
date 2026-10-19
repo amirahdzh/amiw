@@ -1,7 +1,12 @@
 // Things arrive when you scroll to them: a pink marker draws under a heading
 // (".heading-marker"), and rows or cards fade up a little ("data-reveal").
-// The look is all CSS (assets/css/tailwind.css); this only adds the class
-// "is-in" the first time something comes into view.
+// The look is all CSS (assets/css/tailwind.css); this only adds the attribute
+// "data-in" the first time something comes into view.
+//
+// It is an attribute, not a class, on purpose: Vue rewrites an element's class
+// whenever a bound class changes (for example a highlighted fact), which would
+// wipe a class added from here and hide the element again. Vue never touches an
+// attribute it doesn't know about.
 //
 // To make a list arrive one after another, put data-reveal-group on the list
 // and data-reveal on each direct child.
@@ -20,7 +25,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     (entries) => {
       for (const entry of entries) {
         if (!entry.isIntersecting) continue;
-        entry.target.classList.add("is-in");
+        entry.target.setAttribute("data-in", "");
         observer.unobserve(entry.target);
       }
     },
@@ -35,15 +40,28 @@ export default defineNuxtPlugin((nuxtApp) => {
       });
     });
     document.querySelectorAll(".heading-marker, [data-reveal]").forEach((el) => {
-      if (!el.classList.contains("is-in")) observer.observe(el);
+      if (!el.hasAttribute("data-in")) observer.observe(el);
+    });
+  };
+
+  // Items added later (a filtered list, a section that loads late) need to be
+  // noticed too, or they would stay hidden. Looking again is cheap.
+  let queued = false;
+  const scanSoon = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      scan();
     });
   };
 
   nuxtApp.hook("app:mounted", () => {
     scan();
+    new MutationObserver(scanSoon).observe(document.body, { childList: true, subtree: true });
     // Running: switches off the CSS safety net (see the end of tailwind.css).
     root.classList.add("reveal-ready");
   });
   // After every page change the new page's content is on screen: look again.
-  nuxtApp.hook("page:finish", () => requestAnimationFrame(scan));
+  nuxtApp.hook("page:finish", scanSoon);
 });
