@@ -45,6 +45,9 @@ export const topics = ["writing", "productivity", "frugal living", "minimalism",
 // empty on purpose: the section shows it only once there is something here.
 export const COLLAB_VALUE = "";
 
+// Who drew the illustration of Amiw (the hero, the links page, the social card).
+export const ILLUSTRATOR = { handle: "@sal_warm", href: "https://www.instagram.com/sal_warm/" };
+
 export interface Place {
   label: string;
   href: string;

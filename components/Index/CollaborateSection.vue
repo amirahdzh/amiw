@@ -29,7 +29,7 @@ const focusClass =
         data-reveal-group
       >
         <div data-reveal class="md:pr-12">
-          <p class="eyebrow">Collaborators</p>
+          <p class="eyebrow">Collaboration</p>
           <h2
             class="heading-marker mt-2 text-3xl font-bold tracking-tight text-foreground md:text-4xl"
           >

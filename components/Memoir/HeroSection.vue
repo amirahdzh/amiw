@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RESUME_URL, RESUME_UPDATED, formatMonth } from "~/utils/site";
+import { RESUME_URL, RESUME_UPDATED, ILLUSTRATOR, formatMonth } from "~/utils/site";
 import { languageCodes, city, timezone } from "~/utils/workWithMe";
 
 // The diary side of this hero is archived in archive/diary/ (see its README).
@@ -112,6 +112,33 @@ const proLinks = [
             aria-hidden="true"
             class="absolute right-[3%] top-[7%] aspect-square w-[10%] rounded-full bg-bloom"
           ></span>
+          <!-- The credit belongs to the picture, so it lives inside the picture's own
+               box and goes wherever the picture goes. Top-right is empty paper. -->
+          <!-- Deliberately faint (55%): it should not compete with the drawing. It
+               returns to full strength on hover or keyboard focus, and the pink
+               arrow always stays at full strength so it still reads as a link. -->
+          <p
+            class="group/credit absolute right-0 top-0 z-10 text-[10.5px] leading-none text-muted-foreground"
+          >
+            <span
+              class="opacity-55 transition-opacity group-focus-within/credit:opacity-100 group-hover/credit:opacity-100 motion-reduce:transition-none"
+              >Illustrated by
+            </span>
+            <a
+              :href="ILLUSTRATOR.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link-grow rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              ><span
+                class="opacity-55 transition-opacity group-focus-within/credit:opacity-100 group-hover/credit:opacity-100 motion-reduce:transition-none"
+                >{{ ILLUSTRATOR.handle }}</span
+              ><span
+                aria-hidden="true"
+                class="ml-0.5 inline-block text-amiw transition-transform group-hover/credit:-translate-y-px group-hover/credit:translate-x-px motion-reduce:transition-none"
+                >↗</span
+              ></a
+            >
+          </p>
           <img
             src="/img/amiw-figure.webp"
             alt="Illustration of Amiw from behind, wearing a pink hijab and a backpack"
